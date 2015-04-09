@@ -1,6 +1,6 @@
 #
 EXE = mp3
-OBJS = parse.o main.o
+OBJS = digit.o main.o
 
 COMPILER = g++
 COMPILER_OPTS = -c -g -O0 -Wall -Werror
@@ -12,10 +12,10 @@ all : $(EXE)
 $(EXE) : $(OBJS)
 	$(LINKER) $(OBJS) -o $(EXE)
 
-parse.o : parse.cpp
-	$(COMPILER) -c $(COMPILER_OPTS) parse.cpp
+digit.o : digit.cpp
+	$(COMPILER) -c $(COMPILER_OPTS) digit.cpp
 
-main.o : main.cpp parse.h
+main.o : main.cpp digit.h
 	$(COMPILER) -c $(COMPILER_OPTS) main.cpp
 	
 clean :

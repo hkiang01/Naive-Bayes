@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <stdlib.h>
-#include "parse.h"
+#include "digit.h"
 
 using namespace std;
 int main(int argc, char* argv[])
@@ -19,9 +19,9 @@ int main(int argc, char* argv[])
 
 	cout << "Offset: " << input_offset << endl;
 
-	Parse parse_obj;
-	parse_obj.parseNumber(input_file, input_offset);
-	parse_obj.printNumber();
+	Digit digit_obj;
+	digit_obj.parseNumber(input_file, input_offset);
+	digit_obj.printNumber();
 
 	cout << endl;
 }

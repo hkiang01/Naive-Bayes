@@ -1,16 +1,16 @@
-#include "parse.h"
+#include "digit.h"
 
-vector<int> Parse::getNumber()
+vector<int> Digit::getNumber()
 {
 	return number;
 }
 
-void Parse::setNumber(vector<int> i_number)
+void Digit::setNumber(vector<int> i_number)
 {
 	number = i_number;
 }
 
-void Parse::parseNumber(string filename, int offset)
+void Digit::parseNumber(string filename, int offset)
 {
 	string curr_line;
 	ifstream myfile (filename.c_str());
@@ -51,7 +51,7 @@ void Parse::parseNumber(string filename, int offset)
 	return;
 }
 
-void Parse::printNumber()
+void Digit::printNumber()
 {
 	int counter = 0;
 	for(vector<int>::const_iterator it = number.begin(); it!=number.end(); ++it)

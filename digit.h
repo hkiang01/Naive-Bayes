@@ -1,5 +1,5 @@
-#ifndef PARSE_H
-#define PARSE_H
+#ifndef DIGIT_H
+#define DIGIT_H
 
 #include <iostream>
 #include <fstream>
@@ -9,7 +9,7 @@
 using namespace std;
 
 
-class Parse{
+class Digit{
 	public:
 		vector<int> getNumber();
 		void setNumber(vector<int> i_number);
