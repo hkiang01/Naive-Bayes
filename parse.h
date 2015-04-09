@@ -11,9 +11,12 @@ using namespace std;
 
 class Parse{
 	public:
-		vector<int> number;
+		vector<int> getNumber();
+		void setNumber(vector<int> i_number);
 		void parseNumber(string filename, int index);
 		void printNumber();
+	private:
+		vector<int>number;
 };
 
 #endif

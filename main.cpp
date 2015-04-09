@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <stdlib.h>
 #include "parse.h"
 
 using namespace std;
@@ -9,39 +10,17 @@ int main(int argc, char* argv[])
 
 	if (argc!=3) 
 	{
-		cout << "Error, usage: ./mp3 <task A,B,C> <input filename>" << endl;
+		cout << "Error, usage: ./mp3 <int offset> <string filename>" << endl;
 		return 1;
 	}
-	
-	char mode = argv[1][0]; //first letter
+	const char* i_offset = argv[1];
+	int input_offset = atoi(i_offset);
 	string input_file = argv[2];
-	
-	switch(mode)
-	{
-		case 'a':
-		case 'A':
-			mode = 'A';
-			break;
-			
-		case 'b':
-		case 'B':
-			mode = 'B';
-			break;
-			
-		case 'c':
-		case 'C':
-			mode = 'C';
-			break;
-			
-		default:
-			mode = 'A';
-			cout << "Invalid task mode. Defaulting to A" << endl;
-	}
-	
-	cout << "Task mode: " << mode << endl;
+
+	cout << "Offset: " << input_offset << endl;
 
 	Parse parse_obj;
-	parse_obj.parseNumber(input_file, 0);
+	parse_obj.parseNumber(input_file, input_offset);
 	parse_obj.printNumber();
 
 	cout << endl;

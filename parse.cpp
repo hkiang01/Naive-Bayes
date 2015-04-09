@@ -1,5 +1,15 @@
 #include "parse.h"
 
+vector<int> Parse::getNumber()
+{
+	return number;
+}
+
+void Parse::setNumber(vector<int> i_number)
+{
+	number = i_number;
+}
+
 void Parse::parseNumber(string filename, int offset)
 {
 	string curr_line;
