@@ -16,6 +16,5 @@ for i in range (0, 5000):
 for i in range(0,1):
     masterList[i].printNumber()
 
-print ("end of main")
 
 f.close()
