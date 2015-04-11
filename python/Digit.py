@@ -4,7 +4,7 @@ import scipy as sp #importing scipy (not used at time of writing)
 
 # GLOBAL 
 NUM_ROWS = 28
-NUM_COLS = 29
+NUM_COLS = 28
 
 #Class Digit
 class Digit(object):
@@ -18,7 +18,7 @@ class Digit(object):
     	for s in self.number: #s is a string
     		curr_line = []
     		for c in s:
-    			if(c=='#' or c=='*'):
+    			if(c=='#' or c=='+'):
     				curr_line.append(1)
     			else:
     				curr_line.append(0)
@@ -35,7 +35,7 @@ class Digit(object):
         	curr_line = ""
         	for col in xrange(NUM_COLS): 
         		curr_line += self.number[row][col]
-        	print curr_line,
+        	print curr_line
     def printFeatures(self):
     	for row in xrange(NUM_ROWS):
     		curr_line = ""
@@ -46,7 +46,7 @@ class Digit(object):
     	heuristic = 0
     	for row in xrange(0, NUM_ROWS):
     		for col in xrange(0, NUM_COLS):
-    			if(self.features[row][col] == a_digit.features[row][col] and a_digit.features[row][col]==1):
+    			if(self.features[row][col] == a_digit.features[row][col] == 1):
     				heuristic += 1
     	return heuristic
 
