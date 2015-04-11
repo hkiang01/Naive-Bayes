@@ -3,22 +3,33 @@ from Digit import *
 
 debug_small = True
 debug_large = False
+<<<<<<< HEAD
 number_to_test = 5000
-threshold = 0.5
+threshold = 0.55
+=======
+number_to_test = 1000
+sample_size = 5000
+threshold = 70
+>>>>>>> 879d238f33c577bd7fc69d79983b3477d497c3d2
 
 masterList = [] # full list of Digits from given problem
 digitDB = [] # groups of digits (grouped by similartiy)
 testLabels = []
 llhList = []
+classSizes = []
 
 V = 2
-k = 50
+k = 25
 
 def parse(filename):
 	f = open(filename, "r") #opens trainingimages
 	
 	# parsing
+<<<<<<< HEAD
 	for i in xrange (0, 5000):    
+=======
+	for i in xrange (0, sample_size):    
+>>>>>>> 879d238f33c577bd7fc69d79983b3477d497c3d2
 		currList = [] #the array of lines for each digit
 		curr_digit = Digit() 
 		for i in xrange(28):
@@ -45,7 +56,11 @@ def parse(filename):
 			
 def parseLabels(filename):
 	f = open(filename, "r")
+<<<<<<< HEAD
 	for i in xrange (0, 5000):
+=======
+	for i in xrange (0, sample_size):
+>>>>>>> 879d238f33c577bd7fc69d79983b3477d497c3d2
 		curr_line = f.readline()
 		testLabels.append(int(curr_line))
 
@@ -96,12 +111,35 @@ def printDB():
 		for digit in group:
 			digit.printNumber
 
+def calcClassSizes():
+	for group in digitDB:
+		classSizes.append(len(group))
+
+def printClassSizes():
+	numElements = 0
+	classCounter = 0
+	for classID in classSizes:
+		print "Size of class", classCounter, ":", classSizes[classCounter]
+		numElements += classSizes[classCounter]
+		classCounter += 1
+	print "There are", numElements, "numbers"
+
+def calcPriors():
+	classCounter = 0
+	for classID in classSizes:
+		print "Prior for class", classCounter, ":", classSizes[classCounter]/float(sample_size)
+		classCounter += 1
+
+
 def main():
 	parse("trainingimages")
 	parseLabels("traininglabels")
 	trainWithLabels()
 	calculateLikelihood()
 	printDB()
+	calcClassSizes()
+	printClassSizes()
+	calcPriors()
 	print "\nend of main"
 
 if __name__ == '__main__':
