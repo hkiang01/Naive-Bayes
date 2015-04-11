@@ -9,12 +9,7 @@ threshold = 70
 masterList = [] # full list of Digits from given problem
 digitDB = [] # groups of digits (grouped by similartiy)
 testLabels = []
-
-def parseLabels(filename):
-	f = open(filename, "r")
-	for i in xrange (0, 1000):
-		curr_line = f.readline()
-		testLabels.append(int(curr_line))
+llhList = []
 
 def parse(filename):
 	f = open(filename, "r") #opens trainingimages
@@ -44,54 +39,19 @@ def parse(filename):
 			print masterList[counter].calcSimilarityHeuristic(masterList[counter+1])
 			counter+=1
 			print "Counter", counter
-
-
-def train():
-	def appendToDB(dig):
-		#Add a digit as its own group
-		digitDB.append([])
-		digitDB[len(digitDB)-1].append(dig)
-	
-	#For each given Digit in the problem,
-	counter = 0
-	for digit in masterList:
-		print "Counter: ", counter
-		maxSimilarity = -1
-		maxGroupID = -1
-		
-		#Edge Case, first digit we ever looked at
-		if len(digitDB)==0:
-			appendToDB(digit)
-			continue
 			
-		#Iteratively take a group and compare it
-		groupIdx = 0
-		for group in digitDB:
-			curAvg = 0
-			#Take the average similarity from a single group
-			for element in group:
-				curAvg += digit.calcSimilarityHeuristic(element)
-			curAvg /= len(group)
-			
-			if curAvg>maxSimilarity:
-				maxSimilarity = curAvg
-				maxGroupID=groupIdx
-			groupIdx += 1
-
-		if maxSimilarity < threshold:
-			appendToDB(digit)
-		else:
-			digitDB[maxGroupID].append(digit)
-		counter+=1
+def parseLabels(filename):
+	f = open(filename, "r")
+	for i in xrange (0, 1000):
+		curr_line = f.readline()
+		testLabels.append(int(curr_line))
 
 def trainWithLabels():
 
-	def initDB():
-		for i in xrange (0, 10):
-			temp = []
-			digitDB.append(temp)
+	for i in xrange (0, 10):
+		temp = []
+		digitDB.append(temp)
 
-	initDB()
 	#For each given Digit in the problem,
 	counter = 0
 	for digit in masterList:
@@ -100,6 +60,28 @@ def trainWithLabels():
 		print index
 		digitDB[index].append(digit)
 		counter+=1
+
+def calculateLikelihood():
+	def llhGraph(digitClass):
+		ret = [[0 for y in xrange(len(digitClass[0].features))] for x in xrange(len(digitClass[0].features[0]))] 
+		for digit in digitClass:
+			totalFeature = 0		
+			for y in xrange(len(digit.features)-1):
+				for x in xrange(len(digit.features[0])-1):
+					ret[y][x]+= digit.features[y][x]/float(len(digitClass))
+		return ret
+		
+	for digitClass in digitDB:
+		llhList.append(llhGraph(digitClass))
+	
+	groupCounter =0
+	for llhEntry in llhList:
+		for row in llhEntry:
+			for col in row:
+				print "%2d" % (col),
+			print "\n"
+		print "GroupID: ", groupCounter
+		groupCounter+=1
 
 def printDB():
 	for group in digitDB:
@@ -110,6 +92,7 @@ def main():
 	parse("testimages")
 	parseLabels("testlabels")
 	trainWithLabels()
+	calculateLikelihood()
 	printDB()
 	print "\nend of main"
 
