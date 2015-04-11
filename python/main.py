@@ -1,14 +1,15 @@
 import sys, getopt
 from Digit import *
 
-debug_small = False
-debug_large = True
+debug_small = True
+debug_large = False
+number_to_test = 1000
 
 f = open("testimages", "r") #opens trainingimages
 
 masterList = [] # a list of Digits
 
-for i in xrange (0, 5000):    
+for i in xrange (0, 1000):    
     currList = [] #the array of lines for each digit
     curr_digit = Digit() 
     for i in xrange(0, 28):
@@ -19,7 +20,7 @@ for i in xrange (0, 5000):
     masterList.append(curr_digit)
 
 if(debug_small):
-	for digit in range(0,1):
+	for digit in range(number_to_test-1,number_to_test):
 	    masterList[digit].printNumber()
 	    masterList[digit].printFeatures()
 
