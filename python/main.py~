@@ -11,6 +11,9 @@ digitDB = [] # groups of digits (grouped by similartiy)
 testLabels = []
 llhList = []
 
+V = 2
+k = 25
+
 def parse(filename):
 	f = open(filename, "r") #opens trainingimages
 	
@@ -63,12 +66,12 @@ def trainWithLabels():
 
 def calculateLikelihood():
 	def llhGraph(digitClass):
-		ret = [[0 for y in xrange(len(digitClass[0].features))] for x in xrange(len(digitClass[0].features[0]))] 
+		ret = [[0 for y in xrange(NUM_ROWS)] for x in xrange(NUM_COLS)] 
 		for digit in digitClass:
 			totalFeature = 0		
-			for y in xrange(len(digit.features)-1):
-				for x in xrange(len(digit.features[0])-1):
-					ret[y][x]+= digit.features[y][x]/float(len(digitClass))
+			for y in xrange(NUM_ROWS):
+				for x in xrange(NUM_COLS):
+					ret[y][x]+= (digit.features[y][x]+k/len(digitClass))/float(len(digitClass)+k*V)
 		return ret
 		
 	for digitClass in digitDB:
@@ -78,7 +81,7 @@ def calculateLikelihood():
 	for llhEntry in llhList:
 		for row in llhEntry:
 			for col in row:
-				if col > 0.05:
+				if col > k:
 					print "+.++",
 				else:
 					print ("%.2f" % col),
