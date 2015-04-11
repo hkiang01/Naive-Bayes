@@ -78,7 +78,10 @@ def calculateLikelihood():
 	for llhEntry in llhList:
 		for row in llhEntry:
 			for col in row:
-				print "%2d" % (col),
+				if col > 0.5:
+					print "+.++",
+				else:
+					print ("%.2f" % col),
 			print "\n"
 		print "GroupID: ", groupCounter
 		groupCounter+=1
