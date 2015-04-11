@@ -3,8 +3,8 @@ from Digit import *
 
 debug_small = True
 debug_large = False
-number_to_test = 1000
-threshold = 70
+number_to_test = 5000
+threshold = 0.55
 
 masterList = [] # full list of Digits from given problem
 digitDB = [] # groups of digits (grouped by similartiy)
@@ -18,7 +18,7 @@ def parse(filename):
 	f = open(filename, "r") #opens trainingimages
 	
 	# parsing
-	for i in xrange (0, 1000):    
+	for i in xrange (0, 5000):    
 		currList = [] #the array of lines for each digit
 		curr_digit = Digit() 
 		for i in xrange(28):
@@ -45,7 +45,7 @@ def parse(filename):
 			
 def parseLabels(filename):
 	f = open(filename, "r")
-	for i in xrange (0, 1000):
+	for i in xrange (0, 5000):
 		curr_line = f.readline()
 		testLabels.append(int(curr_line))
 
@@ -81,10 +81,12 @@ def calculateLikelihood():
 	for llhEntry in llhList:
 		for row in llhEntry:
 			for col in row:
-				if col > k:
-					print "+.++",
+				if col > threshold:
+					print "=",#print "+.++",
+				elif col > 2*threshold/3:
+					print "-",
 				else:
-					print ("%.2f" % col),
+					print " ",#print ("%.2f" % col),
 			print "\n"
 		print "GroupID: ", groupCounter
 		groupCounter+=1
@@ -95,8 +97,8 @@ def printDB():
 			digit.printNumber
 
 def main():
-	parse("testimages")
-	parseLabels("testlabels")
+	parse("trainingimages")
+	parseLabels("traininglabels")
 	trainWithLabels()
 	calculateLikelihood()
 	printDB()
