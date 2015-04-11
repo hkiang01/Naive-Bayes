@@ -4,12 +4,14 @@ from Digit import *
 debug_small = True
 debug_large = False
 number_to_test = 1000
+sample_size = 5000
 threshold = 70
 
 masterList = [] # full list of Digits from given problem
 digitDB = [] # groups of digits (grouped by similartiy)
 testLabels = []
 llhList = []
+classSizes = []
 
 V = 2
 k = 25
@@ -18,7 +20,7 @@ def parse(filename):
 	f = open(filename, "r") #opens trainingimages
 	
 	# parsing
-	for i in xrange (0, 1000):    
+	for i in xrange (0, sample_size):    
 		currList = [] #the array of lines for each digit
 		curr_digit = Digit() 
 		for i in xrange(28):
@@ -45,7 +47,7 @@ def parse(filename):
 			
 def parseLabels(filename):
 	f = open(filename, "r")
-	for i in xrange (0, 1000):
+	for i in xrange (0, sample_size):
 		curr_line = f.readline()
 		testLabels.append(int(curr_line))
 
@@ -94,12 +96,35 @@ def printDB():
 		for digit in group:
 			digit.printNumber
 
+def calcClassSizes():
+	for group in digitDB:
+		classSizes.append(len(group))
+
+def printClassSizes():
+	numElements = 0
+	classCounter = 0
+	for classID in classSizes:
+		print "Size of class", classCounter, ":", classSizes[classCounter]
+		numElements += classSizes[classCounter]
+		classCounter += 1
+	print "There are", numElements, "numbers"
+
+def calcPriors():
+	classCounter = 0
+	for classID in classSizes:
+		print "Prior for class", classCounter, ":", classSizes[classCounter]/float(sample_size)
+		classCounter += 1
+
+
 def main():
-	parse("testimages")
-	parseLabels("testlabels")
+	parse("trainingimages")
+	parseLabels("traininglabels")
 	trainWithLabels()
 	calculateLikelihood()
 	printDB()
+	calcClassSizes()
+	printClassSizes()
+	calcPriors()
 	print "\nend of main"
 
 if __name__ == '__main__':
