@@ -26,7 +26,7 @@ if(debug_small):
 
 if(debug_large):
 	counter = 0
-	for digit in xrange(0, (len(masterList)-1)):
+	for digit in range(0, (len(masterList))):
 		print masterList[counter].calcSimilarityHeuristic(masterList[counter+1])
 		counter+=1
 		print "Counter", counter
