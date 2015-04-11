@@ -8,6 +8,13 @@ threshold = 70
 
 masterList = [] # full list of Digits from given problem
 digitDB = [] # groups of digits (grouped by similartiy)
+testLabels = []
+
+def parseLabels(filename):
+	f = open(filename, "r")
+	for i in xrange (0, 1000):
+		curr_line = f.readline()
+		testLabels.append(int(curr_line))
 
 def parse(filename):
 	f = open(filename, "r") #opens trainingimages
@@ -46,7 +53,9 @@ def train():
 		digitDB[len(digitDB)-1].append(dig)
 	
 	#For each given Digit in the problem,
+	counter = 0
 	for digit in masterList:
+		print "Counter: ", counter
 		maxSimilarity = -1
 		maxGroupID = -1
 		
@@ -56,7 +65,8 @@ def train():
 			continue
 			
 		#Iteratively take a group and compare it
-		for groupIdx, group in digitDB:
+		groupIdx = 0
+		for group in digitDB:
 			curAvg = 0
 			#Take the average similarity from a single group
 			for element in group:
@@ -66,15 +76,41 @@ def train():
 			if curAvg>maxSimilarity:
 				maxSimilarity = curAvg
 				maxGroupID=groupIdx
-		
+			groupIdx += 1
+
 		if maxSimilarity < threshold:
 			appendToDB(digit)
 		else:
-			digitDB[groupID].append(digit)
+			digitDB[maxGroupID].append(digit)
+		counter+=1
+
+def trainWithLabels():
+
+	def initDB():
+		for i in xrange (0, 10):
+			temp = []
+			digitDB.append(temp)
+
+	initDB()
+	#For each given Digit in the problem,
+	counter = 0
+	for digit in masterList:
+		print "Counter: ", counter
+		index = testLabels[counter]
+		print index
+		digitDB[index].append(digit)
+		counter+=1
+
+def printDB():
+	for group in digitDB:
+		for digit in group:
+			digit.printNumber
 
 def main():
 	parse("testimages")
-	train()
+	parseLabels("testlabels")
+	trainWithLabels()
+	printDB()
 	print "\nend of main"
 
 if __name__ == '__main__':
