@@ -12,7 +12,7 @@ masterList = [] # a list of Digits
 for i in xrange (0, 1000):    
     currList = [] #the array of lines for each digit
     curr_digit = Digit() 
-    for i in xrange(0, 28):
+    for i in xrange(28):
         currline = f.readline()
         currList.append(currline)
     curr_digit.number = currList
@@ -20,7 +20,7 @@ for i in xrange (0, 1000):
     masterList.append(curr_digit)
 
 if(debug_small):
-	for digit in range(number_to_test-1,number_to_test):
+	for digit in xrange(number_to_test-1,number_to_test):
 	    masterList[digit].printNumber()
 	    masterList[digit].printFeatures()
 
