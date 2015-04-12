@@ -1,8 +1,8 @@
 from Part1 import *
-
+from Part1b import *
 def main():
-	Part1("trainingimages", "traininglabels")
-	Part1("testimages", "testlabels")
+	first = Part1("trainingimages", "traininglabels")
+	second = Part1b("testimages", "testlabels")
 
 if __name__ == '__main__':
 	main()
