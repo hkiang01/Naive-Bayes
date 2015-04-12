@@ -1,17 +1,24 @@
 import sys, getopt
 from Digit import *
+from math import log
 
 debug_small = True
 debug_large = False
 number_to_test = 1000
 sample_size = 5000
+test_size = 1000
 threshold = 0.55
 
-masterList = [] # full list of Digits from given problem
+masterList = [] # full list of training Digits from given problem
+testList = [] # full list of test Digits 
 digitDB = [] # groups of digits (grouped by similartiy)
 testLabels = []
-llhList = []
-classSizes = []
+
+# in order of digit classes (0-9)
+llhList = [] # likelihood arrays for each class
+classSizes = [] # size of each class
+classPriors = [] # priors for each class
+mapClassicication = []
 
 V = 2
 k = 25
@@ -21,9 +28,9 @@ def parse(filename):
 	
 	# parsing
 	for i in xrange (0, sample_size):    
-		currList = [] #the array of lines for each digit
+		currList = [] #the array of lines for each Digit
 		curr_digit = Digit() 
-		for i in xrange(28):
+		for i in xrange(NUM_ROWS):
 		    currline = f.readline()
 		    currList.append(currline)
 		curr_digit.number = currList
@@ -44,7 +51,24 @@ def parse(filename):
 			print masterList[counter].calcSimilarityHeuristic(masterList[counter+1])
 			counter+=1
 			print "Counter", counter
-			
+
+def parseTestDigits(filename):
+	f = open(filename, "r") #opens testimages
+	for i in xrange(0, test_size):
+		currList = [] # the array of lines for each Digit
+		curr_digit = Digit()
+		for i in xrange(NUM_ROWS):
+			currline = f.readline()
+			currList.append(currline)
+		curr_digit.number= currList
+		curr_digit.processFeatures()
+		testList.append(curr_digit)
+	f.close()
+
+def printTestDigits():
+	for digit in testList:
+		digit.printNumber()
+
 def parseLabels(filename):
 	f = open(filename, "r")
 	for i in xrange (0, sample_size):
@@ -114,8 +138,19 @@ def printClassSizes():
 def calcPriors():
 	classCounter = 0
 	for classID in classSizes:
-		print "Prior for class", classCounter, ":", classSizes[classCounter]/float(sample_size)
+		classPriors.append(classSizes[classCounter]/float(sample_size))
 		classCounter += 1
+
+def printPriors():
+		priorID = 0
+		for classID in classPriors:
+			print "Prior for class", priorID, ":", classPriors[priorID]
+			priorID += 1
+
+def calcMAP():
+	bestPrior = -1
+	bestVal = 0
+
 
 
 def main():
@@ -127,6 +162,9 @@ def main():
 	calcClassSizes()
 	printClassSizes()
 	calcPriors()
+	printPriors()
+	parseTestDigits("testimages")
+	printTestDigits()
 	print "\nend of main"
 
 if __name__ == '__main__':
