@@ -1,8 +1,7 @@
-from Part1 import *
+from Part1 import * 
 from Part1b import *
-def main():
-	first = Part1("trainingimages", "traininglabels")
-	second = Part1b("testimages", "testlabels")
+import sys
 
-if __name__ == '__main__':
-	main()
+
+#first = Part1("trainingimages", "traininglabels")
+second = Part1b("trainingimages", "traininglabels","testimages")

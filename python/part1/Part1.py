@@ -79,12 +79,13 @@ class Part1(object):
 		for llhEntry in self.llhList:
 			for row in llhEntry:
 				for col in row:
-					if col > self.threshold:
-						print "=",#print "+.++",
-					elif col > 2*(self.threshold)/3:
-						print "-",
-					else:
-						print " ",#print ("%.2f" % col),
+				    print ("%.2f" % col),
+					#if col > self.threshold:
+					#	print "=",#print "+.++",
+					#elif col > 2*(self.threshold)/3:
+					#	print "-",
+					#else:
+					#	print " ", ("%.2f" % col),
 				print "\n"
 			print "GroupID: ", groupCounter
 			groupCounter+=1

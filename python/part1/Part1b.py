@@ -1,5 +1,6 @@
 from Digit import *
 from math import log
+import copy
 
 k = 25
 V = 2
@@ -18,6 +19,7 @@ class Part1b(object):
 	classSizes = [] # size of each class
 	classPriors = [] # priors for each class
 	MAPDB = []
+	testlist = []
 
 	def file_len(self, fname):
 		return sum(1 for line in open(fname))
@@ -26,6 +28,7 @@ class Part1b(object):
 		self.sample_size = self.file_len(filename) // NUM_ROWS
 		f = open(filename, "r") #opens trainingimages
 
+                retlist = []
 		# parsing
 		for i in xrange (0, self.sample_size):    
 			currList = [] #the array of lines for each Digit
@@ -35,10 +38,14 @@ class Part1b(object):
 			    currList.append(currline)
 			curr_digit.number = currList
 			curr_digit.processFeatures()
-			self.masterList.append(curr_digit)
+			retlist.append(curr_digit)
 		
 		f.close()
+		return retlist
 		
+	def printListOfNumbers(self):
+	    for digit in self.masterList:
+	        digit.printNumber()
 
 	def parseLabels(self, filename):
 		f = open(filename, "r")
@@ -121,20 +128,24 @@ class Part1b(object):
 
 	def mapClassification(self):
 		self.MAPDB = []
-		i = 0
 		print "MAPDB:"
-		for llh in self.llhList:
-			product = log(self.classPriors[i])
-			for y in xrange(NUM_ROWS):
-				for x in xrange(NUM_COLS):
-					product *= log(llh[y][x])
-			i+=1
-			print product
-			self.MAPDB.append(product)
+		for digit in self.testlist:
+		  for i,llh in enumerate(self.llhList):
+		      sum1 = log((self.classPriors[i]))
+		      for y in xrange(NUM_ROWS):
+		          for x in xrange(NUM_COLS):
+		              case = digit.features[y][x]
+		              if case==0:
+		                  sum1 += float(log(1-llh[y][x]))
+		              else:
+		                  sum1 += float(log(llh[y][x]))
+		      print sum1
+		      self.MAPDB.append(sum1)
 			
 	
-	def __init__(self, filename_images, filename_labels):
-		self.parse(filename_images)
+	def __init__(self, filename_images, filename_labels,filename_testimages):
+		self.masterList = copy.deepcopy(self.parse(filename_images))
+		self.printListOfNumbers()
 		self.parseLabels(filename_labels)
 		self.trainWithLabels()
 		self.calculateLikelihood()
@@ -143,5 +154,6 @@ class Part1b(object):
 		self.printClassSizes()
 		self.calcPriors()
 		self.printPriors()
+		self.testlist = copy.deepcopy(self.parse(filename_testimages))
 		self.mapClassification()
 

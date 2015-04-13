@@ -35,10 +35,11 @@ class Digit(object):
         for row in xrange(NUM_ROWS): #xrange returns xrange object
         # xrange, see: https://wiki.python.org/moin/ForLoop
         # xrange is more efficient with memory than range
-        	curr_line = ""
-        	for col in xrange(NUM_COLS): 
-        		curr_line += self.number[row][col]
-        	print curr_line
+           	curr_line = ""
+           	for col in xrange(NUM_COLS): 
+          		curr_line += self.number[row][col]
+           	print curr_line
+           	
 
     def printFeatures(self):
     	for row in xrange(NUM_ROWS):
