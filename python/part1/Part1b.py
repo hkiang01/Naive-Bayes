@@ -18,7 +18,7 @@ class Part1b(object):
 	llhList = [] # likelihood arrays for each class
 	classSizes = [] # size of each class
 	classPriors = [] # priors for each class
-	MAPDB = []
+	MAPDB = [[],[],[],[],[],[],[],[],[],[]]
 	testlist = []
 
 	def file_len(self, fname):
@@ -73,7 +73,7 @@ class Part1b(object):
 		def llhGraph(digitClass):
 			ret = [[0 for y in xrange(NUM_ROWS)] for x in xrange(NUM_COLS)] 
 			for digit in digitClass:
-				totalFeature = 0		
+				#totalFeature = 0		
 				for y in xrange(NUM_ROWS):
 					for x in xrange(NUM_COLS):
 						ret[y][x]+= (digit.features[y][x]+k/float(len(digitClass)))/float(len(digitClass)+k*V)
@@ -127,9 +127,10 @@ class Part1b(object):
 				priorID += 1
 
 	def mapClassification(self):
-		self.MAPDB = []
+		
 		print "MAPDB:"
 		for digit in self.testlist:
+		  temp = []
 		  for i,llh in enumerate(self.llhList):
 		      sum1 = log((self.classPriors[i]))
 		      for y in xrange(NUM_ROWS):
@@ -139,13 +140,19 @@ class Part1b(object):
 		                  sum1 += float(log(1-llh[y][x]))
 		              else:
 		                  sum1 += float(log(llh[y][x]))
-		      print sum1
-		      self.MAPDB.append(sum1)
+
+		      temp.append(sum1)
+		      #http://stackoverflow.com/questions/3989016/how-to-find-positions-of-the-list-maximum
+		      self.MAPDB[temp.index(max(temp))].append(digit)
+        
+        def printMap(self):
+            for classID in self.MAPDB:
+                for digit in classID:
+                    digit.printNumber()
 			
 	
 	def __init__(self, filename_images, filename_labels,filename_testimages):
 		self.masterList = copy.deepcopy(self.parse(filename_images))
-		self.printListOfNumbers()
 		self.parseLabels(filename_labels)
 		self.trainWithLabels()
 		self.calculateLikelihood()
@@ -156,4 +163,5 @@ class Part1b(object):
 		self.printPriors()
 		self.testlist = copy.deepcopy(self.parse(filename_testimages))
 		self.mapClassification()
+		self.printMap()
 
