@@ -12,6 +12,7 @@ class Part1b(object):
 	threshold = 0.55
 	masterList = [] # full list of training Digits from given problem
 	digitDB = [] # groups of digits (grouped by similartiy)
+	learnLabels = []
 	testLabels = []
 
 	# in order of digit classes (0-9)
@@ -19,7 +20,11 @@ class Part1b(object):
 	classSizes = [] # size of each class
 	classPriors = [] # priors for each class
 	MAPDB = [[],[],[],[],[],[],[],[],[],[]]
-	testlist = []
+
+	testlist = [] # in order of the testimages
+	MAPclassification = [] # each entry has 2 numbers, left is proper, right is classified
+
+	confusionMatrix = []
 
 	def file_len(self, fname):
 		return sum(1 for line in open(fname))
@@ -49,8 +54,15 @@ class Part1b(object):
 
 	def parseLabels(self, filename):
 		f = open(filename, "r")
-		print self.sample_size
+		print self.sample_size, "learning labels"
 		for i in xrange (0, self.sample_size):
+			curr_line = f.readline()
+			self.learnLabels.append(int(curr_line))
+
+	def parseMAPlabels(self, filename):
+		f = open(filename, "r")
+		print self.sample_size, "testing labels"
+		for i in xrange(0, self.sample_size):
 			curr_line = f.readline()
 			self.testLabels.append(int(curr_line))
 
@@ -63,9 +75,8 @@ class Part1b(object):
 		#For each given Digit in the problem,
 		counter = 0
 		for digit in self.masterList:
-			print "Counter: ", counter
-			index = self.testLabels[counter]
-			print index
+			index = self.learnLabels[counter]
+			digit.setProperClass(index)
 			self.digitDB[index].append(digit)
 			counter+=1
 
@@ -84,16 +95,17 @@ class Part1b(object):
 		
 		groupCounter =0
 		for llhEntry in self.llhList:
+			print "GroupID: ", groupCounter
 			for row in llhEntry:
 				for col in row:
-					if col > self.threshold:
-						print "=",#print "+.++",
-					elif col > 2*(self.threshold)/3:
-						print "-",
-					else:
-						print " ",#print ("%.2f" % col),
+					# if col > self.threshold:
+					# 	print "=",#print "+.++",
+					# elif col > 2*(self.threshold)/3:
+					# 	print "-",
+					# else:
+					# 	print " ",
+					print ("%.2f" % col),
 				print "\n"
-			print "GroupID: ", groupCounter
 			groupCounter+=1
 
 	def printDB(self):
@@ -112,7 +124,7 @@ class Part1b(object):
 			print "Size of class", classCounter, ":", self.classSizes[classCounter]
 			numElements += self.classSizes[classCounter]
 			classCounter += 1
-		print "There are", numElements, "numbers"
+		print "There are", numElements, "numbers in training set"
 
 	def calcPriors(self):
 		classCounter = 0
@@ -127,9 +139,10 @@ class Part1b(object):
 				priorID += 1
 
 	def mapClassification(self):
-		
 		print "MAPDB:"
+		index = 0
 		for digit in self.testlist:
+		  digit.setProperClass(self.testLabels[index])
 		  temp = []
 		  for i,llh in enumerate(self.llhList):
 		      sum1 = log((self.classPriors[i]))
@@ -142,16 +155,42 @@ class Part1b(object):
 		                  sum1 += float(log(llh[y][x]))
 
 		      temp.append(sum1)
+		  self.MAPDB[temp.index(max(temp))].append(digit)
+		  index += 1
 		      #http://stackoverflow.com/questions/3989016/how-to-find-positions-of-the-list-maximum
-		      self.MAPDB[temp.index(max(temp))].append(digit)
-        
-        def printMap(self):
-            for classID in self.MAPDB:
-                for digit in classID:
-                    digit.printNumber()
-			
+
+	def printMap(self):
+		#counter = 0
+		for classID in self.MAPDB:
+			#print "Size of MAP Class", counter, ":", len(self.MAPDB[counter])
+			for digit in classID:
+				digit.printNumber()
+			#counter += 1
+
+	def calcMAPAccuracy(self):
+		accuracy = 0
+		num_digits = 0
+		i = 0
+		for classID in self.MAPDB:
+			for digit in classID:
+				#print int(digit.getProperClass()), i
+				if(int(digit.getProperClass()) == int(i)):
+					accuracy += 1
+				num_digits += 1
+			i += 1
+		accuracy /= float(num_digits)
+		accuracy *= float(100)
+		print "Accuracy:", accuracy, "%"
+
+	# def confusionMatrix(self):
+ # 		#a 10x10 matrix whose entry in row r and column c
+ # 		#is the percentage of test images from class r
+ # 		#that are classified as class c
+ # 		for r in xrange (0, 10):
+ # 			for c in xrange (0, 10):
+				
 	
-	def __init__(self, filename_images, filename_labels,filename_testimages):
+	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels):
 		self.masterList = copy.deepcopy(self.parse(filename_images))
 		self.parseLabels(filename_labels)
 		self.trainWithLabels()
@@ -162,6 +201,7 @@ class Part1b(object):
 		self.calcPriors()
 		self.printPriors()
 		self.testlist = copy.deepcopy(self.parse(filename_testimages))
+		self.parseMAPlabels(filename_testlabels)
 		self.mapClassification()
-		self.printMap()
-
+		#self.printMap()
+		self.calcMAPAccuracy()

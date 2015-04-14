@@ -4,4 +4,4 @@ import sys
 
 
 #first = Part1("trainingimages", "traininglabels")
-second = Part1b("trainingimages", "traininglabels","testimages")
+second = Part1b("trainingimages", "traininglabels","testimages", "testlabels")
