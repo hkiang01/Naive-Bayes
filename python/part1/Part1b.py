@@ -20,7 +20,9 @@ class Part1b(object):
 	classSizes = [] # size of each class
 	classPriors = [] # priors for each class
 	MAPDB = [[],[],[],[],[],[],[],[],[],[]]
-	testlist = []
+
+	testlist = [] # in order of the testimages
+	MAPclassification = [] # each entry has 2 numbers, left is proper, right is classified
 
 	confusionMatrix = []
 
@@ -158,9 +160,12 @@ class Part1b(object):
 		      #http://stackoverflow.com/questions/3989016/how-to-find-positions-of-the-list-maximum
 
 	def printMap(self):
+		#counter = 0
 		for classID in self.MAPDB:
+			#print "Size of MAP Class", counter, ":", len(self.MAPDB[counter])
 			for digit in classID:
 				digit.printNumber()
+			#counter += 1
 
 	def calcMAPAccuracy(self):
 		accuracy = 0
@@ -178,9 +183,12 @@ class Part1b(object):
 		print "Accuracy:", accuracy, "%"
 
 	# def confusionMatrix(self):
-	# 	# each row and column is a class
-		
-			
+ # 		#a 10x10 matrix whose entry in row r and column c
+ # 		#is the percentage of test images from class r
+ # 		#that are classified as class c
+ # 		for r in xrange (0, 10):
+ # 			for c in xrange (0, 10):
+				
 	
 	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels):
 		self.masterList = copy.deepcopy(self.parse(filename_images))
