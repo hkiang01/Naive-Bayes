@@ -177,17 +177,25 @@ class Part1b(object):
 				if(int(digit.getProperClass()) == int(i)):
 					accuracy += 1
 				num_digits += 1
+	
+				# for confusion matrix
+				temp = []
+				temp.append(digit.getProperClass())
+				temp.append(int(i))
+				self.MAPclassification.append(temp)
+				# each entry has 2 numbers, left is proper, right is classified
+
 			i += 1
 		accuracy /= float(num_digits)
 		accuracy *= float(100)
 		print "Accuracy:", accuracy, "%"
 
-	# def confusionMatrix(self):
- # 		#a 10x10 matrix whose entry in row r and column c
- # 		#is the percentage of test images from class r
- # 		#that are classified as class c
- # 		for r in xrange (0, 10):
- # 			for c in xrange (0, 10):
+	def confusionMatrix(self):
+ 		#a 10x10 matrix whose entry in row r and column c
+ 		#is the percentage of test images from class r
+ 		#that are classified as class c
+ 		for r in xrange (0, 10):
+ 			for c in xrange (0, 10):
 				
 	
 	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels):
