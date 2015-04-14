@@ -9,6 +9,8 @@ NUM_COLS = 28
 #Class Digit
 class Digit(object):
 
+    properClass = 0
+
     #define class to store the digit
     def ___init___(self): #default constructor
         self.number = []
@@ -56,7 +58,11 @@ class Digit(object):
     				heuristic += 1
     	return heuristic
 
+    def setProperClass(self, value):
+        self.properClass = value
 
+    def getProperClass(self):
+        return self.properClass
 
 ### NOTES ###
 

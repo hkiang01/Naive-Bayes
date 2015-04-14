@@ -66,6 +66,8 @@ class Part1b(object):
 			print "Counter: ", counter
 			index = self.testLabels[counter]
 			print index
+			digit.setProperClass(index)
+			print digit.getProperClass()
 			self.digitDB[index].append(digit)
 			counter+=1
 
@@ -142,13 +144,29 @@ class Part1b(object):
 		                  sum1 += float(log(llh[y][x]))
 
 		      temp.append(sum1)
+		  self.MAPDB[temp.index(max(temp))].append(digit)
 		      #http://stackoverflow.com/questions/3989016/how-to-find-positions-of-the-list-maximum
-		      self.MAPDB[temp.index(max(temp))].append(digit)
-        
-        def printMap(self):
-            for classID in self.MAPDB:
-                for digit in classID:
-                    digit.printNumber()
+
+	def printMap(self):
+		for classID in self.MAPDB:
+			for digit in classID:
+				digit.printNumber()
+				print counter
+
+	def calcMAPAccuracy(self):
+		accuracy = 0
+		num_digits = 0
+		i = 0
+		for classID in self.MAPDB:
+			for digit in classID:
+				#print int(digit.getProperClass()), i
+				if(int(digit.getProperClass()) == i):
+					accuracy += 1
+				num_digits += 1
+			i += 1
+		accuracy /= num_digits
+		accuracy *= 100
+		print "Accuracy:", accuracy, "%"
 			
 	
 	def __init__(self, filename_images, filename_labels,filename_testimages):
@@ -164,4 +182,4 @@ class Part1b(object):
 		self.testlist = copy.deepcopy(self.parse(filename_testimages))
 		self.mapClassification()
 		self.printMap()
-
+		#self.calcMAPAccuracy()

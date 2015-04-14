@@ -59,6 +59,7 @@ class Part1(object):
 			print "Counter: ", counter
 			index = self.testLabels[counter]
 			print index
+			digit.properClass = index
 			self.digitDB[index].append(digit)
 			counter+=1
 
