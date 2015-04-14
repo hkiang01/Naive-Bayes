@@ -24,7 +24,7 @@ class Part1b(object):
 	testlist = [] # in order of the testimages
 	MAPclassification = [] # each entry has 2 numbers, left is proper, right is classified
 
-	confusionMatrix = []
+	confusionMatrix = [[],[],[],[],[],[],[],[],[],[]]
 
 	def file_len(self, fname):
 		return sum(1 for line in open(fname))
@@ -180,9 +180,10 @@ class Part1b(object):
 	
 				# for confusion matrix
 				temp = []
-				temp.append(digit.getProperClass())
+				temp.append(int(digit.getProperClass()))
 				temp.append(int(i))
 				self.MAPclassification.append(temp)
+				print temp
 				# each entry has 2 numbers, left is proper, right is classified
 
 			i += 1
@@ -196,7 +197,23 @@ class Part1b(object):
  		#that are classified as class c
  		for r in xrange (0, 10):
  			for c in xrange (0, 10):
-				
+ 				r_count = 0
+ 				c_count = 0
+				for entry in self.MAPclassification:
+					if(entry[0] == r):
+						r_count += 1
+						if(entry[1] == c):
+							c_count += 1
+				val = c_count/float(r_count)
+				print ("%.2f" % val),
+				#self.confusionMatrix[r].append(val)
+			print "\n",
+
+	def printConfusionMatrix(self):
+		for row in confusionMatrix:
+			for col in confusionMatrix:
+				print col,
+			print "\n",
 	
 	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels):
 		self.masterList = copy.deepcopy(self.parse(filename_images))
@@ -213,3 +230,5 @@ class Part1b(object):
 		self.mapClassification()
 		#self.printMap()
 		self.calcMAPAccuracy()
+		self.confusionMatrix()
+		self.printConfusionMatrix()
