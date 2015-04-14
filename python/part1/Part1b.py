@@ -22,6 +22,8 @@ class Part1b(object):
 	MAPDB = [[],[],[],[],[],[],[],[],[],[]]
 	testlist = []
 
+	confusionMatrix = []
+
 	def file_len(self, fname):
 		return sum(1 for line in open(fname))
 
@@ -50,14 +52,14 @@ class Part1b(object):
 
 	def parseLabels(self, filename):
 		f = open(filename, "r")
-		print self.sample_size
+		print self.sample_size, "learning labels"
 		for i in xrange (0, self.sample_size):
 			curr_line = f.readline()
 			self.learnLabels.append(int(curr_line))
 
 	def parseMAPlabels(self, filename):
 		f = open(filename, "r")
-		print self.sample_size
+		print self.sample_size, "testing labels"
 		for i in xrange(0, self.sample_size):
 			curr_line = f.readline()
 			self.testLabels.append(int(curr_line))
@@ -71,12 +73,9 @@ class Part1b(object):
 		#For each given Digit in the problem,
 		counter = 0
 		for digit in self.masterList:
-			print "Counter: ", counter
 			index = self.learnLabels[counter]
 			digit.setProperClass(index)
-			print index, digit.getProperClass() # debugging
 			self.digitDB[index].append(digit)
-			print self.digitDB[index][len(self.digitDB[index])-1].getProperClass() # debugging
 			counter+=1
 
 	def calculateLikelihood(self):
@@ -94,16 +93,17 @@ class Part1b(object):
 		
 		groupCounter =0
 		for llhEntry in self.llhList:
+			print "GroupID: ", groupCounter
 			for row in llhEntry:
 				for col in row:
-					if col > self.threshold:
-						print "=",#print "+.++",
-					elif col > 2*(self.threshold)/3:
-						print "-",
-					else:
-						print " ",#print ("%.2f" % col),
+					# if col > self.threshold:
+					# 	print "=",#print "+.++",
+					# elif col > 2*(self.threshold)/3:
+					# 	print "-",
+					# else:
+					# 	print " ",
+					print ("%.2f" % col),
 				print "\n"
-			print "GroupID: ", groupCounter
 			groupCounter+=1
 
 	def printDB(self):
@@ -122,7 +122,7 @@ class Part1b(object):
 			print "Size of class", classCounter, ":", self.classSizes[classCounter]
 			numElements += self.classSizes[classCounter]
 			classCounter += 1
-		print "There are", numElements, "numbers"
+		print "There are", numElements, "numbers in training set"
 
 	def calcPriors(self):
 		classCounter = 0
@@ -176,6 +176,10 @@ class Part1b(object):
 		accuracy /= float(num_digits)
 		accuracy *= float(100)
 		print "Accuracy:", accuracy, "%"
+
+	# def confusionMatrix(self):
+	# 	# each row and column is a class
+		
 			
 	
 	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels):
@@ -191,5 +195,5 @@ class Part1b(object):
 		self.testlist = copy.deepcopy(self.parse(filename_testimages))
 		self.parseMAPlabels(filename_testlabels)
 		self.mapClassification()
-		self.printMap()
+		#self.printMap()
 		self.calcMAPAccuracy()
