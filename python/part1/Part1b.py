@@ -24,7 +24,7 @@ class Part1b(object):
 	testlist = [] # in order of the testimages
 	MAPclassification = [] # each entry has 2 numbers, left is proper, right is classified
 
-	confusionMatrix = [[],[],[],[],[],[],[],[],[],[]]
+	confusionMatrix = []
 
 	def file_len(self, fname):
 		return sum(1 for line in open(fname))
@@ -189,13 +189,15 @@ class Part1b(object):
 			i += 1
 		accuracy /= float(num_digits)
 		accuracy *= float(100)
-		print "Accuracy:", accuracy, "%"
+		print "Overall accuracy:", accuracy, "%"
 
 	def confusionMatrix(self):
  		#a 10x10 matrix whose entry in row r and column c
  		#is the percentage of test images from class r
  		#that are classified as class c
+		localMatrix = []
  		for r in xrange (0, 10):
+ 			row_entry = []
  			for c in xrange (0, 10):
  				r_count = 0
  				c_count = 0
@@ -205,16 +207,25 @@ class Part1b(object):
 						if(entry[1] == c):
 							c_count += 1
 				val = c_count/float(r_count)
-				print ("%.2f" % val),
-				#self.confusionMatrix[r].append(val)
-			print "\n",
+				#print ("%.2f" % val),
+				row_entry.append(val)
+			localMatrix.append(row_entry)
+			#print "\n",
+		self.confusionMatrix = localMatrix
 
 	def printConfusionMatrix(self):
-		for row in confusionMatrix:
-			for col in confusionMatrix:
-				print col,
+		print "Confusion Matrix:" 		
+		for row in self.confusionMatrix:
+			for col in row:
+				print ("%.2f" % col),
 			print "\n",
 	
+	def printAccuracyForEachClass(self):
+		for classID in xrange(0, 10):
+			accuracy = self.confusionMatrix[classID][classID] # want diagonals of confusion matrix
+			accuracy *= float(100)
+			print "Accuracy for class", classID, ":", ("%.2f" % accuracy), "%"
+
 	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels):
 		self.masterList = copy.deepcopy(self.parse(filename_images))
 		self.parseLabels(filename_labels)
@@ -232,3 +243,4 @@ class Part1b(object):
 		self.calcMAPAccuracy()
 		self.confusionMatrix()
 		self.printConfusionMatrix()
+		self.printAccuracyForEachClass()
