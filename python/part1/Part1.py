@@ -1,6 +1,7 @@
 from Digit import *
 from math import log
-import copy
+from operator import itemgetter
+import copy, Queue
 
 k = 25
 V = 2
@@ -24,6 +25,10 @@ class Part1(object):
 	MAPclassification = [] # each entry has 2 numbers, left is proper, right is classified
 
 	confusionMatrix = []
+	oddsRatiosMatrices = []
+	logOddsRatiosMatrices = []
+	c1_list = []
+	c2_list = []
 
 	def file_len(self, fname):
 		return sum(1 for line in open(fname))
@@ -225,6 +230,77 @@ class Part1(object):
 			accuracy *= float(100)
 			print "Accuracy for class", classID, ":", ("%.2f" % accuracy), "%"
 
+	def oddsRatios(self):		
+		#i and j are the respective row and column of a learned features
+		#not dependent upon a test digit, but the 
+		#c1 and c2 are numbers corresponding to the class
+		def odds(i, j, c1, c2):
+			#odds(Fij=1, c1, c2) = P(Fij=1 | c1) / P(Fij=1 | c2)
+			llh_1 = self.llhList[c1]
+			llh_2 = self.llhList[c2]
+			numerator = float(llh_1[i][j])
+			denominator = float(llh_2[i][j])
+			return float(numerator / denominator) #the odds ratio
+
+		def logodds(i, j, c1, c2):
+			return float(log(odds(i, j, c1, c2)))
+
+		#find four pairs of digits (rows, cols of confusion matrix)
+		#that have the highest confusion rates
+		highestFour = []
+		for i in xrange(0, NUM_CLASSES):
+			for j in xrange(0, NUM_CLASSES):
+				highestFour.append([1-self.confusionMatrix[i][j], i, j])
+				# 1 - because want highest values returned from sorted
+				# sorted returns lowest values by default
+		highestFour = sorted(highestFour, key=itemgetter(0))
+
+		for i in xrange(0, 4):
+			#print highestFour[i][1], highestFour[i][2]
+			self.c1_list.append(highestFour[i][1])
+			self.c2_list.append(highestFour[i][2])
+
+		print "Highest four c1, c2 pairs"
+		for i in xrange(0, 4):
+			print self.c1_list[i], self.c2_list[i]
+
+		for c1 in self.c1_list:
+			for c2 in self.c2_list:
+				curr_matrix = []
+				log_curr_matrix = []
+				for i in xrange(0, NUM_ROWS):
+					curr_line = []
+					log_curr_line = []
+					for j in xrange(0, NUM_COLS):
+						curr_line.append(odds(i, j, c1, c2))
+						log_curr_line.append(logodds(i, j, c1, c2))
+					curr_matrix.append(curr_line)
+					log_curr_matrix.append(log_curr_line)
+				self.oddsRatiosMatrices.append(curr_matrix)
+				self.logOddsRatiosMatrices.append(log_curr_matrix)
+
+	def printOddsRatiosMatrices(self):
+		matrix_counter = 1
+		for matrix in self.oddsRatiosMatrices:
+			print "Matrix", matrix_counter, "comparing class", self.c1_list[(matrix_counter-1)//4], "with class", self.c2_list[(matrix_counter-1)%4]
+			for row in matrix:
+				for col in row:
+					print ("%.2f" % col),
+				print "\n",
+			matrix_counter += 1
+			print "\n"
+
+	def printLogOddsRatiosMatrices(self):
+		matrix_counter = 1
+		for matrix in self.logOddsRatiosMatrices:
+			print "Log Matrix", matrix_counter, "comparing class", self.c1_list[(matrix_counter-1)//4], "with class", self.c2_list[(matrix_counter-1)%4]
+			for row in matrix:
+				for col in row:
+					print ("%.2f" % col),
+				print "\n",
+			matrix_counter += 1
+			print "\n"
+
 	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels):
 		self.masterList = copy.deepcopy(self.parse(filename_images))
 		self.parseLabels(filename_labels)
@@ -243,3 +319,6 @@ class Part1(object):
 		self.confusionMatrix()
 		self.printConfusionMatrix()
 		self.printAccuracyForEachClass()
+		self.oddsRatios()
+		self.printOddsRatiosMatrices()
+		self.printLogOddsRatiosMatrices()
