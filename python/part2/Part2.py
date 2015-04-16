@@ -1,8 +1,12 @@
+from operator import itemgetter
 
 class Part2(object):
 
-	masterTrainingEmailDictionaryList = []# dictionaries use {} instead of []
+	#parsing
+	masterTrainingEmailDictionaryList = [] # dictionaries use {} instead of []
 	trainingEmailLabels = [] #each document is either spam or not spam, indexed in order 
+	spamEmailsDictionary = {} # dictionaries use {} instead of []
+	normalEmailsDictionary = {} # dictionaries use {} instead of []
 
 	def parseTrainingEmails(self, filename):
 		#each line is a document
@@ -12,7 +16,7 @@ class Part2(object):
 		#2 is rec.sport.baseball; 3 is comp.windows.x; 4 is talk.politics.misc
 		#5 is misc.forsale; 6 is rec.sport.hockey; 7 is comp.graphics
 
-		# create dictionaries consisting of all unique words occurring in the training documents
+		# create dictionaries consisting of all UNIQUE words occurring in the training documents
 
 		f = open(filename, "r")
 		content = f.readlines()
@@ -49,12 +53,53 @@ class Part2(object):
 		counter = 1
 		for dictionary in self.masterTrainingEmailDictionaryList:
 			print "\n"
-			print "Training email", counter
+			print "Training email", counter,
+			if(self.trainingEmailLabels[counter-1]==0):
+				print "Normal Email"
+			else:
+				print "Spam Email"
 			for entry in dictionary:
 				print entry, dictionary[entry]
 			counter += 1
+
+	# creates 2 dictionaries of unique words for normal and spam learning sets
+	def createSpamAndNormalDictionaries(self):
+		counter = 0
+		for dictionary in self.masterTrainingEmailDictionaryList:
+			for word in dictionary:
+				key = word #the word
+				value = dictionary.get(key) #the frequency
+				spam = self.trainingEmailLabels[counter]
+				#print key, value, spam,
+				if(spam):
+					#print "spam"
+					repeatedEntry = self.spamEmailsDictionary.get(key)
+					if(repeatedEntry != None): #if there is an existing entry for the key (the word)
+						value += self.spamEmailsDictionary.get(key) #increase the value (frequency) by the existing entry's value
+					self.spamEmailsDictionary[key] = value #update the entry
+				else:
+					#print "normal"
+					repeatedEntry = self.normalEmailsDictionary.get(key)
+					if(repeatedEntry != None): #if there is an existing entry for the key (the word)
+						value += self.normalEmailsDictionary.get(key) #increase the value (frequency) by the existing entry's value
+					self.normalEmailsDictionary[key] = value #update the entry
+				break
+			counter += 1
+
+	def printSpamAndNormalDictionaries(self):
+		print "\n",
+		print "printing unique entries in spam set"
+		for word in sorted(self.spamEmailsDictionary):
+			print word, self.spamEmailsDictionary.get(word)
+		print "\n",
+		print "printing unique entries in normal set"
+		for word in sorted(self.normalEmailsDictionary):
+			print word, self.normalEmailsDictionary.get(word)
 
 	def __init__(self, filename_email_training):
 		self.parseTrainingEmails(filename_email_training)
 		#self.printTrainingEmailLabels()
 		#self.printTrainingEmailDictionary()
+		self.createSpamAndNormalDictionaries()
+		self.printSpamAndNormalDictionaries()
+
