@@ -320,7 +320,7 @@ class Part1(object):
 					else:
 						#positive log odds
 						curr_line += '+'
-				output_string += "\n"+curr_line
+				output_string += curr_line
 			matrix_counter += 1
 			print output_string
 			print "\n"
