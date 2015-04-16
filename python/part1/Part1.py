@@ -5,7 +5,7 @@ import copy, Queue
 
 k = 25
 V = 2
-oddsTolerance = 0.10
+oddsTolerance = 0.30
 
 class Part1(object):
 
@@ -30,6 +30,10 @@ class Part1(object):
 	logOddsRatiosMatrices = []
 	c1_list = []
 	c2_list = []
+	
+	# in order of digit classes (0-9)
+	oddsRatiosAllMatrices = []
+	logOddsRatiosAllMatrices = []
 
 	def file_len(self, fname):
 		return sum(1 for line in open(fname))
@@ -279,6 +283,22 @@ class Part1(object):
 					log_curr_matrix.append(log_curr_line)
 				self.oddsRatiosMatrices.append(curr_matrix)
 				self.logOddsRatiosMatrices.append(log_curr_matrix)
+		
+		# all the matrices matrices (c1=c2=[0 through 9])
+		for c1 in xrange(0, 10):
+			for c2 in xrange(0, 10):
+				curr_matrix = []
+				log_curr_matrix = []
+				for i in xrange(0, NUM_ROWS):
+					curr_line = []
+					log_curr_line = []
+					for j in xrange(0, NUM_COLS):
+						curr_line.append(odds(i, j, c1, c2))
+						log_curr_line.append(logodds(i, j, c1, c2))
+					curr_matrix.append(curr_line)
+					log_curr_matrix.append(log_curr_line)
+				self.oddsRatiosAllMatrices.append(curr_matrix)
+				self.logOddsRatiosAllMatrices.append(log_curr_matrix)
 
 	def printOddsRatiosMatrices(self):
 		matrix_counter = 1
@@ -326,6 +346,53 @@ class Part1(object):
 			print "\n"
 
 
+	def printLogOddsRatiosAllMatricesASCII(self):
+		matrix_counter = 1
+		for matrix in self.logOddsRatiosAllMatrices:
+			print "Matrix", matrix_counter, "comparing class", (matrix_counter-1)//10, "with class",(matrix_counter-1)%10
+			output_string = ""
+			for row in matrix:
+				curr_line = ""
+				for col in row:
+					#print ("%.2f" % col),
+					if(abs(1-col) < oddsTolerance):
+						#close to 1
+						curr_line += ' '
+					elif(col<0):
+						#negative log odds
+						curr_line += '-'
+					else:
+						#positive log odds
+						curr_line += '+'
+				output_string += "\n"+curr_line
+			matrix_counter += 1
+			print output_string
+			print "\n"
+	
+	def printLogLikelihoodMapsASCII(self):
+		matrix_counter = 0
+		for llh_matrix in self.llhList: #for each class (0-9)
+			print "Log likelihood map for", matrix_counter
+			output_string = ""
+			for row in llh_matrix:
+				curr_line = ""
+				for col in row:
+					#print ("%.2f" % col),
+					if(abs(1-col) < oddsTolerance):
+						#close to 1
+						curr_line += ' '
+					elif(col<0):
+						#negative log odds
+						curr_line += '-'
+					else:
+						#positive log odds
+						curr_line += '+'
+				output_string += "\n"+curr_line
+			matrix_counter += 1
+			print output_string
+		
+		
+
 	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels):
 		self.masterList = copy.deepcopy(self.parse(filename_images))
 		self.parseLabels(filename_labels)
@@ -348,4 +415,6 @@ class Part1(object):
 		self.printOddsRatiosMatrices()
 		self.printLogOddsRatiosMatrices()
 		self.printLogOddsRatiosMatricesASCII()
+		#self.printLogOddsRatiosAllMatricesASCII()
+		self.printLogLikelihoodMapsASCII()
 		
