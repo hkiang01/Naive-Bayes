@@ -7,8 +7,8 @@ class Part2(object):
 	trainingEmailLabels = [] #each document is either spam or not spam, indexed in order 
 	spamEmailsDictionary = {} # dictionaries use {} instead of []
 	normalEmailsDictionary = {} # dictionaries use {} instead of []
-	numUniqueSpamWords = 0
-	numUniqueNormalWords = 0
+	numSpamWords = 0
+	numNormalWords = 0
 
 	def parseTrainingEmails(self, filename):
 		#each line is a document
@@ -89,12 +89,12 @@ class Part2(object):
 		print "printing unique entries in spam set"
 		for word in sorted(self.spamEmailsDictionary):
 			#print word, self.spamEmailsDictionary.get(word)
-			self.numUniqueSpamWords += self.spamEmailsDictionary.get(word) # for calcProbabilityTables
+			self.numSpamWords += self.spamEmailsDictionary.get(word) # for calcProbabilityTables
 		print "\n",
 		print "printing unique entries in normal set"
 		for word in sorted(self.normalEmailsDictionary):
 			#print word, self.normalEmailsDictionary.get(word)
-			self.numUniqueNormalWords += self.normalEmailsDictionary.get(word) # for calcProbabilityTables
+			self.numNormalWords += self.normalEmailsDictionary.get(word) # for calcProbabilityTables
 
 	def calcProbabilityTables(self):
 		print "\n",
@@ -102,7 +102,7 @@ class Part2(object):
 		for word in sorted(self.spamEmailsDictionary):
 			curr_value = []
 			curr_value.append(self.spamEmailsDictionary.get(word))
-			curr_value.append(curr_value[0]/float(self.numUniqueSpamWords))
+			curr_value.append(curr_value[0]/float(self.numSpamWords))
 			self.spamEmailsDictionary[word] = curr_value
 			print word, self.spamEmailsDictionary.get(word)
 		print "\n",
@@ -110,7 +110,7 @@ class Part2(object):
 		for word in sorted(self.normalEmailsDictionary):
 			curr_value = []
 			curr_value.append(self.normalEmailsDictionary.get(word))
-			curr_value.append(curr_value[0]/float(self.numUniqueNormalWords))
+			curr_value.append(curr_value[0]/float(self.numNormalWords))
 			self.normalEmailsDictionary[word] = curr_value
 			print word, self.normalEmailsDictionary.get(word)
 
@@ -121,7 +121,7 @@ class Part2(object):
 		#self.printTrainingEmailDictionary()
 		self.createSpamAndNormalDictionaries()
 		self.printSpamAndNormalDictionaries()
-		print self.numUniqueSpamWords
-		print self.numUniqueNormalWords
+		print self.numSpamWords
+		print self.numNormalWords
 		self.calcProbabilityTables()
 
