@@ -58,24 +58,24 @@ class Part2(object):
 				print "Normal Email"
 			else:
 				print "Spam Email"
-			for entry in dictionary:
+			for entry in sorted(dictionary):
 				print entry, dictionary[entry]
 			counter += 1
+			break
 
 	# creates 2 dictionaries of unique words for normal and spam learning sets
 	def createSpamAndNormalDictionaries(self):
 		counter = 0
 		for dictionary in self.masterTrainingEmailDictionaryList:
+			spam = self.trainingEmailLabels[counter] # 1 if spam, 0 if normal
 			for word in dictionary:
 				key = word #the word
 				value = dictionary.get(key) #the frequency
-				spam = self.trainingEmailLabels[counter]
 				#print key, value, spam,
+				repeatedEntry = None
 				if(spam):
 					#print "spam"
-					repeatedEntry = self.spamEmailsDictionary.get(key)
-					if(repeatedEntry != None): #if there is an existing entry for the key (the word)
-						value += self.spamEmailsDictionary.get(key) #increase the value (frequency) by the existing entry's value
+					value += self.spamEmailsDictionary.get(key, 0) #increase the value (frequency) by the existing entry's value, default is 0 if none is found
 					self.spamEmailsDictionary[key] = value #update the entry
 				else:
 					#print "normal"
@@ -83,7 +83,6 @@ class Part2(object):
 					if(repeatedEntry != None): #if there is an existing entry for the key (the word)
 						value += self.normalEmailsDictionary.get(key) #increase the value (frequency) by the existing entry's value
 					self.normalEmailsDictionary[key] = value #update the entry
-				break
 			counter += 1
 
 	def printSpamAndNormalDictionaries(self):
