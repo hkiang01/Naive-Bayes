@@ -1,9 +1,9 @@
 from Digit import *
 from math import log
 from operator import itemgetter
-import copy, Queue
+import copy, Queue, sys
 
-k = 25
+k = 50
 V = 2
 oddsTolerance = 0.30
 
@@ -25,6 +25,7 @@ class Part1(object):
 
 	testlist = [] # in order of the testimages
 	MAPclassification = [] # each entry has 2 numbers, left is proper, right is classified
+	MLclassification = []
 
 	confusionMatrix = []
 	oddsRatiosMatrices = []
@@ -221,13 +222,37 @@ class Part1(object):
 				temp.append(int(digit.getProperClass()))
 				temp.append(int(i))
 				self.MAPclassification.append(temp)
-				print temp
+				#print temp
 				# each entry has 2 numbers, left is proper, right is classified
 
 			i += 1
 		accuracy /= float(num_digits)
 		accuracy *= float(100)
 		print "Overall accuracy:", accuracy, "%"
+		
+	def calcMLAccuracy(self):
+		accuracy = 0
+		num_digits = 0
+		i = 0
+		for classID in self.MLDB:
+			for digit in classID:
+				#print int(digit.getProperClass()), i
+				if(int(digit.getProperClass()) == int(i)):
+					accuracy += 1
+				num_digits += 1
+	
+				# for confusion matrix
+				temp = []
+				temp.append(int(digit.getProperClass()))
+				temp.append(int(i))
+				self.MLclassification.append(temp)
+				#print temp
+				# each entry has 2 numbers, left is proper, right is classified
+
+			i += 1
+		accuracy /= float(num_digits)
+		accuracy *= float(100)
+		print "Overall accuracy (ML):", accuracy, "%"
 
 	def confusionMatrix(self):
  		#a 10x10 matrix whose entry in row r and column c
@@ -439,6 +464,8 @@ class Part1(object):
 		#self.printMap()
 		#self.printML()
 		self.calcMAPAccuracy()
+		self.calcMLAccuracy()
+		sys.exit(0)
 		self.confusionMatrix()
 		self.printConfusionMatrix()
 		self.printAccuracyForEachClass()
