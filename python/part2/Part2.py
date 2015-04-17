@@ -7,6 +7,8 @@ class Part2(object):
 	trainingEmailLabels = [] #each document is either spam or not spam, indexed in order 
 	spamEmailsDictionary = {} # dictionaries use {} instead of []
 	normalEmailsDictionary = {} # dictionaries use {} instead of []
+	numUniqueSpamWords = 0
+	numUniqueNormalWords = 0
 
 	def parseTrainingEmails(self, filename):
 		#each line is a document
@@ -72,16 +74,13 @@ class Part2(object):
 				key = word #the word
 				value = dictionary.get(key) #the frequency
 				#print key, value, spam,
-				repeatedEntry = None
 				if(spam):
 					#print "spam"
 					value += self.spamEmailsDictionary.get(key, 0) #increase the value (frequency) by the existing entry's value, default is 0 if none is found
 					self.spamEmailsDictionary[key] = value #update the entry
 				else:
 					#print "normal"
-					repeatedEntry = self.normalEmailsDictionary.get(key)
-					if(repeatedEntry != None): #if there is an existing entry for the key (the word)
-						value += self.normalEmailsDictionary.get(key) #increase the value (frequency) by the existing entry's value
+					value += self.normalEmailsDictionary.get(key, 0) #increase the value (frequency) by the existing entry's value, default is 0 if none is found
 					self.normalEmailsDictionary[key] = value #update the entry
 			counter += 1
 
@@ -89,11 +88,32 @@ class Part2(object):
 		print "\n",
 		print "printing unique entries in spam set"
 		for word in sorted(self.spamEmailsDictionary):
+			#print word, self.spamEmailsDictionary.get(word)
+			self.numUniqueSpamWords += self.spamEmailsDictionary.get(word) # for calcProbabilityTables
+		print "\n",
+		print "printing unique entries in normal set"
+		for word in sorted(self.normalEmailsDictionary):
+			#print word, self.normalEmailsDictionary.get(word)
+			self.numUniqueNormalWords += self.normalEmailsDictionary.get(word) # for calcProbabilityTables
+
+	def calcProbabilityTables(self):
+		print "\n",
+		print "printing unique entries in spam set"
+		for word in sorted(self.spamEmailsDictionary):
+			curr_value = []
+			curr_value.append(self.spamEmailsDictionary.get(word))
+			curr_value.append(curr_value[0]/float(self.numUniqueSpamWords))
+			self.spamEmailsDictionary[word] = curr_value
 			print word, self.spamEmailsDictionary.get(word)
 		print "\n",
 		print "printing unique entries in normal set"
 		for word in sorted(self.normalEmailsDictionary):
+			curr_value = []
+			curr_value.append(self.normalEmailsDictionary.get(word))
+			curr_value.append(curr_value[0]/float(self.numUniqueNormalWords))
+			self.normalEmailsDictionary[word] = curr_value
 			print word, self.normalEmailsDictionary.get(word)
+
 
 	def __init__(self, filename_email_training):
 		self.parseTrainingEmails(filename_email_training)
@@ -101,4 +121,7 @@ class Part2(object):
 		#self.printTrainingEmailDictionary()
 		self.createSpamAndNormalDictionaries()
 		self.printSpamAndNormalDictionaries()
+		print self.numUniqueSpamWords
+		print self.numUniqueNormalWords
+		self.calcProbabilityTables()
 
