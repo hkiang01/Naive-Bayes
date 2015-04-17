@@ -9,7 +9,8 @@ class Part2(object):
 	normalEmailsDictionary = {} # dictionaries use {} instead of []
 	numSpamWords = 0
 	numNormalWords = 0
-
+	testEmailLabels = []
+	masterTestEmailDictionaryList = []
 	#parsing 8cat
 	masterTraining8catDictionaryList = []
 	training8catLabels = []
@@ -30,7 +31,6 @@ class Part2(object):
 		f = open(filename, "r")
 		content = f.readlines()
 		f.close()
-		i = 1
 		for line in content: #for each email document
 			curr_dict = {}
 			# rsplit(sep[, maxsplit]]) Return a list of the words in the string, using sep as the delimiter string
@@ -52,10 +52,30 @@ class Part2(object):
 			    #print "Key:", key, "Value:", value
 			    curr_dict[key] = value #add entry into dictionary
 			self.masterTrainingEmailDictionaryList.append(curr_dict)
-			i += 1
+
+	def parseTestEmails(self, filename):
+		f = open(filename, "r")
+		content = f.readlines()
+		f.close()
+		for line in content:
+			curr_dict = {}
+			elements = line.split(' ')
+			self.testEmailLabels.append(int(elements[0]))
+			iterElements = iter(elements)
+			next(iterElements)
+			for elem in iterElements:
+				temp = elem.rsplit(':')
+				key = temp[0]
+				value = int(temp[1])
+				curr_dict[key] = value
+			self.masterTestEmailDictionaryList.append(curr_dict)
 
 	def printTrainingEmailLabels(self):
 		for label in self.trainingEmailLabels:
+			print label
+
+	def printTestEmailLabels(self):
+		for label in self.testEmailLabels:
 			print label
 
 	def printTrainingEmailDictionaries(self):
@@ -134,7 +154,6 @@ class Part2(object):
 		f = open(filename, "r")
 		content = f.readlines()
 		f.close()
-		i = 1
 		for line in content: #for each email document
 			curr_dict = {}
 			# rsplit(sep[, maxsplit]]) Return a list of the words in the string, using sep as the delimiter string
@@ -156,7 +175,7 @@ class Part2(object):
 			    #print "Key:", key, "Value:", value
 			    curr_dict[key] = value #add entry into dictionary
 			self.masterTraining8catDictionaryList.append(curr_dict)
-			i += 1
+
 
 	def getCat(self, x):
 	    return {
@@ -227,7 +246,8 @@ class Part2(object):
 			#break #first dictionary
 			counter += 1
 
-	def __init__(self, filename_email_training, filename_8cat_training):
+
+	def __init__(self, filename_email_training, filename_8cat_training, filename_email_test):
 		self.parseTrainingEmails(filename_email_training)
 		#self.printTrainingEmailLabels()
 		#self.printTrainingEmailDictionaries()
@@ -243,3 +263,5 @@ class Part2(object):
 		self.print8catDictionaries()
 		self.print8catNumWordsAll()
 		self.calc8catProbabilityTables()
+		self.parseTestEmails(filename_email_test)
+		self.printTestEmailLabels()
