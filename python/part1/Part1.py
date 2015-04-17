@@ -21,6 +21,7 @@ class Part1(object):
 	classSizes = [] # size of each class
 	classPriors = [] # priors for each class
 	MAPDB = [[],[],[],[],[],[],[],[],[],[]]
+	MLDB = [[],[],[],[],[],[],[],[],[],[]]
 
 	testlist = [] # in order of the testimages
 	MAPclassification = [] # each entry has 2 numbers, left is proper, right is classified
@@ -167,7 +168,27 @@ class Part1(object):
 		  self.MAPDB[temp.index(max(temp))].append(digit)
 		  index += 1
 		      #http://stackoverflow.com/questions/3989016/how-to-find-positions-of-the-list-maximum
+	
+	def maxLikelihoodClassification(self):
+		print "MLDB:"
+		index = 0
+		for digit in self.testlist:
+		  digit.setProperClass(self.testLabels[index])
+		  temp = []
+		  for i,llh in enumerate(self.llhList):
+		      sum1 = 0
+		      for y in xrange(NUM_ROWS):
+		          for x in xrange(NUM_COLS):
+		              case = digit.features[y][x]
+		              if case==0:
+		                  sum1 += float(log(1-llh[y][x]))
+		              else:
+		                  sum1 += float(log(llh[y][x]))
 
+		      temp.append(sum1)
+		  self.MLDB[temp.index(max(temp))].append(digit)
+		  index += 1
+		  
 	def printMap(self):
 		#counter = 0
 		for classID in self.MAPDB:
@@ -175,7 +196,15 @@ class Part1(object):
 			for digit in classID:
 				digit.printNumber()
 			#counter += 1
-
+	
+	def printML(self):
+		#counter = 0
+		for classID in self.MLDB:
+			#print "Size of MAP Class", counter, ":", len(self.MAPDB[counter])
+			for digit in classID:
+				digit.printNumber()
+			#counter += 1
+			
 	def calcMAPAccuracy(self):
 		accuracy = 0
 		num_digits = 0
@@ -406,7 +435,9 @@ class Part1(object):
 		self.testlist = copy.deepcopy(self.parse(filename_testimages))
 		self.parseMAPlabels(filename_testlabels)
 		self.mapClassification()
+		self.maxLikelihoodClassification()
 		#self.printMap()
+		#self.printML()
 		self.calcMAPAccuracy()
 		self.confusionMatrix()
 		self.printConfusionMatrix()
