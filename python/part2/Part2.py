@@ -16,7 +16,7 @@ class Part2(object):
 	training8catLabels = []
 	master8catDictList = [{},{},{},{},{},{},{},{}] # list of dictionaries for each class (catetory)
 	num8catWords = [0,0,0,0,0,0,0,0] # number of entries for each class (category)
-
+	priors8cat = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
 
 	def parseTrainingEmails(self, filename):
 		#each line is a document
@@ -232,6 +232,21 @@ class Part2(object):
 			counter +=1
 		print "\n"
 
+	def calc8catPriors(self):
+		counter = 0
+		total = 0
+		for numCategoryWords in self.num8catWords:
+			self.priors8cat[counter] = float(numCategoryWords)
+			total += numCategoryWords
+			counter += 1
+		counter = 0
+		for prior in self.priors8cat:
+			prior /= float(total)
+			print "Prior for", self.getCat(counter), ":", prior
+			counter += 1
+		print "\n"
+
+
 	def calc8catProbabilityTables(self):
 		counter = 0
 		for dictionary in self.master8catDictList:
@@ -262,6 +277,7 @@ class Part2(object):
 		self.createSpamAndNormalDictionaries()
 		self.print8catDictionaries()
 		self.print8catNumWordsAll()
+		self.calc8catPriors()
 		self.calc8catProbabilityTables()
 		self.parseTestEmails(filename_email_test)
 		self.printTestEmailLabels()
