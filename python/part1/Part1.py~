@@ -2,8 +2,12 @@ from Digit import *
 from math import log
 from operator import itemgetter
 import copy, Queue, sys
+import pylab
+import numpy as np
+import matplotlib.pyplot as plt
 
-k = 50
+
+k = 1
 V = 2
 oddsTolerance = 0.30
 
@@ -37,6 +41,18 @@ class Part1(object):
 	oddsRatiosAllMatrices = []
 	logOddsRatiosAllMatrices = []
 
+	def printToHeatMap(self, data, fname):
+		fig = plt.figure()
+
+		ax = fig.add_subplot(111)
+
+		cax = ax.matshow(data, interpolation='nearest')
+		fig.colorbar(cax)
+		
+		#plt.show()
+		plt.savefig('pictures/'+str(fname)+'.png')
+		plt.close()	
+		
 	def file_len(self, fname):
 		return sum(1 for line in open(fname))
 
@@ -338,6 +354,9 @@ class Part1(object):
 				self.oddsRatiosMatrices.append(curr_matrix)
 				self.logOddsRatiosMatrices.append(log_curr_matrix)
 		
+		for matrix in self.logOddsRatiosMatrices:
+			self.printToHeatMap(matrix)
+			
 		# all the matrices matrices (c1=c2=[0 through 9])
 		for c1 in xrange(0, 10):
 			for c2 in xrange(0, 10):
@@ -378,9 +397,11 @@ class Part1(object):
 
 	def printLogOddsRatiosMatricesASCII(self):
 		matrix_counter = 1
+		
 		for matrix in self.logOddsRatiosMatrices:
 			print "Matrix", matrix_counter, "comparing class", self.c1_list[(matrix_counter-1)//4], "with class", self.c2_list[(matrix_counter-1)%4]
 			output_string = ""
+						
 			for row in matrix:
 				curr_line = ""
 				for col in row:
@@ -398,6 +419,9 @@ class Part1(object):
 			matrix_counter += 1
 			print output_string
 			print "\n"
+
+
+
 
 
 	def printLogOddsRatiosAllMatricesASCII(self):
@@ -445,7 +469,6 @@ class Part1(object):
 			matrix_counter += 1
 			print output_string
 		
-		
 
 	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels):
 		self.masterList = copy.deepcopy(self.parse(filename_images))
@@ -465,7 +488,6 @@ class Part1(object):
 		#self.printML()
 		self.calcMAPAccuracy()
 		self.calcMLAccuracy()
-		sys.exit(0)
 		self.confusionMatrix()
 		self.printConfusionMatrix()
 		self.printAccuracyForEachClass()
@@ -474,5 +496,5 @@ class Part1(object):
 		self.printLogOddsRatiosMatrices()
 		self.printLogOddsRatiosMatricesASCII()
 		#self.printLogOddsRatiosAllMatricesASCII()
-		self.printLogLikelihoodMapsASCII()
+		#self.printLogLikelihoodMapsASCII()
 		
