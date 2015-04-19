@@ -304,7 +304,7 @@ class Part2(object):
 		for dictionary in self.master8catDictList:
 			print "Printing Dictionary", category, self.getCat(category)
 			for word in sorted(dictionary):
-				print word, self.master8catDictList[category].get(word)
+				#print word, self.master8catDictList[category].get(word)
 				self.num8catWords[category] += self.master8catDictList[category].get(word, 0) # for calc8catProbabilityTables
 			category += 1
 			print "\n|"
@@ -342,7 +342,7 @@ class Part2(object):
 				curr_value.append(self.master8catDictList[category].get(word))
 				curr_value.append((curr_value[0]+k)/float(self.num8catWords[category]+k*V8)) #laplacian smoothing
 				self.master8catDictList[category][word] = curr_value
-				print word, self.master8catDictList[category].get(word)
+				#print word, self.master8catDictList[category].get(word)
 			#break #first dictionary
 			category += 1
 
@@ -388,22 +388,29 @@ class Part2(object):
 	def classifyTest8cat(self):
 		index = 0
 		for message in self.masterTest8catDictionaryList:
-			testVals = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0] #local evaluation list initially filled with priors
-			testValsIndex = 0
+
+			#local evaluation list for message initially filled with priors
+			print self.priors8cat
+			testVals = []
 			for prior in self.priors8cat: #fill local evaluation list with priors
-				testVals[testValsIndex] = self.priors8cat[testValsIndex]
-				testValsIndex += 1
+				testVals.append(prior)
+			print "Priors:", testVals
+			#iteration through each message's words
 			for word in message: #iterate through each word in the message
 				for category in xrange(len(self.master8catDictList)):
 					temp = self.master8catDictList[category].get(word)
 					if(temp==None):
-						testVals[category] += log(k/float(self.num8catWords[category] + k*V8)) #laplacian smoothing for new words
+						print "New word prob:", log(k/float(self.num8catWords[category] + k*V8))
+						testVals[category] += log(k/float(self.num8catWords[category] + k*V8)) #laplacian smoothing for "new" words
 					else:
+						print "Trained word prob:", log(temp[1])
 						testVals[category] += log(temp[1]) #
 			#get the max testVal (best category) and classify accordingly
 			bestCat = testVals.index(max(testVals))
+			print testVals, bestCat
 			self.classified8cat[bestCat].append(index)
 			index += 1
+			break
 
 	def calc8catClassificationAccuracy(self):
 		accuracy = 0.0
@@ -442,10 +449,11 @@ class Part2(object):
 		#self.printTraining8catDictionaries()
 		self.create8catDictionaries()
 		self.print8catDictionaries()
-		self.print8catNumWordsAll()
+		#self.print8catNumWordsAll()
 		self.calc8catPriors()
 		self.calc8catProbabilityTables()
 		self.parseTest8cat(filename_8cat_test)
 		self.printTest8catLabels()
+		self.calc8catPriors()
 		self.classifyTest8cat()
 		self.calc8catClassificationAccuracy()
