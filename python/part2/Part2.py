@@ -4,13 +4,18 @@ class Part2(object):
 
 	#parsing emails
 	masterTrainingEmailDictionaryList = [] # dictionaries use {} instead of []
-	trainingEmailLabels = [] #each document is either spam or not spam, indexed in order 
+	trainingEmailLabels = [] #each document is either spam or not spam, indexed in order
+
+	masterTestEmailDictionaryList = [] #in order of the input
+	testEmailLabels = []
+
+	#unique keys (words) and their respective values (frequencies)
 	spamEmailsDictionary = {} # dictionaries use {} instead of []
 	normalEmailsDictionary = {} # dictionaries use {} instead of []
+	#counters
 	numSpamWords = 0
 	numNormalWords = 0
-	testEmailLabels = []
-	masterTestEmailDictionaryList = []
+
 	#parsing 8cat
 	masterTraining8catDictionaryList = []
 	training8catLabels = []
@@ -18,6 +23,7 @@ class Part2(object):
 	num8catWords = [0,0,0,0,0,0,0,0] # number of entries for each class (category)
 	priors8cat = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
 
+	#parse the training emails
 	def parseTrainingEmails(self, filename):
 		#each line is a document
 		#each document: [label] [word1]:[count1] [word2]:[count2] ... [wordn]:[countn]
@@ -28,6 +34,7 @@ class Part2(object):
 
 		# create dictionaries consisting of all UNIQUE words occurring in the training documents
 
+		print "parsing training emails"
 		f = open(filename, "r")
 		content = f.readlines()
 		f.close()
@@ -52,7 +59,33 @@ class Part2(object):
 			    #print "Key:", key, "Value:", value
 			    curr_dict[key] = value #add entry into dictionary
 			self.masterTrainingEmailDictionaryList.append(curr_dict)
+		print "end of parsing training emails"
 
+	# creates 2 dictionaries of unique words for normal and spam learning sets
+	def createTrainingSpamAndNormalDictionaries(self):
+		counter = 0
+		for dictionary in self.masterTrainingEmailDictionaryList:
+			spam = self.trainingEmailLabels[counter] # 1 if spam, 0 if normal
+			for word in dictionary:
+				key = word #the word
+				value = dictionary.get(key) #the frequency
+				print key, value, spam,
+				if(spam):
+					print "spam"
+					value += self.spamEmailsDictionary.get(key, 0) #increase the value (frequency) by the existing entry's value, default is 0 if none is found
+					self.spamEmailsDictionary[key] = value #update the entry
+				else:
+					print "normal"
+					value += self.normalEmailsDictionary.get(key, 0) #increase the value (frequency) by the existing entry's value, default is 0 if none is found
+					self.normalEmailsDictionary[key] = value #update the entry
+			counter += 1
+
+	#print the email labels
+	def printTrainingEmailLabels(self):
+		for label in self.trainingEmailLabels:
+			print label
+
+	#parse the test emails
 	def parseTestEmails(self, filename):
 		f = open(filename, "r")
 		content = f.readlines()
@@ -70,14 +103,11 @@ class Part2(object):
 				curr_dict[key] = value
 			self.masterTestEmailDictionaryList.append(curr_dict)
 
-	def printTrainingEmailLabels(self):
-		for label in self.trainingEmailLabels:
-			print label
-
 	def printTestEmailLabels(self):
 		for label in self.testEmailLabels:
 			print label
 
+	#in order of input
 	def printTrainingEmailDictionaries(self):
 		counter = 1
 		for dictionary in self.masterTrainingEmailDictionaryList:
@@ -90,56 +120,39 @@ class Part2(object):
 			for entry in sorted(dictionary):
 				print entry, dictionary[entry]
 			counter += 1
-			break
-
-	# creates 2 dictionaries of unique words for normal and spam learning sets
-	def createSpamAndNormalDictionaries(self):
-		counter = 0
-		for dictionary in self.masterTrainingEmailDictionaryList:
-			spam = self.trainingEmailLabels[counter] # 1 if spam, 0 if normal
-			for word in dictionary:
-				key = word #the word
-				value = dictionary.get(key) #the frequency
-				#print key, value, spam,
-				if(spam):
-					#print "spam"
-					value += self.spamEmailsDictionary.get(key, 0) #increase the value (frequency) by the existing entry's value, default is 0 if none is found
-					self.spamEmailsDictionary[key] = value #update the entry
-				else:
-					#print "normal"
-					value += self.normalEmailsDictionary.get(key, 0) #increase the value (frequency) by the existing entry's value, default is 0 if none is found
-					self.normalEmailsDictionary[key] = value #update the entry
-			counter += 1
 
 	def printSpamAndNormalDictionaries(self):
-		#print "\n",
-		#print "printing unique entries in spam set"
+		print "\n",
+		print "printing unique entries in spam set"
 		for word in sorted(self.spamEmailsDictionary):
-			#print word, self.spamEmailsDictionary.get(word)
+			print word, self.spamEmailsDictionary.get(word)
 			self.numSpamWords += self.spamEmailsDictionary.get(word) # for calcProbabilityTables
-		#print "\n",
-		#print "printing unique entries in normal set"
+		print "\n",
+		print "printing unique entries in normal set"
 		for word in sorted(self.normalEmailsDictionary):
-			#print word, self.normalEmailsDictionary.get(word)
+			print word, self.normalEmailsDictionary.get(word)
 			self.numNormalWords += self.normalEmailsDictionary.get(word) # for calcProbabilityTables
+		print "\n"
 
 	def calcEmailProbabilityTables(self):
-		#print "\n",
-		#print "printing unique entries in spam set"
+		print "\n",
+		print "printing unique entries in spam set"
 		for word in sorted(self.spamEmailsDictionary):
 			curr_value = []
 			curr_value.append(self.spamEmailsDictionary.get(word))
 			curr_value.append(curr_value[0]/float(self.numSpamWords))
 			self.spamEmailsDictionary[word] = curr_value
-			#print word, self.spamEmailsDictionary.get(word)
-		#print "\n",
-		#print "printing unique entries in normal set"
+			print word, self.spamEmailsDictionary.get(word)
+		print "\n",
+		print "printing unique entries in normal set"
 		for word in sorted(self.normalEmailsDictionary):
 			curr_value = []
 			curr_value.append(self.normalEmailsDictionary.get(word))
 			curr_value.append(curr_value[0]/float(self.numNormalWords))
 			self.normalEmailsDictionary[word] = curr_value
-			#print word, self.normalEmailsDictionary.get(word)
+			print word, self.normalEmailsDictionary.get(word)
+
+
 
 	def parseTraining8cat(self, filename):
 		#each line is a document
@@ -176,7 +189,6 @@ class Part2(object):
 			    curr_dict[key] = value #add entry into dictionary
 			self.masterTraining8catDictionaryList.append(curr_dict)
 
-
 	def getCat(self, x):
 	    return {
 	        0: "sci.space",
@@ -204,10 +216,11 @@ class Part2(object):
 			counter += 1
 
 	# creates 8 dictionaries of unique words for each 8cat class
-	def createSpamAndNormalDictionaries(self):
+	def create8catDictionaries(self):
 		counter = 0
 		for dictionary in self.masterTraining8catDictionaryList:
 			category = self.training8catLabels[counter] # 1 if spam, 0 if normal
+			print "Category", category
 			for word in dictionary:
 				key = word #the word
 				value = dictionary.get(key) #the frequency
@@ -240,12 +253,12 @@ class Part2(object):
 			total += numCategoryWords
 			counter += 1
 		counter = 0
+		print "total:", total
 		for prior in self.priors8cat:
 			prior /= float(total)
 			print "Prior for", self.getCat(counter), ":", prior
 			counter += 1
 		print "\n"
-
 
 	def calc8catProbabilityTables(self):
 		counter = 0
@@ -263,21 +276,28 @@ class Part2(object):
 
 
 	def __init__(self, filename_email_training, filename_8cat_training, filename_email_test):
+
+		#training email
 		self.parseTrainingEmails(filename_email_training)
+		self.createTrainingSpamAndNormalDictionaries()
 		#self.printTrainingEmailLabels()
-		#self.printTrainingEmailDictionaries()
-		self.createSpamAndNormalDictionaries()
+		#self.printTestEmailLabels()
+		self.printTrainingEmailDictionaries()
 		self.printSpamAndNormalDictionaries()
-		print self.numSpamWords
-		print self.numNormalWords
+		print "Spam words:", self.numSpamWords
+		print "Normal words:",self.numNormalWords
 		self.calcEmailProbabilityTables()
-		self.parseTraining8cat(filename_8cat_training)
-		#self.printTraining8catLabels()
-		self.printTraining8catDictionaries()
-		self.createSpamAndNormalDictionaries()
-		self.print8catDictionaries()
-		self.print8catNumWordsAll()
-		self.calc8catPriors()
-		self.calc8catProbabilityTables()
-		self.parseTestEmails(filename_email_test)
-		self.printTestEmailLabels()
+
+		# #test emails
+		# self.parseTestEmails(filename_email_test)
+		# self.printTestEmailLabels()
+
+		# #training 8cat
+		# self.parseTraining8cat(filename_8cat_training)
+		# self.printTraining8catLabels()
+		# self.printTraining8catDictionaries()
+		# #self.print8catDictionaries()
+		# self.print8catNumWordsAll()
+		# self.calc8catPriors()
+		# self.calc8catProbabilityTables()
+
