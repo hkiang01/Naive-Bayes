@@ -249,7 +249,7 @@ class Part2(object):
 		for topEntry in xrange(0, 20):
 			print top20NormalWords[topEntry][0]
 		print "\n",
-		
+
 	def confusionMatrixEmails(self):
  		#a 2x2 matrix whose entry in row r and column c
  		#is the percentage of test images from class r
@@ -509,6 +509,15 @@ class Part2(object):
 		for entry in self.MAPClassification8cat:
 			print entry
 
+	def findTop20WordsPerClass8cat(self):
+		for category in xrange(len(self.master8catDictList)):		
+			print "Top 20 words in", self.getCat(category), "with highest likelihood"
+			# sorts spamEmailsDictionary by its values, greatest to least (instead of least to greatest)
+			top20Words = sorted(self.master8catDictList[category].items(), key=itemgetter(1), reverse=True)
+			for topEntry in xrange(0, 20):
+				print top20Words[topEntry][0]
+			print "\n"
+
 
 	def confusionMatrix8cat(self):
  		#a 8x8 matrix whose entry in row r and column c
@@ -541,38 +550,39 @@ class Part2(object):
 
 	def __init__(self, filename_email_training, filename_8cat_training, filename_email_test, filename_8cat_test):
 
-		#EMAILS
-		self.parseTrainingEmails(filename_email_training)
-		self.createTrainingSpamAndNormalDictionaries()
-		#self.printTrainingEmailLabels()
-		#self.printTestEmailLabels()
-		#self.printTrainingEmailDictionaries()
-		self.printSpamAndNormalDictionaries()
-		print "Spam words:", self.numSpamWords
-		print "Normal words:",self.numNormalWords
-		self.calcEmailProbabilityTables()
-		self.calcEmailPriors()
-		self.parseTestEmails(filename_email_test)
-		#self.printTestEmailLabels()
-		self.classifyTestEmails()
-		self.calcEmailClassificationAccuracy()
-		self.printMAPClassificationEmails()
-		self.findTop20WordsPerClassEmail()
-		self.confusionMatrixEmails()
-		self.printConfusionMatrixEmails()
+		# #EMAILS
+		# self.parseTrainingEmails(filename_email_training)
+		# self.createTrainingSpamAndNormalDictionaries()
+		# #self.printTrainingEmailLabels()
+		# #self.printTestEmailLabels()
+		# #self.printTrainingEmailDictionaries()
+		# self.printSpamAndNormalDictionaries()
+		# print "Spam words:", self.numSpamWords
+		# print "Normal words:",self.numNormalWords
+		# self.calcEmailProbabilityTables()
+		# self.calcEmailPriors()
+		# self.parseTestEmails(filename_email_test)
+		# #self.printTestEmailLabels()
+		# self.classifyTestEmails()
+		# self.calcEmailClassificationAccuracy()
+		# self.printMAPClassificationEmails()
+		# self.findTop20WordsPerClassEmail()
+		# self.confusionMatrixEmails()
+		# self.printConfusionMatrixEmails()
 
-		# #8CAT
-		# self.parseTraining8cat(filename_8cat_training)
-		# #self.printTraining8catLabels()
-		# #self.printTraining8catDictionaries()
-		# self.create8catDictionaries()
-		# self.print8catDictionaries()
-		# #self.print8catNumWordsAll()
-		# self.calc8catPriors()
-		# self.calc8catProbabilityTables()
-		# self.parseTest8cat(filename_8cat_test)
-		# #self.printTest8catLabels()
-		# self.classifyTest8cat()
-		# self.printMAPClassification8cat()
-		# self.confusionMatrix8cat()
-		# self.printConfusionMatrix8cat()
+		#8CAT
+		self.parseTraining8cat(filename_8cat_training)
+		#self.printTraining8catLabels()
+		#self.printTraining8catDictionaries()
+		self.create8catDictionaries()
+		self.print8catDictionaries()
+		#self.print8catNumWordsAll()
+		self.calc8catPriors()
+		self.calc8catProbabilityTables()
+		self.parseTest8cat(filename_8cat_test)
+		#self.printTest8catLabels()
+		self.classifyTest8cat()
+		self.printMAPClassification8cat()
+		self.findTop20WordsPerClass8cat()
+		self.confusionMatrix8cat()
+		self.printConfusionMatrix8cat()
