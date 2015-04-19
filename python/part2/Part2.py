@@ -2,6 +2,7 @@ from operator import itemgetter
 
 class Part2(object):
 
+	##EMAILS
 	#parsing emails
 	masterTrainingEmailDictionaryList = [] # dictionaries use {} instead of []
 	trainingEmailLabels = [] #each document is either spam or not spam, indexed in order
@@ -15,12 +16,16 @@ class Part2(object):
 	#counters
 	numSpamWords = 0
 	numNormalWords = 0
+	spamPrior = 0.0
+	normalPrior = 0.0
 
+	##8CAT
 	#parsing 8cat
 	masterTraining8catDictionaryList = []
 	training8catLabels = []
+
 	master8catDictList = [{},{},{},{},{},{},{},{}] # list of dictionaries for each class (catetory)
-	num8catWords = [0,0,0,0,0,0,0,0] # number of entries for each class (category)
+	num8catWords = [0,0,0,0,0,0,0,0] # counters
 	priors8cat = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
 
 	#parse the training emails
@@ -152,7 +157,11 @@ class Part2(object):
 			self.normalEmailsDictionary[word] = curr_value
 			print word, self.normalEmailsDictionary.get(word)
 
-
+	def calcEmailPriors(self):
+		self.spamPrior = self.numSpamWords / float(self.numSpamWords + self.numNormalWords)
+		self.normalPrior = self.numNormalWords / float(self.numSpamWords + self.numNormalWords)
+		print "Spam Prior:", self.spamPrior
+		print "Normal Prior:", self.normalPrior
 
 	def parseTraining8cat(self, filename):
 		#each line is a document
@@ -219,8 +228,8 @@ class Part2(object):
 	def create8catDictionaries(self):
 		counter = 0
 		for dictionary in self.masterTraining8catDictionaryList:
-			category = self.training8catLabels[counter] # 1 if spam, 0 if normal
-			print "Category", category
+			category = self.training8catLabels[counter]
+			print "Category", category, getCat(category)
 			for word in dictionary:
 				key = word #the word
 				value = dictionary.get(key) #the frequency
@@ -234,7 +243,7 @@ class Part2(object):
 		for dictionary in self.master8catDictList:
 			for word in sorted(dictionary):
 				print word, self.master8catDictList[counter].get(word)
-				self.num8catWords[counter] += self.master8catDictList[counter].get(word, 0) # for calcProbabilityTables
+				self.num8catWords[counter] += self.master8catDictList[counter].get(word, 0) # for calc8catProbabilityTables
 			counter += 1
 
 	def print8catNumWordsAll(self):
@@ -261,43 +270,44 @@ class Part2(object):
 		print "\n"
 
 	def calc8catProbabilityTables(self):
-		counter = 0
+		catetory = 0
 		for dictionary in self.master8catDictList:
 			#print "\n",
 			#print "printing unique entries in spam set"
 			for word in sorted(dictionary):
 				curr_value = []
-				curr_value.append(self.master8catDictList[counter].get(word))
-				curr_value.append(curr_value[0]/float(self.num8catWords[counter]))
-				self.master8catDictList[counter][word] = curr_value
-				print word, self.master8catDictList[counter].get(word)
+				curr_value.append(self.master8catDictList[category].get(word))
+				curr_value.append(curr_value[0]/float(self.num8catWords[category]))
+				self.master8catDictList[category][word] = curr_value
+				print word, self.master8catDictList[category].get(word)
 			#break #first dictionary
-			counter += 1
+			category += 1
 
 
 	def __init__(self, filename_email_training, filename_8cat_training, filename_email_test):
 
-		#training email
-		self.parseTrainingEmails(filename_email_training)
-		self.createTrainingSpamAndNormalDictionaries()
-		#self.printTrainingEmailLabels()
-		#self.printTestEmailLabels()
-		self.printTrainingEmailDictionaries()
-		self.printSpamAndNormalDictionaries()
-		print "Spam words:", self.numSpamWords
-		print "Normal words:",self.numNormalWords
-		self.calcEmailProbabilityTables()
+		# #training email
+		# self.parseTrainingEmails(filename_email_training)
+		# self.createTrainingSpamAndNormalDictionaries()
+		# #self.printTrainingEmailLabels()
+		# #self.printTestEmailLabels()
+		# self.printTrainingEmailDictionaries()
+		# self.printSpamAndNormalDictionaries()
+		# print "Spam words:", self.numSpamWords
+		# print "Normal words:",self.numNormalWords
+		# self.calcEmailProbabilityTables()
+		# self.calcEmailPriors()
 
 		# #test emails
 		# self.parseTestEmails(filename_email_test)
 		# self.printTestEmailLabels()
 
-		# #training 8cat
-		# self.parseTraining8cat(filename_8cat_training)
-		# self.printTraining8catLabels()
-		# self.printTraining8catDictionaries()
-		# #self.print8catDictionaries()
-		# self.print8catNumWordsAll()
-		# self.calc8catPriors()
-		# self.calc8catProbabilityTables()
+		#training 8cat
+		self.parseTraining8cat(filename_8cat_training)
+		self.printTraining8catLabels()
+		self.printTraining8catDictionaries()
+		#self.print8catDictionaries()
+		self.print8catNumWordsAll()
+		self.calc8catPriors()
+		self.calc8catProbabilityTables()
 
