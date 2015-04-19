@@ -1,5 +1,6 @@
 from operator import itemgetter
 from math import log
+from operator import itemgetter
 
 k = 1 #1 to 50
 V = 2
@@ -28,6 +29,7 @@ class Part2(object):
 	normalClassified = [] #as normal
 
 	MAPClassificationEmails = []
+	top20WordsPerClassEmail = []
 	confusionMatrixEmails = []
 
 	##8CAT
@@ -232,7 +234,22 @@ class Part2(object):
 		print "Printing MAP Classification for emails"
 		for entry in self.MAPClassificationEmails:
 			print entry
+		print "\n"
 
+	def findTop20WordsPerClassEmail(self):
+		print "Top 20 words in spam set with highest likelihood"
+		# sorts spamEmailsDictionary by its values, greatest to least (instead of least to greatest)
+		top20SpamWords = sorted(self.spamEmailsDictionary.items(), key=itemgetter(1), reverse=True)
+		for topEntry in xrange(0, 20):
+			print top20SpamWords[topEntry][0]
+		print "\n",
+
+		print "Top 20 in normal set with highest likelihood"
+		top20NormalWords = sorted(self.normalEmailsDictionary.items(), key=itemgetter(1), reverse=True)
+		for topEntry in xrange(0, 20):
+			print top20NormalWords[topEntry][0]
+		print "\n",
+		
 	def confusionMatrixEmails(self):
  		#a 2x2 matrix whose entry in row r and column c
  		#is the percentage of test images from class r
@@ -529,7 +546,7 @@ class Part2(object):
 		self.createTrainingSpamAndNormalDictionaries()
 		#self.printTrainingEmailLabels()
 		#self.printTestEmailLabels()
-		self.printTrainingEmailDictionaries()
+		#self.printTrainingEmailDictionaries()
 		self.printSpamAndNormalDictionaries()
 		print "Spam words:", self.numSpamWords
 		print "Normal words:",self.numNormalWords
@@ -540,21 +557,22 @@ class Part2(object):
 		self.classifyTestEmails()
 		self.calcEmailClassificationAccuracy()
 		self.printMAPClassificationEmails()
+		self.findTop20WordsPerClassEmail()
 		self.confusionMatrixEmails()
 		self.printConfusionMatrixEmails()
 
-		#8CAT
-		self.parseTraining8cat(filename_8cat_training)
-		#self.printTraining8catLabels()
-		#self.printTraining8catDictionaries()
-		self.create8catDictionaries()
-		self.print8catDictionaries()
-		#self.print8catNumWordsAll()
-		self.calc8catPriors()
-		self.calc8catProbabilityTables()
-		self.parseTest8cat(filename_8cat_test)
-		#self.printTest8catLabels()
-		self.classifyTest8cat()
-		self.printMAPClassification8cat()
-		self.confusionMatrix8cat()
-		self.printConfusionMatrix8cat()
+		# #8CAT
+		# self.parseTraining8cat(filename_8cat_training)
+		# #self.printTraining8catLabels()
+		# #self.printTraining8catDictionaries()
+		# self.create8catDictionaries()
+		# self.print8catDictionaries()
+		# #self.print8catNumWordsAll()
+		# self.calc8catPriors()
+		# self.calc8catProbabilityTables()
+		# self.parseTest8cat(filename_8cat_test)
+		# #self.printTest8catLabels()
+		# self.classifyTest8cat()
+		# self.printMAPClassification8cat()
+		# self.confusionMatrix8cat()
+		# self.printConfusionMatrix8cat()
