@@ -434,21 +434,6 @@ class Part2(object):
 		accuracy *= float(100)
 		print "Overall 8cat accuracy:", accuracy, "%"
 
-	def calc8catClassificationAccuracy(self):
-		accuracy = 0.0
-		total = 0
-		for subTotal in self.num8catWords:
-			total += subTotal
-		print "total:", total
-		for category in self.classified8cat:
-			for testIndex in category:
-				if(testIndex == category):
-					accuracy += 1
-		print "Calculated accuracy:", accuracy
-		accuracy /= float(total)
-		accuracy *= float(100)
-		print "Overall 8cat accuracy:", accuracy, "%"
-
 	def __init__(self, filename_email_training, filename_8cat_training, filename_email_test, filename_8cat_test):
 
 		# #EMAILS
@@ -479,4 +464,3 @@ class Part2(object):
 		self.parseTest8cat(filename_8cat_test)
 		self.printTest8catLabels()
 		self.classifyTest8cat()
-		#self.calc8catClassificationAccuracy()
