@@ -328,8 +328,10 @@ class Part2(object):
 		print "total:", total
 		for prior in self.priors8cat:
 			prior /= total
+			self.priors8cat[counter] = prior #whoops
 			print "Prior for", self.getCat(counter), ":", prior
 			counter += 1
+		print self.priors8cat
 		print "\n"
 
 	def calc8catProbabilityTables(self):
@@ -390,37 +392,48 @@ class Part2(object):
 		for message in self.masterTest8catDictionaryList:
 
 			#local evaluation list for message initially filled with priors
-			print self.priors8cat
+			#print self.priors8cat
 			testVals = []
 			for prior in self.priors8cat: #fill local evaluation list with priors
 				testVals.append(prior)
-			print "Priors:", testVals
+			#print "Priors:", testVals
+			
 			#iteration through each message's words
 			for word in message: #iterate through each word in the message
 				for category in xrange(len(self.master8catDictList)):
 					temp = self.master8catDictList[category].get(word)
 					if(temp==None):
-						print "New word prob:", log(k/float(self.num8catWords[category] + k*V8))
+						#print "New word prob:", log(k/float(self.num8catWords[category] + k*V8))
 						testVals[category] += log(k/float(self.num8catWords[category] + k*V8)) #laplacian smoothing for "new" words
 					else:
-						print "Trained word prob:", log(temp[1])
+						#print "Trained word prob:", log(temp[1])
 						testVals[category] += log(temp[1]) #
+			
+
 			#get the max testVal (best category) and classify accordingly
 			bestCat = testVals.index(max(testVals))
-			print testVals, bestCat
 			self.classified8cat[bestCat].append(index)
+
+			#debugging
+			testPrint = []
+			testPrint.append(self.test8catLabels[index])
+			testPrint.append(bestCat)
+			print testPrint
+
 			index += 1
-			break
+
 
 	def calc8catClassificationAccuracy(self):
 		accuracy = 0.0
 		total = 0
 		for subTotal in self.num8catWords:
 			total += subTotal
+		print "total:", total
 		for category in self.classified8cat:
 			for testIndex in category:
 				if(testIndex == category):
 					accuracy += 1
+		print "Calculated accuracy:", accuracy
 		accuracy /= float(total)
 		accuracy *= float(100)
 		print "Overall 8cat accuracy:", accuracy, "%"
@@ -454,6 +467,5 @@ class Part2(object):
 		self.calc8catProbabilityTables()
 		self.parseTest8cat(filename_8cat_test)
 		self.printTest8catLabels()
-		self.calc8catPriors()
 		self.classifyTest8cat()
 		self.calc8catClassificationAccuracy()

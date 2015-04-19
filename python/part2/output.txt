@@ -1931,6 +1931,7 @@ Prior for talk.politics.misc : 0.203430319399
 Prior for misc.forsale : 0.0493796847612
 Prior for rec.sport.hockey : 0.142106411857
 Prior for comp.graphics : 0.131377925098
+[0.1598513835178251, 0.07012563173940621, 0.10726099618739726, 0.13646764743996345, 0.20343031939925932, 0.04937968476118375, 0.14210641185658066, 0.13137792509838425]
 
 
 6
@@ -2196,978 +2197,269 @@ Prior for comp.graphics : 0.131377925098
 6
 1
 4
+[6, 6]
+[2, 2]
+[0, 0]
+[2, 2]
+[2, 2]
+[4, 4]
+[2, 2]
+[3, 3]
+[6, 6]
+[5, 5]
+[3, 3]
+[2, 2]
+[1, 1]
+[2, 2]
+[7, 1]
+[4, 4]
+[2, 2]
+[4, 4]
+[6, 6]
+[3, 3]
+[4, 4]
+[4, 4]
+[6, 6]
+[1, 1]
+[6, 6]
+[2, 2]
+[1, 1]
+[1, 1]
+[0, 0]
+[3, 1]
+[0, 0]
+[4, 4]
+[1, 1]
+[6, 6]
+[1, 1]
+[4, 4]
+[3, 1]
+[1, 1]
+[7, 1]
+[0, 0]
+[4, 4]
+[6, 6]
+[7, 1]
+[3, 3]
+[0, 0]
+[4, 4]
+[3, 7]
+[1, 1]
+[4, 4]
+[6, 6]
+[0, 5]
+[5, 5]
+[4, 4]
+[4, 4]
+[2, 2]
+[5, 1]
+[4, 0]
+[7, 7]
+[1, 3]
+[6, 6]
+[1, 1]
+[4, 4]
+[1, 1]
+[7, 5]
+[1, 5]
+[1, 1]
+[5, 5]
+[7, 7]
+[6, 6]
+[6, 6]
+[6, 6]
+[4, 4]
+[0, 0]
+[2, 2]
+[7, 7]
+[4, 4]
+[2, 2]
+[4, 4]
+[7, 7]
+[0, 0]
+[0, 0]
+[7, 1]
+[6, 6]
+[1, 1]
+[4, 4]
+[0, 0]
+[4, 4]
+[6, 6]
+[6, 6]
+[4, 4]
+[6, 6]
+[2, 2]
+[2, 2]
+[4, 4]
+[7, 7]
+[2, 2]
+[6, 6]
+[3, 3]
+[6, 6]
+[5, 5]
+[5, 5]
+[6, 6]
+[3, 3]
+[4, 1]
+[6, 1]
+[2, 2]
+[3, 3]
+[1, 1]
+[4, 4]
+[2, 2]
+[7, 7]
+[2, 2]
+[0, 0]
+[6, 6]
+[7, 7]
+[4, 4]
+[7, 7]
+[7, 7]
+[6, 6]
+[6, 2]
+[1, 1]
+[3, 5]
+[0, 0]
+[5, 5]
+[2, 2]
+[6, 6]
+[0, 0]
+[0, 0]
+[6, 6]
+[2, 2]
+[4, 4]
+[2, 2]
+[3, 3]
+[3, 3]
+[0, 0]
+[6, 6]
+[4, 2]
+[7, 7]
+[6, 6]
+[2, 2]
+[4, 4]
+[7, 7]
+[0, 0]
+[5, 5]
+[6, 6]
+[1, 1]
+[1, 1]
+[4, 4]
+[1, 1]
+[4, 4]
+[6, 6]
+[4, 4]
+[7, 7]
+[6, 6]
+[7, 7]
+[0, 0]
+[3, 1]
+[3, 1]
+[4, 4]
+[2, 2]
+[3, 3]
+[0, 0]
+[7, 7]
+[2, 2]
+[4, 4]
+[2, 2]
+[7, 7]
+[6, 6]
+[0, 0]
+[0, 0]
+[4, 4]
+[6, 6]
+[1, 1]
+[7, 7]
+[4, 4]
+[7, 7]
+[2, 2]
+[3, 3]
+[6, 6]
+[3, 3]
+[0, 0]
+[6, 6]
+[1, 1]
+[6, 6]
+[0, 0]
+[1, 1]
+[6, 6]
+[2, 2]
+[6, 6]
+[6, 6]
+[6, 6]
+[2, 2]
+[1, 1]
+[1, 1]
+[5, 5]
+[1, 1]
+[6, 5]
+[0, 0]
+[3, 3]
+[7, 3]
+[5, 5]
+[1, 1]
+[4, 4]
+[1, 1]
+[2, 2]
+[3, 7]
+[2, 2]
+[4, 4]
+[6, 6]
+[3, 3]
+[2, 2]
+[0, 0]
+[3, 3]
+[2, 2]
+[6, 6]
+[1, 1]
+[7, 7]
+[6, 6]
+[1, 1]
+[4, 4]
+[3, 3]
+[3, 3]
+[2, 2]
+[7, 7]
+[4, 4]
+[0, 0]
+[4, 4]
+[2, 2]
+[4, 4]
+[6, 6]
+[2, 2]
+[1, 1]
+[4, 4]
+[1, 1]
+[0, 0]
+[7, 5]
+[3, 3]
+[3, 3]
+[6, 6]
+[4, 4]
+[7, 7]
+[3, 3]
+[2, 2]
+[0, 0]
+[4, 4]
+[0, 0]
+[2, 2]
+[0, 0]
+[0, 0]
+[0, 0]
+[4, 4]
+[0, 0]
+[7, 7]
+[7, 5]
+[1, 1]
+[3, 3]
+[0, 0]
+[4, 4]
+[4, 4]
+[0, 4]
+[6, 6]
+[1, 1]
+[4, 4]
 total: 586476
-Prior for sci.space : 0.159851383518
-Prior for comp.sys.ibm.pc.hardware : 0.0701256317394
-Prior for rec.sport.baseball : 0.107260996187
-Prior for comp.windows.x : 0.13646764744
-Prior for talk.politics.misc : 0.203430319399
-Prior for misc.forsale : 0.0493796847612
-Prior for rec.sport.hockey : 0.142106411857
-Prior for comp.graphics : 0.131377925098
-
-
-[93749.0, 41127.0, 62906.0, 80035.0, 119307.0, 28960.0, 83342.0, 77050.0]
-Priors: [93749.0, 41127.0, 62906.0, 80035.0, 119307.0, 28960.0, 83342.0, 77050.0]
-Trained word prob: -7.83754369507
-Trained word prob: -6.01944443361
-Trained word prob: -7.06053994687
-Trained word prob: -6.50282752647
-Trained word prob: -7.34571691177
-Trained word prob: -7.13845283552
-Trained word prob: -7.80444336356
-Trained word prob: -6.6371931472
-Trained word prob: -9.36902006603
-New word prob: -10.6246146196
-Trained word prob: -9.66322963232
-Trained word prob: -9.68088135682
-Trained word prob: -8.32222650364
-Trained word prob: -8.88765269033
-Trained word prob: -8.49759054412
-Trained word prob: -10.5591664835
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-New word prob: -11.252313664
-Trained word prob: -7.98272570491
-Trained word prob: -9.52600233093
-Trained word prob: -8.97008245176
-New word prob: -11.2903192693
-Trained word prob: -8.74508335446
-New word prob: -10.2739470514
-Trained word prob: -8.93290861538
-Trained word prob: -10.5591664835
-Trained word prob: -6.91586211456
-Trained word prob: -8.32202952661
-Trained word prob: -7.09828027486
-Trained word prob: -8.11226543891
-Trained word prob: -6.65908441223
-Trained word prob: -6.6630291388
-Trained word prob: -7.05413776916
-Trained word prob: -7.53874159734
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -10.6376567076
-New word prob: -11.252313664
-Trained word prob: -10.7553144272
-New word prob: -10.6246146196
-Trained word prob: -9.10361384438
-New word prob: -11.2903192693
-Trained word prob: -10.590910045
-New word prob: -10.2739470514
-Trained word prob: -6.15465415561
-New word prob: -11.252313664
-Trained word prob: -5.84265954142
-Trained word prob: -5.71933984116
-Trained word prob: -5.17459326259
-Trained word prob: -6.31358552683
-Trained word prob: -5.3741643321
-Trained word prob: -7.13845283552
-Trained word prob: -5.82547235225
-Trained word prob: -6.42399992674
-Trained word prob: -10.349849319
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-Trained word prob: -10.5971720887
-Trained word prob: -9.20461568384
-New word prob: -10.2739470514
-Trained word prob: -6.76645569671
-New word prob: -11.252313664
-Trained word prob: -7.53643860228
-Trained word prob: -9.01517670717
-Trained word prob: -7.41193783371
-Trained word prob: -8.98773417626
-Trained word prob: -7.61198488972
-Trained word prob: -6.17960248922
-Trained word prob: -8.23976143482
-Trained word prob: -8.25658139049
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-Trained word prob: -10.3563768129
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-Trained word prob: -9.58079987089
-Trained word prob: -9.2513623465
-Trained word prob: -10.5591664835
-Trained word prob: -8.74041140661
-Trained word prob: -8.54517307792
-Trained word prob: -7.68222816345
-Trained word prob: -10.1917069806
-Trained word prob: -8.59847988027
-New word prob: -10.2739470514
-Trained word prob: -7.5931342699
-Trained word prob: -9.64287575161
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-Trained word prob: -10.590910045
-New word prob: -10.2739470514
-Trained word prob: -10.2321915995
-New word prob: -11.252313664
-Trained word prob: -7.18578173067
-Trained word prob: -7.79140127555
-Trained word prob: -6.49564710184
-Trained word prob: -8.89242399646
-Trained word prob: -7.51513506373
-Trained word prob: -7.38357529355
-Trained word prob: -7.111296183
-Trained word prob: -7.88501783405
-Trained word prob: -7.21435510311
-Trained word prob: -7.1588787168
-Trained word prob: -7.87147016309
-Trained word prob: -7.41911825835
-Trained word prob: -7.41285621461
-Trained word prob: -8.07672247411
-Trained word prob: -7.89681668369
-Trained word prob: -7.61472750431
-Trained word prob: -9.83902369528
-Trained word prob: -8.67870447055
-Trained word prob: -5.29062221956
-Trained word prob: -9.09309469192
-Trained word prob: -8.59847988027
-Trained word prob: -6.56037498474
-Trained word prob: -4.84769653672
-Trained word prob: -9.0550890867
-Trained word prob: -7.22895390254
-Trained word prob: -7.73424286171
-Trained word prob: -7.0064727256
-Trained word prob: -7.88912188759
-Trained word prob: -7.04513143449
-Trained word prob: -7.50135832921
-Trained word prob: -6.98699846633
-Trained word prob: -7.6413957514
-Trained word prob: -6.464854986
-Trained word prob: -5.62740234584
-Trained word prob: -5.79725056539
-Trained word prob: -6.59897138703
-Trained word prob: -5.58249944589
-Trained word prob: -6.34212141872
-Trained word prob: -6.24320755295
-Trained word prob: -6.43203209844
-Trained word prob: -6.92667303066
-Trained word prob: -5.88841617121
-Trained word prob: -8.21631064938
-Trained word prob: -5.82648746423
-Trained word prob: -7.16773375658
-Trained word prob: -7.13845283552
-Trained word prob: -9.38489373912
-Trained word prob: -6.22187574265
-Trained word prob: -8.61524826366
-Trained word prob: -7.36651808158
-Trained word prob: -7.58378809064
-Trained word prob: -8.03222273123
-Trained word prob: -7.54638760724
-Trained word prob: -9.17533476278
-Trained word prob: -8.38636490901
-Trained word prob: -8.85441839124
-Trained word prob: -9.05056633491
-New word prob: -10.6246146196
-Trained word prob: -9.66322963232
-New word prob: -11.2903192693
-Trained word prob: -9.29162706083
-New word prob: -10.2739470514
-Trained word prob: -10.2321915995
-Trained word prob: -9.64287575161
-Trained word prob: -5.7281498311
-Trained word prob: -5.62066831366
-Trained word prob: -5.45853701293
-Trained word prob: -6.03804584121
-Trained word prob: -5.68563526652
-Trained word prob: -6.36192404602
-Trained word prob: -5.78954034302
-Trained word prob: -6.03737790643
-Trained word prob: -10.349849319
-Trained word prob: -9.93146743904
-Trained word prob: -9.10361384438
-Trained word prob: -9.49855980003
-Trained word prob: -9.05046500401
-New word prob: -10.2739470514
-Trained word prob: -9.2513623465
-Trained word prob: -10.5591664835
-Trained word prob: -8.8094042781
-Trained word prob: -8.54517307792
-Trained word prob: -7.64832661178
-Trained word prob: -9.3444091202
-Trained word prob: -8.13417427214
-New word prob: -10.2739470514
-Trained word prob: -8.19530967225
-Trained word prob: -10.5591664835
-Trained word prob: -10.7553144272
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-Trained word prob: -10.5971720887
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -9.2513623465
-New word prob: -11.252313664
-Trained word prob: -7.37092416381
-New word prob: -10.6246146196
-Trained word prob: -5.3625486371
-Trained word prob: -10.5971720887
-Trained word prob: -9.05046500401
-Trained word prob: -7.87605177865
-Trained word prob: -4.87560532484
-Trained word prob: -10.1537013754
-Trained word prob: -8.15262474171
-Trained word prob: -8.2267193468
-Trained word prob: -7.26533435952
-Trained word prob: -9.90402490813
-Trained word prob: -7.70053828706
-Trained word prob: -8.32803690239
-Trained word prob: -6.93635473351
-Trained word prob: -9.30640351499
-Trained word prob: -7.89311354622
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-Trained word prob: -9.09309469192
-Trained word prob: -8.5540281177
-Trained word prob: -9.58079987089
-Trained word prob: -7.69321772845
-Trained word prob: -9.17287212236
-Trained word prob: -7.68726149202
-Trained word prob: -7.53357216624
-Trained word prob: -7.0064727256
-Trained word prob: -8.39994751136
-Trained word prob: -6.5596236187
-Trained word prob: -8.88765269033
-Trained word prob: -7.3795601696
-Trained word prob: -8.20779122632
-Trained word prob: -6.82348879443
-Trained word prob: -6.58156335177
-Trained word prob: -6.23733963807
-Trained word prob: -7.28298608402
-Trained word prob: -5.88438736471
-Trained word prob: -7.38357529355
-Trained word prob: -6.40355020302
-Trained word prob: -7.19187065349
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-Trained word prob: -8.65162872064
-New word prob: -11.2903192693
-Trained word prob: -10.590910045
-New word prob: -10.2739470514
-Trained word prob: -8.28628145046
-New word prob: -11.252313664
-Trained word prob: -6.15515678299
-Trained word prob: -6.5470771757
-Trained word prob: -6.18971158908
-Trained word prob: -6.93361044257
-Trained word prob: -4.96568989281
-Trained word prob: -7.0958932211
-Trained word prob: -6.41814900244
-Trained word prob: -6.77497684956
-Trained word prob: -10.349849319
-Trained word prob: -9.93146743904
-Trained word prob: -8.8522994161
-New word prob: -11.2903192693
-Trained word prob: -9.20461568384
-Trained word prob: -8.88765269033
-Trained word prob: -9.2513623465
-Trained word prob: -10.1537013754
-Trained word prob: -10.349849319
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-Trained word prob: -9.61008079195
-New word prob: -10.2739470514
-Trained word prob: -6.91196328038
-New word prob: -11.252313664
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -9.94450952706
-New word prob: -11.252313664
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -9.94450952706
-New word prob: -11.252313664
-Trained word prob: -7.86494266926
-Trained word prob: -7.1588787168
-Trained word prob: -6.32213617473
-Trained word prob: -7.26496757852
-Trained word prob: -7.37203422009
-Trained word prob: -6.94174254127
-Trained word prob: -6.3403713014
-Trained word prob: -7.14143979987
-Trained word prob: -6.89458471611
-Trained word prob: -6.51374075543
-Trained word prob: -6.12954306761
-Trained word prob: -7.35849363653
-Trained word prob: -6.66564181278
-Trained word prob: -7.18290459809
-Trained word prob: -6.56862995338
-Trained word prob: -7.72595313942
-Trained word prob: -10.349849319
-New word prob: -10.6246146196
-Trained word prob: -8.65162872064
-New word prob: -11.2903192693
-Trained word prob: -8.39368546762
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-New word prob: -11.252313664
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-New word prob: -11.252313664
-Trained word prob: -8.19036506969
-Trained word prob: -7.53357216624
-Trained word prob: -7.87147016309
-Trained word prob: -8.58226906815
-Trained word prob: -8.69379006007
-Trained word prob: -8.48218758222
-Trained word prob: -8.49759054412
-Trained word prob: -7.81832645956
-Trained word prob: -8.31296739178
-Trained word prob: -9.93146743904
-Trained word prob: -9.440086081
-Trained word prob: -10.1917069806
-Trained word prob: -10.590910045
-Trained word prob: -9.17533476278
-Trained word prob: -6.55168039507
-Trained word prob: -9.30640351499
-Trained word prob: -10.0621672466
-Trained word prob: -8.13970796982
-Trained word prob: -6.7868441164
-New word prob: -11.2903192693
-Trained word prob: -10.9963751531
-Trained word prob: -9.17533476278
-Trained word prob: -6.31352405136
-Trained word prob: -10.1537013754
-Trained word prob: -9.65670213848
-Trained word prob: -9.52600233093
-Trained word prob: -9.25776452421
-Trained word prob: -10.5971720887
-Trained word prob: -8.6449998959
-New word prob: -10.2739470514
-Trained word prob: -9.94450952706
-Trained word prob: -10.5591664835
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -10.6376567076
-New word prob: -11.252313664
-Trained word prob: -10.349849319
-Trained word prob: -9.93146743904
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-Trained word prob: -10.9963751531
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-Trained word prob: -10.1537013754
-Trained word prob: -7.5772605968
-Trained word prob: -6.45022734971
-Trained word prob: -6.56088762371
-Trained word prob: -7.76395874464
-Trained word prob: -6.96213451491
-Trained word prob: -7.13845283552
-Trained word prob: -6.28094788093
-Trained word prob: -7.69696560255
-Trained word prob: -10.7553144272
-New word prob: -10.6246146196
-Trained word prob: -9.10361384438
-New word prob: -11.2903192693
-Trained word prob: -8.91693361139
-New word prob: -10.2739470514
-Trained word prob: -8.93290861538
-New word prob: -11.252313664
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-Trained word prob: -8.58226906815
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -7.998599378
-New word prob: -11.252313664
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -9.53904441895
-New word prob: -11.252313664
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -10.6376567076
-New word prob: -11.252313664
-Trained word prob: -7.78489996158
-Trained word prob: -7.73424286171
-Trained word prob: -7.75368712743
-Trained word prob: -8.07144344439
-Trained word prob: -7.47001462845
-Trained word prob: -7.70899769398
-Trained word prob: -7.71988597553
-Trained word prob: -7.6413957514
-Trained word prob: -10.349849319
-Trained word prob: -9.52600233093
-New word prob: -11.0495239934
-Trained word prob: -9.21087772757
-Trained word prob: -9.12457297617
-New word prob: -10.2739470514
-Trained word prob: -10.6376567076
-New word prob: -11.252313664
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -10.6376567076
-New word prob: -11.252313664
-Trained word prob: -6.01038229879
-Trained word prob: -5.75708016915
-Trained word prob: -5.3865635133
-Trained word prob: -6.4540373623
-Trained word prob: -5.45511160791
-Trained word prob: -7.27821477789
-Trained word prob: -6.08377981602
-Trained word prob: -6.30355377366
-Trained word prob: -7.71079198943
-Trained word prob: -7.19062741512
-Trained word prob: -6.80102875139
-Trained word prob: -7.92302343927
-Trained word prob: -6.61434851839
-Trained word prob: -7.01585051342
-Trained word prob: -7.21993002401
-Trained word prob: -7.85111628238
-Trained word prob: -9.65670213848
-Trained word prob: -9.52600233093
-Trained word prob: -7.31185437516
-Trained word prob: -10.5971720887
-Trained word prob: -9.61008079195
-Trained word prob: -8.88765269033
-Trained word prob: -8.55821516594
-Trained word prob: -10.5591664835
-Trained word prob: -7.05401245304
-Trained word prob: -6.86341450391
-Trained word prob: -5.38309730533
-Trained word prob: -7.46167787277
-Trained word prob: -6.53623073913
-Trained word prob: -6.6630291388
-Trained word prob: -6.03248652163
-Trained word prob: -7.42367226755
-Trained word prob: -10.7553144272
-Trained word prob: -9.93146743904
-Trained word prob: -10.3563768129
-New word prob: -11.2903192693
-Trained word prob: -7.64647106579
-Trained word prob: -9.58079987089
-Trained word prob: -7.39897825545
-Trained word prob: -9.86601930292
-Trained word prob: -6.55811247949
-Trained word prob: -6.67337090102
-Trained word prob: -6.27040050033
-Trained word prob: -6.68514908327
-Trained word prob: -6.29135963211
-Trained word prob: -7.01585051342
-Trained word prob: -6.50249015088
-Trained word prob: -6.09902206954
-Trained word prob: -7.61982021122
-Trained word prob: -7.40573879473
-Trained word prob: -6.98908098289
-Trained word prob: -7.95811475908
-Trained word prob: -7.28280308636
-Trained word prob: -8.07672247411
-Trained word prob: -7.39897825545
-Trained word prob: -8.68736430658
-Trained word prob: -9.05056633491
-Trained word prob: -7.25731878962
-New word prob: -11.0495239934
-Trained word prob: -8.58226906815
-Trained word prob: -9.49229775629
-Trained word prob: -9.58079987089
-Trained word prob: -10.6376567076
-Trained word prob: -9.64287575161
-Trained word prob: -10.0621672466
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-Trained word prob: -9.61008079195
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-New word prob: -11.252313664
-Trained word prob: -6.24445492064
-Trained word prob: -6.0499036411
-Trained word prob: -5.3865635133
-Trained word prob: -7.08562664986
-Trained word prob: -5.34038334225
-Trained word prob: -6.97811018544
-Trained word prob: -5.70678638199
-Trained word prob: -6.65719381391
-Trained word prob: -5.91112734069
-Trained word prob: -6.69278898688
-Trained word prob: -5.70241646272
-Trained word prob: -6.74702448698
-Trained word prob: -6.24710462311
-Trained word prob: -6.51274693575
-Trained word prob: -5.65748062101
-Trained word prob: -6.64714347805
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -10.6376567076
-New word prob: -11.252313664
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-Trained word prob: -9.440086081
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -7.17192080482
-New word prob: -11.252313664
-Trained word prob: -8.27040777736
-Trained word prob: -8.05966526214
-Trained word prob: -7.71731948326
-Trained word prob: -8.72536991179
-Trained word prob: -8.25553512914
-Trained word prob: -7.56589685034
-Trained word prob: -9.02821879518
-Trained word prob: -8.41910031998
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-New word prob: -11.252313664
-Trained word prob: -6.58864920335
-Trained word prob: -6.34794850059
-Trained word prob: -6.50622921117
-Trained word prob: -6.6363589191
-Trained word prob: -6.67888703953
-Trained word prob: -5.81959975519
-Trained word prob: -6.44800196559
-Trained word prob: -6.47319017093
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-Trained word prob: -10.3563768129
-New word prob: -11.2903192693
-Trained word prob: -10.590910045
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-New word prob: -11.252313664
-Trained word prob: -7.78489996158
-Trained word prob: -8.42739004227
-Trained word prob: -8.2769352712
-Trained word prob: -9.68088135682
-Trained word prob: -8.28832495197
-Trained word prob: -9.17533476278
-Trained word prob: -5.5048037808
-Trained word prob: -8.85441839124
-Trained word prob: -5.49521827342
-Trained word prob: -5.05246058743
-Trained word prob: -5.29062221956
-Trained word prob: -5.75692978053
-Trained word prob: -5.28926488832
-Trained word prob: -5.54655923273
-Trained word prob: -5.58460069764
-Trained word prob: -5.69163203303
-Trained word prob: -10.349849319
-New word prob: -10.6246146196
-Trained word prob: -10.3563768129
-New word prob: -11.2903192693
-Trained word prob: -7.2008859639
-New word prob: -10.2739470514
-Trained word prob: -7.74728494972
-Trained word prob: -9.30640351499
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-Trained word prob: -10.9963751531
-New word prob: -10.2739470514
-Trained word prob: -9.72136597574
-New word prob: -11.252313664
-Trained word prob: -8.01447440323
-Trained word prob: -7.68017564044
-Trained word prob: -7.24286150367
-Trained word prob: -8.89242399646
-Trained word prob: -7.7774993282
-Trained word prob: -8.66450913901
-Trained word prob: -7.96350805819
-Trained word prob: -8.54426346294
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-Trained word prob: -10.3563768129
-New word prob: -11.2903192693
-Trained word prob: -10.9963751531
-New word prob: -10.2739470514
-Trained word prob: -10.6376567076
-New word prob: -11.252313664
-Trained word prob: -9.65670213848
-Trained word prob: -9.93146743904
-Trained word prob: -7.91402977751
-Trained word prob: -9.90402490813
-Trained word prob: -8.59847988027
-Trained word prob: -9.17533476278
-Trained word prob: -8.55821516594
-Trained word prob: -10.5591664835
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -10.6376567076
-New word prob: -11.252313664
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-Trained word prob: -7.58378809064
-New word prob: -11.2903192693
-Trained word prob: -10.590910045
-Trained word prob: -9.17533476278
-Trained word prob: -7.52414139841
-Trained word prob: -10.1537013754
-Trained word prob: -6.19618817967
-Trained word prob: -6.17026732335
-Trained word prob: -6.00609887652
-Trained word prob: -6.97283115572
-Trained word prob: -6.17206943716
-Trained word prob: -6.80821114865
-Trained word prob: -6.33359161441
-Trained word prob: -6.3470388856
-Trained word prob: -8.15262474171
-Trained word prob: -7.19062741512
-Trained word prob: -6.95517943122
-Trained word prob: -7.24726800142
-Trained word prob: -7.44102709158
-Trained word prob: -6.77743948998
-Trained word prob: -7.50216249169
-Trained word prob: -7.07792639415
-Trained word prob: -7.71079198943
-Trained word prob: -9.52600233093
-Trained word prob: -7.15770369533
-Trained word prob: -8.65126193964
-Trained word prob: -6.74787991102
-Trained word prob: -7.50135832921
-Trained word prob: -8.69174655856
-Trained word prob: -8.61325633443
-Trained word prob: -7.61982021122
-Trained word prob: -8.67870447055
-Trained word prob: -7.79142745542
-Trained word prob: -8.89242399646
-Trained word prob: -6.92734839883
-Trained word prob: -9.58079987089
-Trained word prob: -8.28628145046
-Trained word prob: -8.94972857105
-Trained word prob: -9.65670213848
-Trained word prob: -9.93146743904
-Trained word prob: -7.68222816345
-New word prob: -11.2903192693
-Trained word prob: -9.49229775629
-New word prob: -10.2739470514
-Trained word prob: -9.94450952706
-New word prob: -11.252313664
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -7.998599378
-New word prob: -11.252313664
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -9.72136597574
-Trained word prob: -9.64287575161
-Trained word prob: -8.61524826366
-Trained word prob: -7.68017564044
-Trained word prob: -8.15915223554
-Trained word prob: -8.98773417626
-Trained word prob: -7.79770203552
-Trained word prob: -8.66450913901
-Trained word prob: -8.38636490901
-Trained word prob: -8.54426346294
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-Trained word prob: -10.3563768129
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -10.6376567076
-New word prob: -11.252313664
-Trained word prob: -8.15262474171
-Trained word prob: -8.42739004227
-Trained word prob: -7.41193783371
-Trained word prob: -8.80541261947
-Trained word prob: -8.28832495197
-Trained word prob: -9.58079987089
-Trained word prob: -8.03496702217
-Trained word prob: -8.76740701425
-Trained word prob: -7.9221010831
-Trained word prob: -7.58009218188
-Trained word prob: -7.64832661178
-Trained word prob: -9.68088135682
-Trained word prob: -6.82198788317
-Trained word prob: -8.88765269033
-Trained word prob: -7.92960650652
-Trained word prob: -8.03343783917
-Trained word prob: -8.15262474171
-Trained word prob: -7.85202589736
-Trained word prob: -7.95848154008
-Trained word prob: -7.79381170779
-Trained word prob: -7.7576967009
-Trained word prob: -7.01585051342
-Trained word prob: -8.44043213028
-Trained word prob: -8.61325633443
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-New word prob: -11.252313664
-New word prob: -11.4484616077
-Trained word prob: -9.52600233093
-Trained word prob: -10.3563768129
-New word prob: -11.2903192693
-Trained word prob: -9.8977628644
-New word prob: -10.2739470514
-Trained word prob: -8.93290861538
-New word prob: -11.252313664
-Trained word prob: -6.33647381936
-Trained word prob: -6.63563057304
-Trained word prob: -5.8790399984
-Trained word prob: -6.26643874841
-Trained word prob: -6.36651235449
-Trained word prob: -7.18290459809
-Trained word prob: -6.03248652163
-Trained word prob: -6.0649278582
-Trained word prob: -5.81010693838
-Trained word prob: -7.3287777536
-Trained word prob: -6.97198654953
-Trained word prob: -7.24726800142
-Trained word prob: -5.6540409011
-Trained word prob: -6.69042811299
-Trained word prob: -7.06812401114
-Trained word prob: -6.94824857084
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-New word prob: -11.252313664
-Trained word prob: -10.349849319
-Trained word prob: -9.52600233093
-Trained word prob: -9.25776452421
-New word prob: -11.2903192693
-Trained word prob: -9.29162706083
-Trained word prob: -9.58079987089
-Trained word prob: -9.53904441895
-Trained word prob: -9.86601930292
-Trained word prob: -9.36902006603
-Trained word prob: -9.23832025848
-New word prob: -11.0495239934
-Trained word prob: -8.72536991179
-Trained word prob: -8.43142579561
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-Trained word prob: -9.46055419481
-Trained word prob: -7.00581035122
-Trained word prob: -5.69014068647
-Trained word prob: -7.38596234731
-Trained word prob: -6.29988668248
-Trained word prob: -6.85324042668
-Trained word prob: -7.63488972183
-Trained word prob: -8.19530967225
-Trained word prob: -6.57018243692
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-Trained word prob: -10.6376567076
-New word prob: -11.252313664
-Trained word prob: -8.31296739178
-Trained word prob: -7.48912040367
-Trained word prob: -7.71731948326
-Trained word prob: -9.68088135682
-Trained word prob: -7.51513506373
-Trained word prob: -9.58079987089
-Trained word prob: -8.33507161462
-Trained word prob: -8.54426346294
-Trained word prob: -7.51663597499
-Trained word prob: -6.67337090102
-Trained word prob: -7.79142745542
-Trained word prob: -7.7068003308
-Trained word prob: -8.0259606875
-Trained word prob: -7.56589685034
-Trained word prob: -8.49759054412
-Trained word prob: -7.88501783405
-Trained word prob: -10.349849319
-New word prob: -10.6246146196
-Trained word prob: -9.10361384438
-New word prob: -11.2903192693
-Trained word prob: -10.0800844212
-New word prob: -10.2739470514
-Trained word prob: -8.44043213028
-New word prob: -11.252313664
-Trained word prob: -7.83754369507
-Trained word prob: -7.40573879473
-Trained word prob: -7.26533435952
-Trained word prob: -7.65273310953
-Trained word prob: -7.39906289248
-Trained word prob: -8.88765269033
-Trained word prob: -8.15275005783
-Trained word prob: -7.78657776124
-Trained word prob: -10.7553144272
-New word prob: -10.6246146196
-Trained word prob: -10.3563768129
-New word prob: -11.2903192693
-Trained word prob: -9.20461568384
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-New word prob: -11.252313664
-Trained word prob: -10.7553144272
-New word prob: -10.6246146196
-Trained word prob: -8.56461734365
-New word prob: -11.2903192693
-Trained word prob: -10.9963751531
-Trained word prob: -9.58079987089
-Trained word prob: -7.89681668369
-New word prob: -11.252313664
-Trained word prob: -9.50255145866
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-Trained word prob: -10.1917069806
-Trained word prob: -8.69379006007
-New word prob: -10.2739470514
-Trained word prob: -8.07270735016
-Trained word prob: -8.94972857105
-Trained word prob: -8.40393916999
-Trained word prob: -9.52600233093
-Trained word prob: -9.25776452421
-Trained word prob: -9.49855980003
-Trained word prob: -8.85630898957
-New word prob: -10.2739470514
-Trained word prob: -5.84600695469
-New word prob: -11.252313664
-Trained word prob: -5.65240385695
-Trained word prob: -5.29673845081
-Trained word prob: -5.3659442261
-Trained word prob: -5.23353525603
-Trained word prob: -5.75198612854
-Trained word prob: -5.38359792322
-Trained word prob: -5.50185827057
-Trained word prob: -5.89572738937
-Trained word prob: -5.06158228835
-Trained word prob: -4.65080500773
-Trained word prob: -4.2068407112
-Trained word prob: -5.21727473515
-Trained word prob: -4.44458078729
-Trained word prob: -5.61050795733
-Trained word prob: -4.59859318171
-Trained word prob: -5.21205895276
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-New word prob: -11.252313664
-Trained word prob: -9.36902006603
-Trained word prob: -9.01517670717
-Trained word prob: -6.53866448692
-Trained word prob: -9.68088135682
-Trained word prob: -8.74508335446
-Trained word prob: -9.58079987089
-Trained word prob: -7.66724224205
-Trained word prob: -9.64287575161
-Trained word prob: -10.7553144272
-New word prob: -10.6246146196
-Trained word prob: -10.3563768129
-Trained word prob: -10.5971720887
-Trained word prob: -8.91693361139
-New word prob: -10.2739470514
-Trained word prob: -9.38489373912
-New word prob: -11.252313664
-Trained word prob: -7.49721788913
-Trained word prob: -9.01517670717
-Trained word prob: -7.11769836071
-Trained word prob: -7.02763939221
-Trained word prob: -7.34571691177
-Trained word prob: -6.24859536071
-Trained word prob: -8.23976143482
-Trained word prob: -8.76740701425
-Trained word prob: -7.64179911794
-Trained word prob: -7.98555728999
-Trained word prob: -7.09828027486
-Trained word prob: -8.39994751136
-Trained word prob: -7.51513506373
-Trained word prob: -9.17533476278
-Trained word prob: -7.15641661828
-Trained word prob: -8.54426346294
-Trained word prob: -10.349849319
-New word prob: -10.6246146196
-Trained word prob: -9.95091170477
-Trained word prob: -10.1917069806
-Trained word prob: -9.61008079195
-New word prob: -10.2739470514
-Trained word prob: -9.94450952706
-New word prob: -11.252313664
-Trained word prob: -10.7553144272
-New word prob: -10.6246146196
-Trained word prob: -10.3563768129
-Trained word prob: -10.1917069806
-Trained word prob: -8.59847988027
-Trained word prob: -8.48218758222
-Trained word prob: -8.03496702217
-New word prob: -11.252313664
-New word prob: -11.4484616077
-New word prob: -10.6246146196
-New word prob: -11.0495239934
-New word prob: -11.2903192693
-New word prob: -11.6895223336
-New word prob: -10.2739470514
-New word prob: -11.3308038882
-New word prob: -11.252313664
-Trained word prob: -9.05056633491
-Trained word prob: -9.01517670717
-Trained word prob: -9.440086081
-Trained word prob: -8.24579683153
-Trained word prob: -9.29162706083
-Trained word prob: -8.66450913901
-Trained word prob: -10.6376567076
-Trained word prob: -9.64287575161
-[92655.70630856337, 40058.36144033019, 61874.222024364004, 78902.018504497, 118253.10873694046, 27890.403610624737, 82335.76745614267, 75924.20318534446] 4
+Calculated accuracy: 0.0
 Overall 8cat accuracy: 0.0 %
