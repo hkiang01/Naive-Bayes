@@ -181,25 +181,42 @@ class Part2(object):
 			normalVal = log(self.normalPrior)
 			#P(spam|message) correlates to P(spam)*Product( P(w_i|spam) )
 			for word in message:
+				#print word,
+
 				temp = self.spamEmailsDictionary.get(word)
-				#print temp
-				spamVal += log(temp[1])
+				#print "spam", temp, type(temp),
+				if(temp == None): #words not found in spam https://piazza.com/class/i56vzaj3akl4wf?cid=472
+					#  1 / (the number of words in "spam" + k * V)
+					#print "new word",
+					#print k/float(self.numSpamWords + k*V)
+					spamVal += log(k/float(self.numSpamWords + k*V)) #DOUBLE CHECK NUMERATOR
+				else:
+					spamVal += log(temp[1])
+				
 				temp = self.normalEmailsDictionary.get(word)
-				normalVal += log(temp[1])
+				print "normal", temp, type(temp)
+				if(temp == None): #words not found in spam https://piazza.com/class/i56vzaj3akl4wf?cid=472
+					#  1 / (the number of words in "spam" + k * V)
+					#print "new word",
+					#print k/float(self.numNormalWords + k*V)
+					normalVal += log(k/float(self.numNormalWords + k*V)) #DOUBLE CHECK NUMERATOR
+				else:
+					normalVal += log(temp[1])
+
 			#laplacian smoothing
 			if(spamVal > normalVal):
-				spamClassified.append(index)
+				self.spamClassified.append(index)
 			else:
-				normalClassified.append(index)
+				self.normalClassified.append(index)
 			index += 1
 
 	def calcEmailClassificationAccuracy(self):
 		accuracy = 0.0
 		for testIndex in self.spamClassified:
-			if(testEmailLabels[testIndex] == 1):
+			if(self.testEmailLabels[testIndex] == 1):
 				accuracy += 1
 		for testIndex in self.normalClassified:
-			if(testEmailLabels[testIndex] == 0):
+			if(self.testEmailLabels[testIndex] == 0):
 				accuracy += 1
 		accuracy /= len(self.masterTestEmailDictionaryList)
 		accuracy *= float(100)
@@ -378,6 +395,7 @@ class Part2(object):
 		self.calcEmailProbabilityTables()
 		self.calcEmailPriors()
 		self.parseTestEmails(filename_email_test)
+		#self.printTestEmailLabels()
 		self.classifyTestEmails()
 		self.calcEmailClassificationAccuracy()
 
