@@ -27,6 +27,9 @@ class Part2(object):
 	spamClassified = [] #indices for emails classified as spam
 	normalClassified = [] #as normal
 
+	MAPClassificationEmails = []
+	confusionMatrixEmails = []
+
 	##8CAT
 	#parsing 8cat
 	masterTraining8catDictionaryList = []
@@ -39,6 +42,10 @@ class Part2(object):
 	num8catWords = [0,0,0,0,0,0,0,0] # counters
 	priors8cat = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
 	classified8cat = [[],[],[],[],[],[],[],[]] #indices for messages classified for each class (category)
+
+	MAPClassification8cat = []
+	confusionMatrix8cat = []
+
 
 	#parse the training emails
 	def parseTrainingEmails(self, filename):
@@ -176,7 +183,7 @@ class Part2(object):
 		print "Normal Prior:", self.normalPrior
 
 	def classifyTestEmails(self):
-		index = 0
+		messageIndex = 0
 		for message in self.masterTestEmailDictionaryList:
 			spamVal = log(self.spamPrior)
 			normalVal = log(self.normalPrior)
@@ -204,12 +211,55 @@ class Part2(object):
 				else:
 					normalVal += log(temp[1])
 
+			bestCat = -1
 			#the actual clasification
 			if(spamVal > normalVal):
-				self.spamClassified.append(index)
+				self.spamClassified.append(messageIndex)
+				bestCat = 1
 			else:
-				self.normalClassified.append(index)
-			index += 1
+				self.normalClassified.append(messageIndex)
+				bestCat = 0
+
+			#for confusion matrix
+			testPrint = []
+			testPrint.append(self.testEmailLabels[messageIndex])
+			testPrint.append(bestCat)
+			self.MAPClassificationEmails.append(testPrint)
+
+			messageIndex += 1
+
+	def printMAPClassificationEmails(self):
+		print "Printing MAP Classification for emails"
+		for entry in self.MAPClassificationEmails:
+			print entry
+
+	def confusionMatrixEmails(self):
+ 		#a 2x2 matrix whose entry in row r and column c
+ 		#is the percentage of test images from class r
+ 		#that are classified as class c
+ 		localMatrix = []
+ 		for r in xrange(0,2):
+ 			row_entry = []
+ 			for c in xrange(0,2):
+ 				#the entry itself
+ 				r_count = 0
+ 				c_count = 0
+ 				for entry in self.MAPClassificationEmails:
+ 					if(entry[0]==r):
+ 						r_count += 1
+ 						if(entry[1]==c):
+ 							c_count += 1
+ 				val = c_count/float(r_count)
+ 				row_entry.append(val)
+ 			localMatrix.append(row_entry)
+ 		self.confusionMatrixEmails = localMatrix
+
+ 	def printConfusionMatrixEmails(self):
+ 		print "Confusion Matrix for Emails"
+ 		for row in self.confusionMatrixEmails:
+ 			for col in row:
+				print ("%.6f" % col),
+			print "\n",
 
 	def calcEmailClassificationAccuracy(self):
 		accuracy = 0.0
@@ -307,7 +357,7 @@ class Part2(object):
 				#print word, self.master8catDictList[category].get(word)
 				self.num8catWords[category] += self.master8catDictList[category].get(word, 0) # for calc8catProbabilityTables
 			category += 1
-			print "\n|"
+			#print "\n|"
 
 	def print8catNumWordsAll(self):
 		print "\n"
@@ -416,10 +466,13 @@ class Part2(object):
 			bestCat = testVals.index(max(testVals))
 			self.classified8cat[bestCat].append(messageIndex)
 
-			#debugging
+			#for confusion matrix
 			testPrint = []
 			testPrint.append(self.test8catLabels[messageIndex])
 			testPrint.append(bestCat)
+			self.MAPClassification8cat.append(testPrint)
+
+			#debugging
 			print testPrint,
 			if(testPrint[0]==testPrint[1]):
 				accuracy += 1
@@ -434,23 +487,61 @@ class Part2(object):
 		accuracy *= float(100)
 		print "Overall 8cat accuracy:", accuracy, "%"
 
+	def printMAPClassification8cat(self):
+		print "Printing MAP Classification for 8cat"
+		for entry in self.MAPClassification8cat:
+			print entry
+
+
+	def confusionMatrix8cat(self):
+ 		#a 8x8 matrix whose entry in row r and column c
+ 		#is the percentage of test images from class r
+ 		#that are classified as class c
+ 		localMatrix = []
+ 		for r in xrange(0,8):
+ 			row_entry = []
+ 			for c in xrange(0,8):
+ 				#the entry itself
+ 				r_count = 0
+ 				c_count = 0
+ 				for entry in self.MAPClassification8cat:
+ 					if(entry[0]==r):
+ 						r_count += 1
+ 						if(entry[1]==c):
+ 							c_count += 1
+ 				val = c_count/float(r_count)
+ 				row_entry.append(val)
+ 			localMatrix.append(row_entry)
+ 		self.confusionMatrix8cat = localMatrix
+
+ 	def printConfusionMatrix8cat(self):
+ 		print "Confusion Matrix for 8cat"
+ 		for row in self.confusionMatrix8cat:
+ 			for col in row:
+				print ("%.4f" % col),
+			print "\n",
+
+
 	def __init__(self, filename_email_training, filename_8cat_training, filename_email_test, filename_8cat_test):
 
-		# #EMAILS
-		# self.parseTrainingEmails(filename_email_training)
-		# self.createTrainingSpamAndNormalDictionaries()
-		# #self.printTrainingEmailLabels()
-		# #self.printTestEmailLabels()
-		# self.printTrainingEmailDictionaries()
-		# self.printSpamAndNormalDictionaries()
-		# print "Spam words:", self.numSpamWords
-		# print "Normal words:",self.numNormalWords
-		# self.calcEmailProbabilityTables()
-		# self.calcEmailPriors()
-		# self.parseTestEmails(filename_email_test)
-		# #self.printTestEmailLabels()
-		# self.classifyTestEmails()
-		# self.calcEmailClassificationAccuracy()
+		#EMAILS
+		self.parseTrainingEmails(filename_email_training)
+		self.createTrainingSpamAndNormalDictionaries()
+		#self.printTrainingEmailLabels()
+		#self.printTestEmailLabels()
+		self.printTrainingEmailDictionaries()
+		self.printSpamAndNormalDictionaries()
+		print "Spam words:", self.numSpamWords
+		print "Normal words:",self.numNormalWords
+		self.calcEmailProbabilityTables()
+		self.calcEmailPriors()
+		self.parseTestEmails(filename_email_test)
+		#self.printTestEmailLabels()
+		self.classifyTestEmails()
+		self.calcEmailClassificationAccuracy()
+		self.printMAPClassificationEmails()
+		self.confusionMatrixEmails()
+		self.printConfusionMatrixEmails()
 
 		#8CAT
 		self.parseTraining8cat(filename_8cat_training)
@@ -462,5 +553,8 @@ class Part2(object):
 		self.calc8catPriors()
 		self.calc8catProbabilityTables()
 		self.parseTest8cat(filename_8cat_test)
-		self.printTest8catLabels()
+		#self.printTest8catLabels()
 		self.classifyTest8cat()
+		self.printMAPClassification8cat()
+		self.confusionMatrix8cat()
+		self.printConfusionMatrix8cat()
