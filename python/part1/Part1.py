@@ -338,6 +338,8 @@ class Part1(object):
 		print "Highest four c1, c2 pairs"
 		for i in xrange(0, 4):
 			print self.c1_list[i], self.c2_list[i]
+			self.printToHeatMap(self.llhList[self.c1_list[i]],"originalFirst"+str(i))
+			self.printToHeatMap(self.llhList[self.c2_list[i]],"originalSecond"+str(i))
 
 		for c1 in self.c1_list:
 			for c2 in self.c2_list:
@@ -354,10 +356,10 @@ class Part1(object):
 				self.oddsRatiosMatrices.append(curr_matrix)
 				self.logOddsRatiosMatrices.append(log_curr_matrix)
 		
-		i=0
+		matrix_counter = 1
 		for matrix in self.logOddsRatiosMatrices:
-			self.printToHeatMap(matrix,i)
-			i+=1
+			self.printToHeatMap(matrix,"LogOdds"+str(self.c1_list[(matrix_counter-1)//4])+"over"+str(self.c2_list[(matrix_counter-1)%4]))
+			matrix_counter+=1
 			
 		# all the matrices matrices (c1=c2=[0 through 9])
 		for c1 in xrange(0, 10):
