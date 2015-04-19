@@ -388,7 +388,9 @@ class Part2(object):
 			print label
 
 	def classifyTest8cat(self):
-		index = 0
+		accuracy = 0.0 #for accuracy calculation
+
+		messageIndex = 0
 		for message in self.masterTest8catDictionaryList:
 
 			#local evaluation list for message initially filled with priors
@@ -397,7 +399,7 @@ class Part2(object):
 			for prior in self.priors8cat: #fill local evaluation list with priors
 				testVals.append(prior)
 			#print "Priors:", testVals
-			
+
 			#iteration through each message's words
 			for word in message: #iterate through each word in the message
 				for category in xrange(len(self.master8catDictList)):
@@ -412,16 +414,25 @@ class Part2(object):
 
 			#get the max testVal (best category) and classify accordingly
 			bestCat = testVals.index(max(testVals))
-			self.classified8cat[bestCat].append(index)
+			self.classified8cat[bestCat].append(messageIndex)
 
 			#debugging
 			testPrint = []
-			testPrint.append(self.test8catLabels[index])
+			testPrint.append(self.test8catLabels[messageIndex])
 			testPrint.append(bestCat)
-			print testPrint
+			print testPrint,
+			if(testPrint[0]==testPrint[1]):
+				accuracy += 1
+				print "correct classification"
+			else:
+				print ""
 
-			index += 1
+			messageIndex += 1
 
+		#accuracy calculation
+		accuracy /= float(messageIndex+1)
+		accuracy *= float(100)
+		print "Overall 8cat accuracy:", accuracy, "%"
 
 	def calc8catClassificationAccuracy(self):
 		accuracy = 0.0
@@ -468,4 +479,4 @@ class Part2(object):
 		self.parseTest8cat(filename_8cat_test)
 		self.printTest8catLabels()
 		self.classifyTest8cat()
-		self.calc8catClassificationAccuracy()
+		#self.calc8catClassificationAccuracy()
