@@ -1,4 +1,9 @@
 from operator import itemgetter
+from math import log
+
+k = 1 #1 to 50
+V = 2
+V8 = 8
 
 class Part2(object):
 
@@ -18,6 +23,9 @@ class Part2(object):
 	numNormalWords = 0
 	spamPrior = 0.0
 	normalPrior = 0.0
+
+	spamClassified = [] #indices for emails classified as spam
+	normalClassified = [] #as normal
 
 	##8CAT
 	#parsing 8cat
@@ -148,7 +156,7 @@ class Part2(object):
 		for word in sorted(self.spamEmailsDictionary):
 			curr_value = []
 			curr_value.append(self.spamEmailsDictionary.get(word))
-			curr_value.append(curr_value[0]/float(self.numSpamWords))
+			curr_value.append((curr_value[0]+k)/float(self.numSpamWords+k*V))
 			self.spamEmailsDictionary[word] = curr_value
 			print word, self.spamEmailsDictionary.get(word)
 		print "\n",
@@ -156,7 +164,7 @@ class Part2(object):
 		for word in sorted(self.normalEmailsDictionary):
 			curr_value = []
 			curr_value.append(self.normalEmailsDictionary.get(word))
-			curr_value.append(curr_value[0]/float(self.numNormalWords))
+			curr_value.append((curr_value[0]+k)/float(self.numNormalWords+k*V))
 			self.normalEmailsDictionary[word] = curr_value
 			print word, self.normalEmailsDictionary.get(word)
 
@@ -165,6 +173,37 @@ class Part2(object):
 		self.normalPrior = self.numNormalWords / float(self.numSpamWords + self.numNormalWords)
 		print "Spam Prior:", self.spamPrior
 		print "Normal Prior:", self.normalPrior
+
+	def classifyTestEmails(self):
+		index = 0
+		for message in self.masterTestEmailDictionaryList:
+			spamVal = log(self.spamPrior)
+			normalVal = log(self.normalPrior)
+			#P(spam|message) correlates to P(spam)*Product( P(w_i|spam) )
+			for word in message:
+				temp = self.spamEmailsDictionary.get(word)
+				#print temp
+				spamVal += log(temp[1])
+				temp = self.normalEmailsDictionary.get(word)
+				normalVal += log(temp[1])
+			#laplacian smoothing
+			if(spamVal > normalVal):
+				spamClassified.append(index)
+			else:
+				normalClassified.append(index)
+			index += 1
+
+	def calcEmailClassificationAccuracy(self):
+		accuracy = 0.0
+		for testIndex in self.spamClassified:
+			if(testEmailLabels[testIndex] == 1):
+				accuracy += 1
+		for testIndex in self.normalClassified:
+			if(testEmailLabels[testIndex] == 0):
+				accuracy += 1
+		accuracy /= len(self.masterTestEmailDictionaryList)
+		accuracy *= float(100)
+		print "Overall accuracy:", accuracy, "%"
 
 	def parseTraining8cat(self, filename):
 		#each line is a document
@@ -287,7 +326,7 @@ class Part2(object):
 			category += 1
 
 	def parseTest8cat(self, filename):
-				#each line is a document
+		#each line is a document
 		#each document: [label] [word1]:[count1] [word2]:[count2] ... [wordn]:[countn]
 		#labels for email: 0 is normal, 1 is spam
 		#labels for 8category: 0 is sci.space; 1 is comp.sys.ibm.pc.hardware;
@@ -327,31 +366,34 @@ class Part2(object):
 
 	def __init__(self, filename_email_training, filename_8cat_training, filename_email_test, filename_8cat_test):
 
-		# #training email
-		# self.parseTrainingEmails(filename_email_training)
-		# self.createTrainingSpamAndNormalDictionaries()
-		# #self.printTrainingEmailLabels()
-		# #self.printTestEmailLabels()
-		# self.printTrainingEmailDictionaries()
-		# self.printSpamAndNormalDictionaries()
-		# print "Spam words:", self.numSpamWords
-		# print "Normal words:",self.numNormalWords
-		# self.calcEmailProbabilityTables()
-		# self.calcEmailPriors()
+		#training email
+		self.parseTrainingEmails(filename_email_training)
+		self.createTrainingSpamAndNormalDictionaries()
+		#self.printTrainingEmailLabels()
+		#self.printTestEmailLabels()
+		self.printTrainingEmailDictionaries()
+		self.printSpamAndNormalDictionaries()
+		print "Spam words:", self.numSpamWords
+		print "Normal words:",self.numNormalWords
+		self.calcEmailProbabilityTables()
+		self.calcEmailPriors()
+		self.parseTestEmails(filename_email_test)
+		self.classifyTestEmails()
+		self.calcEmailClassificationAccuracy()
 
 		# #test emails
 		# self.parseTestEmails(filename_email_test)
 		# self.printTestEmailLabels()
 
-		#training 8cat
-		self.parseTraining8cat(filename_8cat_training)
-		self.printTraining8catLabels()
-		self.printTraining8catDictionaries()
-		self.create8catDictionaries()
-		self.print8catDictionaries()
-		self.print8catNumWordsAll()
-		self.calc8catPriors()
-		self.calc8catProbabilityTables()
-		self.parseTest8cat(filename_8cat_test)
-		self.printTest8catLabels()
+		# #training 8cat
+		# self.parseTraining8cat(filename_8cat_training)
+		# self.printTraining8catLabels()
+		# self.printTraining8catDictionaries()
+		# self.create8catDictionaries()
+		# self.print8catDictionaries()
+		# self.print8catNumWordsAll()
+		# self.calc8catPriors()
+		# self.calc8catProbabilityTables()
+		# self.parseTest8cat(filename_8cat_test)
+		# self.printTest8catLabels()
 
