@@ -281,7 +281,6 @@ class Part2(object):
 				self.master8catDictList[category][word] = curr_value
 				print word, self.master8catDictList[category].get(word)
 			#break #first dictionary
-			print self.num8catWords[category]
 			category += 1
 
 
