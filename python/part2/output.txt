@@ -2639,97 +2639,97 @@ Confusion Matrix for 8cat
 0.0000 0.1000 0.0000 0.0000 0.0000 0.9000 0.0000 0.0000 
 0.0000 0.0217 0.0217 0.0000 0.0000 0.0217 0.9348 0.0000 
 0.0000 0.1379 0.0000 0.0345 0.0000 0.1034 0.0000 0.7241 
-c1 list: [2, 0, 1, 4]
-c2 list: [2, 0, 1, 4]
-top 20 words with the highest log-odds ratio for class rec.sport.baseball and rec.sport.baseball
-alldefines
-darrylo
-theoreticaly
-sowell
-sonja
-aspibin
-woods
-hsv
-xaviertar
-hanging
-woody
-thensen
-localized
-disobeying
-xtinitialize
-sprague
-gab
-skipping
-hilighter
-gaa
+c1 list: [3, 7, 7, 5]
+c2 list: [1, 1, 5, 1]
+top 20 words with the highest log-odds ratio for class 3 comp.windows.x and 1 comp.sys.ibm.pc.hardware
+motif
+widget
+xterm
+x
+openwindows
+export
+z
+microsoftwindows
+echo
+resources
+toolkit
+widgets
+resource
+entries
+xlib
+printf
+visual
+title
+oname
+xv
 
 
-top 20 words with the highest log-odds ratio for class sci.space and sci.space
-alldefines
-darrylo
-theoreticaly
-sowell
-sonja
-aspibin
-woods
-hsv
-xaviertar
-hanging
-woody
-thensen
-localized
-disobeying
-xtinitialize
-sprague
-gab
-skipping
-hilighter
-gaa
+top 20 words with the highest log-odds ratio for class 7 comp.graphics and 1 comp.sys.ibm.pc.hardware
+jpeg
+z
+ray
+xv
+tiff
+convert
+visualization
+phigs
+quicktime
+gopher
+project
+interactive
+gif
+viewer
+animation
+algorithm
+pixel
+sgi
+analysis
+gamma
 
 
-top 20 words with the highest log-odds ratio for class comp.sys.ibm.pc.hardware and comp.sys.ibm.pc.hardware
-alldefines
-darrylo
-theoreticaly
-sowell
-sonja
-aspibin
-woods
-hsv
-xaviertar
-hanging
-woody
-thensen
-localized
-disobeying
-xtinitialize
-sprague
-gab
-skipping
-hilighter
-gaa
+top 20 words with the highest log-odds ratio for class 7 comp.graphics and 5 misc.forsale
+jpeg
+ftp
+gif
+images
+sgi
+xv
+sites
+bits
+image
+archive
+tiff
+visualization
+phigs
+quicktime
+gopher
+faq
+archie
+viewer
+animation
+algorithm
 
 
-top 20 words with the highest log-odds ratio for class talk.politics.misc and talk.politics.misc
-alldefines
-darrylo
-theoreticaly
-sowell
-sonja
-aspibin
-woods
-hsv
-xaviertar
-hanging
-woody
-thensen
-localized
-disobeying
-xtinitialize
-sprague
-gab
-skipping
-hilighter
-gaa
+top 20 words with the highest log-odds ratio for class 5 misc.forsale and 1 comp.sys.ibm.pc.hardware
+wolverine
+comics
+hulk
+annual
+spiderman
+ghost
+liefeld
+sabretooth
+rider
+condition
+app
+bagged
+hobgoblin
+xforce
+guide
+punisher
+sale
+edition
+marvel
+ufl
 
 

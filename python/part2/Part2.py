@@ -637,6 +637,8 @@ class Part2(object):
 		for row in self.confusionMatrix8cat:
 			col_counter = 0
 			for col in row:
+				if(row_counter==col_counter): #exclude diagonals
+					continue
 				curr = []
 				curr.append(col)
 				curr.append(row_counter)
@@ -671,7 +673,7 @@ class Part2(object):
 					#print word
 					logOddsWordListEmail[word] = logodds(word, c1, c2)
 			logOddsWordListEmail = sorted(logOddsWordListEmail.items(), key=itemgetter(1), reverse=True)
-			print "top 20 words with the highest log-odds ratio for class", self.getCat(c1), "and", self.getCat(c2)
+			print "top 20 words with the highest log-odds ratio for class", c1, self.getCat(c1), "and", c2, self.getCat(c2)
 			for j in xrange(0, 20):
 				print logOddsWordListEmail[j][0]
 			print "\n"
