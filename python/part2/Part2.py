@@ -107,7 +107,6 @@ class Part2(object):
 					self.normalEmailsDictionary[key] = value #update the entry
 			counter += 1
 
-	#print the email labels
 	def printTrainingEmailLabels(self):
 		for label in self.trainingEmailLabels:
 			print label
@@ -205,7 +204,7 @@ class Part2(object):
 					spamVal += log(temp[1])
 				
 				temp = self.normalEmailsDictionary.get(word)
-				print "normal", temp, type(temp)
+				#print "normal", temp, type(temp)
 				if(temp == None): #words not found in spam https://piazza.com/class/i56vzaj3akl4wf?cid=472
 					#  1 / (the number of words in "spam" + k * V)
 					#print "new word",
@@ -298,14 +297,14 @@ class Part2(object):
 		#c1 and c2 are numbers corresponding to the class
 		def odds(word, c1, c2):
 			#odds(Fij=1, c1, c2) = P(Fij=1 | c1) / P(Fij=1 | c2)
-			llh_1 = self.spamEmailsDictionary.get(word, 0)
-			llh_2 = self.normalEmailsDictionary.get(word, 0)
-			print "c1:",llh_1,"c2:",llh_2, #debugging
-			return float(llh_1)/float(llh_2)
+			llh_1 = self.spamEmailsDictionary.get(word, [0,k/float(self.numSpamWords + k*V)])
+			llh_2 = self.normalEmailsDictionary.get(word, [0,k/float(self.numNormalWords + k*V)])
+			print "c1:",("%.6f" % llh_1[1]),"c2:",("%.6f" % llh_2[1]), #debugging
+			return float(llh_1[1])/float(llh_2[1])
 
 		def logodds(word, c1, c2):
 			val = float(log(odds(word, c1, c2)))
-			print "logodds:", val
+			print "logodds:", ("%.6f" % val)
 			return val
 
 		highestFour = []
@@ -331,19 +330,30 @@ class Part2(object):
 			c1_list.append(highestFour[i][1])
 			c2_list.append(highestFour[i][2])
 			#http://stackoverflow.com/questions/930397/getting-the-last-element-of-a-list-in-python
-			print c1_list[-1], c2_list[-1] #last element
+			#print c1_list[-1], c2_list[-1] #last element
 
-		logOddsWordListEmail = {}
+		print "c1 list:", c1_list
+		print "c2 list:", c2_list
+
 		for c1 in c1_list:
 			for c2 in c2_list:
 				#iterate through words in
-				for dictionary in self.masterTestEmailDictionaryList:
-					print "Printing a dictionary"
-					#print dictionary
-					for word in dictionary:
-						# word, dictionary.get(word)
-						sys.exit(0)
-						logOddsWordListEmail[word] = logodds(word, c1, c2)
+				logOddsWordListEmail = {}
+				counter = 0
+				for word in self.spamEmailsDictionary:
+					# word, dictionary.get(word)
+					print word
+					logOddsWordListEmail[word] = logodds(word, c1, c2)
+					if(counter >= 6): sys.exit(0)
+					counter += 1
+				for word in self.normalEmailsDictionary:
+					print word
+					logOddsWordListEmail[word] = logodds(word, c1, c2)
+				logOddsWordListEmail = sorted(logOddsWordListEmail, key=itemgetter(1), reverse=True)
+				for i in xrange(0, 20):
+					print "top 20 words with the highest log-odds ratio for class", c1, "and", c2
+					print logOddsWordListEmail[i]
+				counter += 1
 
 		# #the top 20 words with the highest log-odds ratio for that pair of classes
 		# sortedLogOddsWordList = sorted(logOddsWordList, key=itemgetter(1), reverse=True)
