@@ -1,5 +1,6 @@
 from operator import itemgetter
 from math import log
+from operator import itemgetter
 
 k = 1 #1 to 50
 V = 2
@@ -27,6 +28,10 @@ class Part2(object):
 	spamClassified = [] #indices for emails classified as spam
 	normalClassified = [] #as normal
 
+	MAPClassificationEmails = []
+	top20WordsPerClassEmail = []
+	confusionMatrixEmails = []
+
 	##8CAT
 	#parsing 8cat
 	masterTraining8catDictionaryList = []
@@ -35,9 +40,14 @@ class Part2(object):
 	masterTest8catDictionaryList = []
 	test8catLabels = []
 
-	master8catDictList = [{},{},{},{},{},{},{},{}] # list of dictionaries for each class (catetory)
+	master8catDictList = [{},{},{},{},{},{},{},{}] # list of dictionaries for each class (category)
 	num8catWords = [0,0,0,0,0,0,0,0] # counters
 	priors8cat = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+	classified8cat = [[],[],[],[],[],[],[],[]] #indices for messages classified for each class (category)
+
+	MAPClassification8cat = []
+	confusionMatrix8cat = []
+
 
 	#parse the training emails
 	def parseTrainingEmails(self, filename):
@@ -175,35 +185,110 @@ class Part2(object):
 		print "Normal Prior:", self.normalPrior
 
 	def classifyTestEmails(self):
-		index = 0
+		messageIndex = 0
 		for message in self.masterTestEmailDictionaryList:
 			spamVal = log(self.spamPrior)
 			normalVal = log(self.normalPrior)
 			#P(spam|message) correlates to P(spam)*Product( P(w_i|spam) )
 			for word in message:
+				#print word,
+
 				temp = self.spamEmailsDictionary.get(word)
-				#print temp
-				spamVal += log(temp[1])
+				#print "spam", temp, type(temp),
+				if(temp == None): #words not found in spam https://piazza.com/class/i56vzaj3akl4wf?cid=472
+					#  1 / (the number of words in "spam" + k * V)
+					#print "new word",
+					#print k/float(self.numSpamWords + k*V)
+					spamVal += log(k/float(self.numSpamWords + k*V)) #laplacian smoothing for new words
+				else:
+					spamVal += log(temp[1])
+				
 				temp = self.normalEmailsDictionary.get(word)
-				normalVal += log(temp[1])
-			#laplacian smoothing
+				print "normal", temp, type(temp)
+				if(temp == None): #words not found in spam https://piazza.com/class/i56vzaj3akl4wf?cid=472
+					#  1 / (the number of words in "spam" + k * V)
+					#print "new word",
+					#print k/float(self.numNormalWords + k*V)
+					normalVal += log(k/float(self.numNormalWords + k*V)) #laplacian smoothing for new words
+				else:
+					normalVal += log(temp[1])
+
+			bestCat = -1
+			#the actual clasification
 			if(spamVal > normalVal):
-				spamClassified.append(index)
+				self.spamClassified.append(messageIndex)
+				bestCat = 1
 			else:
-				normalClassified.append(index)
-			index += 1
+				self.normalClassified.append(messageIndex)
+				bestCat = 0
+
+			#for confusion matrix
+			testPrint = []
+			testPrint.append(self.testEmailLabels[messageIndex])
+			testPrint.append(bestCat)
+			self.MAPClassificationEmails.append(testPrint)
+
+			messageIndex += 1
+
+	def printMAPClassificationEmails(self):
+		print "Printing MAP Classification for emails"
+		for entry in self.MAPClassificationEmails:
+			print entry
+		print "\n"
+
+	def findTop20WordsPerClassEmail(self):
+		print "Top 20 words in spam set with highest likelihood"
+		# sorts spamEmailsDictionary by its values, greatest to least (instead of least to greatest)
+		top20SpamWords = sorted(self.spamEmailsDictionary.items(), key=itemgetter(1), reverse=True)
+		for topEntry in xrange(0, 20):
+			print top20SpamWords[topEntry][0]
+		print "\n",
+
+		print "Top 20 in normal set with highest likelihood"
+		top20NormalWords = sorted(self.normalEmailsDictionary.items(), key=itemgetter(1), reverse=True)
+		for topEntry in xrange(0, 20):
+			print top20NormalWords[topEntry][0]
+		print "\n",
+
+	def confusionMatrixEmails(self):
+ 		#a 2x2 matrix whose entry in row r and column c
+ 		#is the percentage of test images from class r
+ 		#that are classified as class c
+ 		localMatrix = []
+ 		for r in xrange(0,2):
+ 			row_entry = []
+ 			for c in xrange(0,2):
+ 				#the entry itself
+ 				r_count = 0
+ 				c_count = 0
+ 				for entry in self.MAPClassificationEmails:
+ 					if(entry[0]==r):
+ 						r_count += 1
+ 						if(entry[1]==c):
+ 							c_count += 1
+ 				val = c_count/float(r_count)
+ 				row_entry.append(val)
+ 			localMatrix.append(row_entry)
+ 		self.confusionMatrixEmails = localMatrix
+
+ 	def printConfusionMatrixEmails(self):
+ 		print "Confusion Matrix for Emails"
+ 		for row in self.confusionMatrixEmails:
+ 			for col in row:
+				print ("%.6f" % col),
+			print "\n",
 
 	def calcEmailClassificationAccuracy(self):
 		accuracy = 0.0
 		for testIndex in self.spamClassified:
-			if(testEmailLabels[testIndex] == 1):
+			if(self.testEmailLabels[testIndex] == 1):
 				accuracy += 1
 		for testIndex in self.normalClassified:
-			if(testEmailLabels[testIndex] == 0):
+			if(self.testEmailLabels[testIndex] == 0):
 				accuracy += 1
 		accuracy /= len(self.masterTestEmailDictionaryList)
 		accuracy *= float(100)
-		print "Overall accuracy:", accuracy, "%"
+		print "Overall email accuracy:", accuracy, "%"
 
 	def parseTraining8cat(self, filename):
 		#each line is a document
@@ -271,7 +356,7 @@ class Part2(object):
 		counter = 0
 		for dictionary in self.masterTraining8catDictionaryList:
 			category = self.training8catLabels[counter]
-			print "Category", category, self.getCat(category)
+			#print "Category", category, self.getCat(category)
 			for word in dictionary:
 				key = word #the word
 				value = dictionary.get(key) #the frequency
@@ -279,14 +364,17 @@ class Part2(object):
 				value += self.master8catDictList[category].get(key, 0) #increase the value (frequency) by the existing entry's value, default is 0 if none is found
 				self.master8catDictList[category][key] = value #update the entry
 			counter += 1
+			print ""
 
 	def print8catDictionaries(self):
-		counter = 0
+		category = 0
 		for dictionary in self.master8catDictList:
+			print "Printing Dictionary", category, self.getCat(category)
 			for word in sorted(dictionary):
-				print word, self.master8catDictList[counter].get(word)
-				self.num8catWords[counter] += self.master8catDictList[counter].get(word, 0) # for calc8catProbabilityTables
-			counter += 1
+				#print word, self.master8catDictList[category].get(word)
+				self.num8catWords[category] += self.master8catDictList[category].get(word, 0) # for calc8catProbabilityTables
+			category += 1
+			#print "\n|"
 
 	def print8catNumWordsAll(self):
 		print "\n"
@@ -307,8 +395,10 @@ class Part2(object):
 		print "total:", total
 		for prior in self.priors8cat:
 			prior /= total
+			self.priors8cat[counter] = prior #whoops
 			print "Prior for", self.getCat(counter), ":", prior
 			counter += 1
+		print self.priors8cat
 		print "\n"
 
 	def calc8catProbabilityTables(self):
@@ -319,9 +409,9 @@ class Part2(object):
 			for word in sorted(dictionary):
 				curr_value = []
 				curr_value.append(self.master8catDictList[category].get(word))
-				curr_value.append(curr_value[0]/float(self.num8catWords[category]))
+				curr_value.append((curr_value[0]+k)/float(self.num8catWords[category]+k*V8)) #laplacian smoothing
 				self.master8catDictList[category][word] = curr_value
-				print word, self.master8catDictList[category].get(word)
+				#print word, self.master8catDictList[category].get(word)
 			#break #first dictionary
 			category += 1
 
@@ -364,36 +454,135 @@ class Part2(object):
 		for label in self.test8catLabels:
 			print label
 
+	def classifyTest8cat(self):
+		accuracy = 0.0 #for accuracy calculation
+
+		messageIndex = 0
+		for message in self.masterTest8catDictionaryList:
+
+			#local evaluation list for message initially filled with priors
+			#print self.priors8cat
+			testVals = []
+			for prior in self.priors8cat: #fill local evaluation list with priors
+				testVals.append(prior)
+			#print "Priors:", testVals
+
+			#iteration through each message's words
+			for word in message: #iterate through each word in the message
+				for category in xrange(len(self.master8catDictList)):
+					temp = self.master8catDictList[category].get(word)
+					if(temp==None):
+						#print "New word prob:", log(k/float(self.num8catWords[category] + k*V8))
+						testVals[category] += log(k/float(self.num8catWords[category] + k*V8)) #laplacian smoothing for "new" words
+					else:
+						#print "Trained word prob:", log(temp[1])
+						testVals[category] += log(temp[1]) #
+			
+
+			#get the max testVal (best category) and classify accordingly
+			bestCat = testVals.index(max(testVals))
+			self.classified8cat[bestCat].append(messageIndex)
+
+			#for confusion matrix
+			testPrint = []
+			testPrint.append(self.test8catLabels[messageIndex])
+			testPrint.append(bestCat)
+			self.MAPClassification8cat.append(testPrint)
+
+			#debugging
+			print testPrint,
+			if(testPrint[0]==testPrint[1]):
+				accuracy += 1
+				print "correct classification"
+			else:
+				print ""
+
+			messageIndex += 1
+
+		#accuracy calculation
+		accuracy /= float(messageIndex+1)
+		accuracy *= float(100)
+		print "Overall 8cat accuracy:", accuracy, "%"
+
+	def printMAPClassification8cat(self):
+		print "Printing MAP Classification for 8cat"
+		for entry in self.MAPClassification8cat:
+			print entry
+
+	def findTop20WordsPerClass8cat(self):
+		for category in xrange(len(self.master8catDictList)):		
+			print "Top 20 words in", self.getCat(category), "with highest likelihood"
+			# sorts spamEmailsDictionary by its values, greatest to least (instead of least to greatest)
+			top20Words = sorted(self.master8catDictList[category].items(), key=itemgetter(1), reverse=True)
+			for topEntry in xrange(0, 20):
+				print top20Words[topEntry][0]
+			print "\n"
+
+
+	def confusionMatrix8cat(self):
+ 		#a 8x8 matrix whose entry in row r and column c
+ 		#is the percentage of test images from class r
+ 		#that are classified as class c
+ 		localMatrix = []
+ 		for r in xrange(0,8):
+ 			row_entry = []
+ 			for c in xrange(0,8):
+ 				#the entry itself
+ 				r_count = 0
+ 				c_count = 0
+ 				for entry in self.MAPClassification8cat:
+ 					if(entry[0]==r):
+ 						r_count += 1
+ 						if(entry[1]==c):
+ 							c_count += 1
+ 				val = c_count/float(r_count)
+ 				row_entry.append(val)
+ 			localMatrix.append(row_entry)
+ 		self.confusionMatrix8cat = localMatrix
+
+ 	def printConfusionMatrix8cat(self):
+ 		print "Confusion Matrix for 8cat"
+ 		for row in self.confusionMatrix8cat:
+ 			for col in row:
+				print ("%.4f" % col),
+			print "\n",
+
+
 	def __init__(self, filename_email_training, filename_8cat_training, filename_email_test, filename_8cat_test):
 
-		#training email
-		self.parseTrainingEmails(filename_email_training)
-		self.createTrainingSpamAndNormalDictionaries()
-		#self.printTrainingEmailLabels()
-		#self.printTestEmailLabels()
-		self.printTrainingEmailDictionaries()
-		self.printSpamAndNormalDictionaries()
-		print "Spam words:", self.numSpamWords
-		print "Normal words:",self.numNormalWords
-		self.calcEmailProbabilityTables()
-		self.calcEmailPriors()
-		self.parseTestEmails(filename_email_test)
-		self.classifyTestEmails()
-		self.calcEmailClassificationAccuracy()
-
-		# #test emails
+		# #EMAILS
+		# self.parseTrainingEmails(filename_email_training)
+		# self.createTrainingSpamAndNormalDictionaries()
+		# #self.printTrainingEmailLabels()
+		# #self.printTestEmailLabels()
+		# #self.printTrainingEmailDictionaries()
+		# self.printSpamAndNormalDictionaries()
+		# print "Spam words:", self.numSpamWords
+		# print "Normal words:",self.numNormalWords
+		# self.calcEmailProbabilityTables()
+		# self.calcEmailPriors()
 		# self.parseTestEmails(filename_email_test)
-		# self.printTestEmailLabels()
+		# #self.printTestEmailLabels()
+		# self.classifyTestEmails()
+		# self.calcEmailClassificationAccuracy()
+		# self.printMAPClassificationEmails()
+		# self.findTop20WordsPerClassEmail()
+		# self.confusionMatrixEmails()
+		# self.printConfusionMatrixEmails()
 
-		# #training 8cat
-		# self.parseTraining8cat(filename_8cat_training)
-		# self.printTraining8catLabels()
-		# self.printTraining8catDictionaries()
-		# self.create8catDictionaries()
-		# self.print8catDictionaries()
-		# self.print8catNumWordsAll()
-		# self.calc8catPriors()
-		# self.calc8catProbabilityTables()
-		# self.parseTest8cat(filename_8cat_test)
-		# self.printTest8catLabels()
-
+		#8CAT
+		self.parseTraining8cat(filename_8cat_training)
+		#self.printTraining8catLabels()
+		#self.printTraining8catDictionaries()
+		self.create8catDictionaries()
+		self.print8catDictionaries()
+		#self.print8catNumWordsAll()
+		self.calc8catPriors()
+		self.calc8catProbabilityTables()
+		self.parseTest8cat(filename_8cat_test)
+		#self.printTest8catLabels()
+		self.classifyTest8cat()
+		self.printMAPClassification8cat()
+		self.findTop20WordsPerClass8cat()
+		self.confusionMatrix8cat()
+		self.printConfusionMatrix8cat()
