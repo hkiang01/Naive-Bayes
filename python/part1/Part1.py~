@@ -325,7 +325,8 @@ class Part1(object):
 		highestFour = []
 		for i in xrange(0, NUM_CLASSES):
 			for j in xrange(0, NUM_CLASSES):
-				highestFour.append([1-self.confusionMatrix[i][j], i, j])
+				if (self.confusionMatrix[i][j]!=1):
+					highestFour.append([1-self.confusionMatrix[i][j], i, j])
 				# 1 - because want highest values returned from sorted
 				# sorted returns lowest values by default
 		highestFour = sorted(highestFour, key=itemgetter(0))
@@ -338,27 +339,32 @@ class Part1(object):
 		print "Highest four c1, c2 pairs"
 		for i in xrange(0, 4):
 			print self.c1_list[i], self.c2_list[i]
-			self.printToHeatMap(self.llhList[self.c1_list[i]],"originalFirst"+str(i))
-			self.printToHeatMap(self.llhList[self.c2_list[i]],"originalSecond"+str(i))
+			#self.printToHeatMap(self.llhList[self.c1_list[i]],"originalFirst"+str(i))
+			#self.printToHeatMap(self.llhList[self.c2_list[i]],"originalSecond"+str(i))
+			self.printToHeatMap(self.llhList[highestFour[i][1]],"originalFirst"+str(i))
+			self.printToHeatMap(self.llhList[highestFour[i][2]],"originalSecond"+str(i))
 
-		for c1 in self.c1_list:
-			for c2 in self.c2_list:
-				curr_matrix = []
-				log_curr_matrix = []
-				for i in xrange(0, NUM_ROWS):
-					curr_line = []
-					log_curr_line = []
-					for j in xrange(0, NUM_COLS):
-						curr_line.append(odds(i, j, c1, c2))
-						log_curr_line.append(logodds(i, j, c1, c2))
-					curr_matrix.append(curr_line)
-					log_curr_matrix.append(log_curr_line)
-				self.oddsRatiosMatrices.append(curr_matrix)
-				self.logOddsRatiosMatrices.append(log_curr_matrix)
+		#for c1 in self.c1_list:
+		#	for c2 in self.c2_list:
+		for idx in xrange(0,4):
+			curr_matrix = []
+			log_curr_matrix = []
+			for i in xrange(0, NUM_ROWS):
+				curr_line = []
+				log_curr_line = []
+				for j in xrange(0, NUM_COLS):
+					curr_line.append(odds(i, j, highestFour[idx][1], highestFour[idx][2]))
+					log_curr_line.append(logodds(i, j, highestFour[idx][1], highestFour[idx][2]))
+					#curr_line.append(odds(i, j, self.c1_list[idx], self.c2_list[idx]))
+					#log_curr_line.append(logodds(i, j, self.c1_list[idx], self.c2_list[idx]))
+				curr_matrix.append(curr_line)
+				log_curr_matrix.append(log_curr_line)
+			self.oddsRatiosMatrices.append(curr_matrix)
+			self.logOddsRatiosMatrices.append(log_curr_matrix)
 		
 		matrix_counter = 1
 		for matrix in self.logOddsRatiosMatrices:
-			self.printToHeatMap(matrix,"LogOdds"+str(self.c1_list[(matrix_counter-1)//4])+"over"+self.c2_list[(matrix_counter-1)%4])
+			self.printToHeatMap(matrix,"LogOdds"+str(self.c1_list[(matrix_counter-1)%4])+"over"+str(self.c2_list[(matrix_counter-1)%4]))
 			matrix_counter+=1
 			
 		# all the matrices matrices (c1=c2=[0 through 9])
