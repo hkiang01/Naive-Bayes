@@ -346,12 +346,10 @@ class Part2(object):
 			c2 = c2_list[i]
 			#iterate through words in spam and normal training sets
 			logOddsWordListEmail = {}
-			counter = 0
 			for word in self.spamEmailsDictionary:
 				# word, dictionary.get(word)
 				#print word
 				logOddsWordListEmail[word] = logodds(word, c1, c2)
-				counter += 1
 			for word in self.normalEmailsDictionary:
 				#print word
 				logOddsWordListEmail[word] = logodds(word, c1, c2)
@@ -360,8 +358,6 @@ class Part2(object):
 			for j in xrange(0, 20):
 				print logOddsWordListEmail[j][0]
 			print "\n"
-			counter += 1
-
 
 	def parseTraining8cat(self, filename):
 		#each line is a document
@@ -619,42 +615,104 @@ class Part2(object):
 				print ("%.4f" % col),
 			print "\n",
 
+	def oddsRatios8cat(self):	
+		#display the top 20 words with the highest log-odds ratio for that pair of classes
+
+		#word is a word in the given message
+		#c1 and c2 are numbers corresponding to the class
+		def odds(word, c1, c2):
+			#odds(Fij=1, c1, c2) = P(Fij=1 | c1) / P(Fij=1 | c2)
+			llh_1 = self.master8catDictList[c1].get(word, [0,k/float(self.num8catWords[c1] + k*V8)])
+			llh_2 = self.master8catDictList[c2].get(word, [0,k/float(self.num8catWords[c2] + k*V8)])
+			#print "c1:",("%.6f" % llh_1[1]),"c2:",("%.6f" % llh_2[1]), #debugging
+			return float(llh_1[1])/float(llh_2[1])
+
+		def logodds(word, c1, c2):
+			val = float(log(odds(word, c1, c2)))
+			#print "logodds:", ("%.6f" % val)
+			return val
+
+		highestFour = []
+		row_counter = 0
+		for row in self.confusionMatrix8cat:
+			col_counter = 0
+			for col in row:
+				curr = []
+				curr.append(col)
+				curr.append(row_counter)
+				curr.append(col_counter)
+				#print curr
+				highestFour.append(curr)
+				col_counter += 1
+			row_counter += 1
+
+		c1_list = []
+		c2_list = []
+
+		highestFour = sorted(highestFour, key=itemgetter(0), reverse=True)
+		#print "Highest four c1, c2 pairs"
+		for i in xrange(0,4):
+			c1_list.append(highestFour[i][1])
+			c2_list.append(highestFour[i][2])
+			#http://stackoverflow.com/questions/930397/getting-the-last-element-of-a-list-in-python
+			#print c1_list[-1], c2_list[-1] #last element
+
+		print "c1 list:", c1_list
+		print "c2 list:", c2_list
+
+		for i in xrange(0,4): #iterate through pairs
+			c1 = c1_list[i]
+			c2 = c2_list[i]
+			#iterate through words in spam and normal training sets
+			logOddsWordListEmail = {}
+			for dictionary in self.master8catDictList:
+				for word in dictionary:
+					# word, dictionary.get(word)
+					#print word
+					logOddsWordListEmail[word] = logodds(word, c1, c2)
+			logOddsWordListEmail = sorted(logOddsWordListEmail.items(), key=itemgetter(1), reverse=True)
+			print "top 20 words with the highest log-odds ratio for class", self.getCat(c1), "and", self.getCat(c2)
+			for j in xrange(0, 20):
+				print logOddsWordListEmail[j][0]
+			print "\n"
+
 	def __init__(self, filename_email_training, filename_8cat_training, filename_email_test, filename_8cat_test):
 
-		# #EMAILS
-		self.parseTrainingEmails(filename_email_training)
-		self.createTrainingSpamAndNormalDictionaries()
-		#self.printTrainingEmailLabels()
-		#self.printTestEmailLabels()
-		#self.printTrainingEmailDictionaries()
-		self.printSpamAndNormalDictionaries()
-		print "Spam words:", self.numSpamWords
-		print "Normal words:",self.numNormalWords
-		self.calcEmailProbabilityTables()
-		self.calcEmailPriors()
-		self.parseTestEmails(filename_email_test)
-		#self.printTestEmailLabels()
-		self.classifyTestEmails()
-		self.calcEmailClassificationAccuracy()
-		self.printMAPClassificationEmails()
-		self.findTop20WordsPerClassEmail()
-		self.confusionMatrixEmails()
-		self.printConfusionMatrixEmails()
-		self.oddsRatiosEmail()
+		# # #EMAILS
+		# self.parseTrainingEmails(filename_email_training)
+		# self.createTrainingSpamAndNormalDictionaries()
+		# #self.printTrainingEmailLabels()
+		# #self.printTestEmailLabels()
+		# #self.printTrainingEmailDictionaries()
+		# self.printSpamAndNormalDictionaries()
+		# print "Spam words:", self.numSpamWords
+		# print "Normal words:",self.numNormalWords
+		# self.calcEmailProbabilityTables()
+		# self.calcEmailPriors()
+		# self.parseTestEmails(filename_email_test)
+		# #self.printTestEmailLabels()
+		# self.classifyTestEmails()
+		# self.calcEmailClassificationAccuracy()
+		# self.printMAPClassificationEmails()
+		# self.findTop20WordsPerClassEmail()
+		# self.confusionMatrixEmails()
+		# self.printConfusionMatrixEmails()
+		# self.oddsRatiosEmail()
 
-		# #8CAT
-		# self.parseTraining8cat(filename_8cat_training)
-		# #self.printTraining8catLabels()
-		# #self.printTraining8catDictionaries()
-		# self.create8catDictionaries()
-		# self.print8catDictionaries()
-		# #self.print8catNumWordsAll()
-		# self.calc8catPriors()
-		# self.calc8catProbabilityTables()
-		# self.parseTest8cat(filename_8cat_test)
-		# #self.printTest8catLabels()
-		# self.classifyTest8cat()
-		# self.printMAPClassification8cat()
-		# self.findTop20WordsPerClass8cat()
-		# self.confusionMatrix8cat()
-		# self.printConfusionMatrix8cat()
+		#8CAT
+		self.parseTraining8cat(filename_8cat_training)
+		#self.printTraining8catLabels()
+		#self.printTraining8catDictionaries()
+		self.create8catDictionaries()
+		self.print8catDictionaries()
+		#self.print8catNumWordsAll()
+		self.calc8catPriors()
+		self.calc8catProbabilityTables()
+		self.parseTest8cat(filename_8cat_test)
+		#self.printTest8catLabels()
+		self.classifyTest8cat()
+		self.printMAPClassification8cat()
+		self.findTop20WordsPerClass8cat()
+		self.confusionMatrix8cat()
+		self.printConfusionMatrix8cat()
+		self.oddsRatios8cat()
