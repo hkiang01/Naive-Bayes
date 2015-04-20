@@ -158290,72 +158290,72 @@ Confusion Matrix for Emails
 c1 list: [1, 0, 0, 1]
 c2 list: [1, 0, 1, 0]
 top 20 words with the highest log-odds ratio for class 1 and 1
-sell
-nbsp
-ffa
-remove
-capitalfm
-bulk
-money
-floodgate
-investment
-bonus
-aol
-profit
-mailing
-save
-links
-reports
-offshore
-hundred
-debt
-advertise
+writings
+latinoweb
+predestinate
+pacfocol
+yellow
+qamarus
+four
+compatable
+jioeva
+travaux
+parameterization
+woody
+gabriella
+seoul
+payoff
+looking
+augustine
+idiomatischen
+eligible
+electricity
 
 
 top 20 words with the highest log-odds ratio for class 0 and 0
-sell
-nbsp
-ffa
-remove
-capitalfm
-bulk
-money
-floodgate
-investment
-bonus
-aol
-profit
-mailing
-save
-links
-reports
-offshore
-hundred
-debt
-advertise
+writings
+latinoweb
+predestinate
+pacfocol
+yellow
+qamarus
+four
+compatable
+jioeva
+travaux
+parameterization
+woody
+gabriella
+seoul
+payoff
+looking
+augustine
+idiomatischen
+eligible
+electricity
 
 
 top 20 words with the highest log-odds ratio for class 0 and 1
-sell
-nbsp
-ffa
-remove
-capitalfm
-bulk
-money
-floodgate
-investment
-bonus
-aol
-profit
-mailing
-save
-links
-reports
-offshore
-hundred
-debt
-advertise
+linguistic
+workshop
+abstract
+theory
+syntax
+grammar
+chair
+discourse
+translation
+movement
+computational
+committee
+semantic
+benjamin
+verb
+context
+programme
+phonology
+semantics
+nl
 
 
 top 20 words with the highest log-odds ratio for class 1 and 0

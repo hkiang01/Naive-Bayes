@@ -297,8 +297,14 @@ class Part2(object):
 		#c1 and c2 are numbers corresponding to the class
 		def odds(word, c1, c2):
 			#odds(Fij=1, c1, c2) = P(Fij=1 | c1) / P(Fij=1 | c2)
-			llh_1 = self.spamEmailsDictionary.get(word, [0,k/float(self.numSpamWords + k*V)])
-			llh_2 = self.normalEmailsDictionary.get(word, [0,k/float(self.numNormalWords + k*V)])
+			if(c1==1):
+				llh_1 = self.spamEmailsDictionary.get(word, [0,k/float(self.numSpamWords + k*V)])
+			else:
+				llh_1 = self.normalEmailsDictionary.get(word, [0,k/float(self.numNormalWords + k*V)])
+			if(c2==1):
+				llh_2 = self.spamEmailsDictionary.get(word, [0,k/float(self.numSpamWords + k*V)])
+			else:
+				llh_2 = self.normalEmailsDictionary.get(word, [0,k/float(self.numNormalWords + k*V)])
 			#print "c1:",("%.6f" % llh_1[1]),"c2:",("%.6f" % llh_2[1]), #debugging
 			return float(llh_1[1])/float(llh_2[1])
 
