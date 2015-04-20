@@ -158289,17 +158289,95 @@ Confusion Matrix for Emails
 [0.9846153846153847, 1, 1]
 c1 list: [1, 0, 0, 1]
 c2 list: [1, 0, 1, 0]
-latinoweb
-c1: 0.000018 c2: 0.000011 logodds: 0.495167
-yellow
-c1: 0.000046 c2: 0.000011 logodds: 1.411458
-four
-c1: 0.001219 c2: 0.000369 logodds: 1.195862
-woody
-c1: 0.000018 c2: 0.000022 logodds: -0.197980
-succulent
-c1: 0.000018 c2: 0.000011 logodds: 0.495167
-payoff
-c1: 0.000027 c2: 0.000011 logodds: 0.900632
-looking
-c1: 0.000027 c2: 0.000011 logodds: 0.900632
+top 20 words with the highest log-odds ratio for class 1 and 1
+sell
+nbsp
+ffa
+remove
+capitalfm
+bulk
+money
+floodgate
+investment
+bonus
+aol
+profit
+mailing
+save
+links
+reports
+offshore
+hundred
+debt
+advertise
+
+
+top 20 words with the highest log-odds ratio for class 0 and 0
+sell
+nbsp
+ffa
+remove
+capitalfm
+bulk
+money
+floodgate
+investment
+bonus
+aol
+profit
+mailing
+save
+links
+reports
+offshore
+hundred
+debt
+advertise
+
+
+top 20 words with the highest log-odds ratio for class 0 and 1
+sell
+nbsp
+ffa
+remove
+capitalfm
+bulk
+money
+floodgate
+investment
+bonus
+aol
+profit
+mailing
+save
+links
+reports
+offshore
+hundred
+debt
+advertise
+
+
+top 20 words with the highest log-odds ratio for class 1 and 0
+sell
+nbsp
+ffa
+remove
+capitalfm
+bulk
+money
+floodgate
+investment
+bonus
+aol
+profit
+mailing
+save
+links
+reports
+offshore
+hundred
+debt
+advertise
+
+

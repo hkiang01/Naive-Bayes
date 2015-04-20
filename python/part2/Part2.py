@@ -299,12 +299,12 @@ class Part2(object):
 			#odds(Fij=1, c1, c2) = P(Fij=1 | c1) / P(Fij=1 | c2)
 			llh_1 = self.spamEmailsDictionary.get(word, [0,k/float(self.numSpamWords + k*V)])
 			llh_2 = self.normalEmailsDictionary.get(word, [0,k/float(self.numNormalWords + k*V)])
-			print "c1:",("%.6f" % llh_1[1]),"c2:",("%.6f" % llh_2[1]), #debugging
+			#print "c1:",("%.6f" % llh_1[1]),"c2:",("%.6f" % llh_2[1]), #debugging
 			return float(llh_1[1])/float(llh_2[1])
 
 		def logodds(word, c1, c2):
 			val = float(log(odds(word, c1, c2)))
-			print "logodds:", ("%.6f" % val)
+			#print "logodds:", ("%.6f" % val)
 			return val
 
 		highestFour = []
@@ -335,30 +335,26 @@ class Part2(object):
 		print "c1 list:", c1_list
 		print "c2 list:", c2_list
 
-		for c1 in c1_list:
-			for c2 in c2_list:
-				#iterate through words in
-				logOddsWordListEmail = {}
-				counter = 0
-				for word in self.spamEmailsDictionary:
-					# word, dictionary.get(word)
-					print word
-					logOddsWordListEmail[word] = logodds(word, c1, c2)
-					if(counter >= 6): sys.exit(0)
-					counter += 1
-				for word in self.normalEmailsDictionary:
-					print word
-					logOddsWordListEmail[word] = logodds(word, c1, c2)
-				logOddsWordListEmail = sorted(logOddsWordListEmail, key=itemgetter(1), reverse=True)
-				for i in xrange(0, 20):
-					print "top 20 words with the highest log-odds ratio for class", c1, "and", c2
-					print logOddsWordListEmail[i]
+		for i in xrange(0,4): #iterate through pairs
+			c1 = c1_list[i]
+			c2 = c2_list[i]
+			#iterate through words in spam and normal training sets
+			logOddsWordListEmail = {}
+			counter = 0
+			for word in self.spamEmailsDictionary:
+				# word, dictionary.get(word)
+				#print word
+				logOddsWordListEmail[word] = logodds(word, c1, c2)
 				counter += 1
-
-		# #the top 20 words with the highest log-odds ratio for that pair of classes
-		# sortedLogOddsWordList = sorted(logOddsWordList, key=itemgetter(1), reverse=True)
-		# #for i in xrange(0, 20):
-		# 	#print sortedLogOddsWordList[i][0]
+			for word in self.normalEmailsDictionary:
+				#print word
+				logOddsWordListEmail[word] = logodds(word, c1, c2)
+			logOddsWordListEmail = sorted(logOddsWordListEmail.items(), key=itemgetter(1), reverse=True)
+			print "top 20 words with the highest log-odds ratio for class", c1, "and", c2
+			for j in xrange(0, 20):
+				print logOddsWordListEmail[j][0]
+			print "\n"
+			counter += 1
 
 
 	def parseTraining8cat(self, filename):
