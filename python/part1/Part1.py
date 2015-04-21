@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 
 
 k = 1
-V = 3
 oddsTolerance = 0.30
 
 class Part1(object):
@@ -19,7 +18,9 @@ class Part1(object):
 	digitDB = [] # groups of digits (grouped by similartiy)
 	learnLabels = []
 	testLabels = []
-
+	
+	V = 2
+	
 	# in order of digit classes (0-9)
 	llhList = [] # likelihood arrays for each class
 	classSizes = [] # size of each class
@@ -64,7 +65,7 @@ class Part1(object):
 		# parsing
 		for i in xrange (0, self.sample_size):    
 			currList = [] #the array of lines for each Digit
-			curr_digit = Digit() 
+			curr_digit = Digit(self.V)
 			for i in xrange(NUM_ROWS):
 			    currline = f.readline()
 			    currList.append(currline)
@@ -114,7 +115,7 @@ class Part1(object):
 				#totalFeature = 0		
 				for y in xrange(NUM_ROWS):
 					for x in xrange(NUM_COLS):
-						ret[y][x]+= (digit.features[y][x]+k/float(len(digitClass)))/float(len(digitClass)+k*V)
+						ret[y][x]+= (digit.features[y][x]+k/float(len(digitClass)))/float(len(digitClass)+k*self.V)
 			return ret
 			
 		for digitClass in self.digitDB:
@@ -178,8 +179,8 @@ class Part1(object):
 		              case = digit.features[y][x]
 		              if case==0.0:
 		                  sum1 += float(log(1-llh[y][x]))
-		              elif case==0.5:
-		                  sum1 += float(log(llh[y][x]))
+		              #elif case==0.5:
+		              #    sum1 += float(log(llh[y][x]))
 		              else:
 		                  sum1 += float(log(llh[y][x]))
 
@@ -201,8 +202,8 @@ class Part1(object):
 		              case = digit.features[y][x]
 		              if case==0.0:
 		                  sum1 += float(log(1-llh[y][x]))
-		              elif case==0.5:
-		                  sum1 += float(log(llh[y][x]))
+		              #elif case==0.5:
+		              #    sum1 += float(log(llh[y][x]))
 		              else:
 		                  sum1 += float(log(llh[y][x]))
 
@@ -484,7 +485,10 @@ class Part1(object):
 			print output_string
 		
 
-	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels):
+	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels, numFeatures):
+		if(numFeatures==3):
+			self.V=numFeatures
+			print 'Setting to ternary'+str(self.V)
 		self.masterList = copy.deepcopy(self.parse(filename_images))
 		self.parseLabels(filename_labels)
 		self.trainWithLabels()

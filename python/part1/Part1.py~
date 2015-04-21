@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 
 
 k = 1
-V = 3
 oddsTolerance = 0.30
 
 class Part1(object):
@@ -64,7 +63,7 @@ class Part1(object):
 		# parsing
 		for i in xrange (0, self.sample_size):    
 			currList = [] #the array of lines for each Digit
-			curr_digit = Digit() 
+			curr_digit = Digit(V)
 			for i in xrange(NUM_ROWS):
 			    currline = f.readline()
 			    currList.append(currline)
@@ -178,8 +177,8 @@ class Part1(object):
 		              case = digit.features[y][x]
 		              if case==0.0:
 		                  sum1 += float(log(1-llh[y][x]))
-		              elif case==0.5:
-		                  sum1 += float(log(llh[y][x]))
+		              #elif case==0.5:
+		              #    sum1 += float(log(llh[y][x]))
 		              else:
 		                  sum1 += float(log(llh[y][x]))
 
@@ -201,8 +200,8 @@ class Part1(object):
 		              case = digit.features[y][x]
 		              if case==0.0:
 		                  sum1 += float(log(1-llh[y][x]))
-		              elif case==0.5:
-		                  sum1 += float(log(llh[y][x]))
+		              #elif case==0.5:
+		              #    sum1 += float(log(llh[y][x]))
 		              else:
 		                  sum1 += float(log(llh[y][x]))
 
@@ -484,7 +483,10 @@ class Part1(object):
 			print output_string
 		
 
-	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels):
+	def __init__(self, filename_images, filename_labels,filename_testimages, filename_testlabels, numFeatures):
+		if(numFeatures==3):
+			V=numFeatures
+			print 'Setting to ternary'+str(V)
 		self.masterList = copy.deepcopy(self.parse(filename_images))
 		self.parseLabels(filename_labels)
 		self.trainWithLabels()
@@ -505,10 +507,10 @@ class Part1(object):
 		self.confusionMatrix()
 		self.printConfusionMatrix()
 		self.printAccuracyForEachClass()
-#		self.oddsRatios()
-#		self.printOddsRatiosMatrices()
-#		self.printLogOddsRatiosMatrices()
-#		self.printLogOddsRatiosMatricesASCII()
+		self.oddsRatios()
+		self.printOddsRatiosMatrices()
+		self.printLogOddsRatiosMatrices()
+		self.printLogOddsRatiosMatricesASCII()
 		#self.printLogOddsRatiosAllMatricesASCII()
 		#self.printLogLikelihoodMapsASCII()
 		

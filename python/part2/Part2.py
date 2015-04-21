@@ -4,8 +4,8 @@ from operator import itemgetter
 import sys
 
 k = 1 #1 to 50
-V = 2
-V8 = 8
+V = 198622 #DOUBLE CHECK
+V8 = 586476 #DOUBLE CHECK
 
 class Part2(object):
 
@@ -680,38 +680,38 @@ class Part2(object):
 
 	def __init__(self, filename_email_training, filename_8cat_training, filename_email_test, filename_8cat_test):
 
-		# # #EMAILS
-		# self.parseTrainingEmails(filename_email_training)
-		# self.createTrainingSpamAndNormalDictionaries()
-		# #self.printTrainingEmailLabels()
-		# #self.printTestEmailLabels()
-		# #self.printTrainingEmailDictionaries()
-		# self.printSpamAndNormalDictionaries()
-		# print "Spam words:", self.numSpamWords
-		# print "Normal words:",self.numNormalWords
-		# self.calcEmailProbabilityTables()
-		# self.calcEmailPriors()
-		# self.parseTestEmails(filename_email_test)
-		# #self.printTestEmailLabels()
-		# self.classifyTestEmails()
-		# self.calcEmailClassificationAccuracy()
-		# self.printMAPClassificationEmails()
-		# self.findTop20WordsPerClassEmail()
-		# self.confusionMatrixEmails()
-		# self.printConfusionMatrixEmails()
-		# self.oddsRatiosEmail()
+		# #EMAILS
+		self.parseTrainingEmails(filename_email_training)
+		self.createTrainingSpamAndNormalDictionaries()
+		self.printTrainingEmailLabels()
+		self.printTestEmailLabels()
+		self.printTrainingEmailDictionaries()
+		self.printSpamAndNormalDictionaries()
+		print "Spam words:", self.numSpamWords
+		print "Normal words:",self.numNormalWords
+		self.calcEmailProbabilityTables()
+		self.calcEmailPriors()
+		self.parseTestEmails(filename_email_test)
+		self.printTestEmailLabels()
+		self.classifyTestEmails()
+		self.calcEmailClassificationAccuracy()
+		self.printMAPClassificationEmails()
+		self.findTop20WordsPerClassEmail()
+		self.confusionMatrixEmails()
+		self.printConfusionMatrixEmails()
+		self.oddsRatiosEmail()
 
 		#8CAT
 		self.parseTraining8cat(filename_8cat_training)
-		#self.printTraining8catLabels()
-		#self.printTraining8catDictionaries()
+		self.printTraining8catLabels()
+		self.printTraining8catDictionaries()
 		self.create8catDictionaries()
 		self.print8catDictionaries()
-		#self.print8catNumWordsAll()
+		self.print8catNumWordsAll()
 		self.calc8catPriors()
 		self.calc8catProbabilityTables()
 		self.parseTest8cat(filename_8cat_test)
-		#self.printTest8catLabels()
+		self.printTest8catLabels()
 		self.classifyTest8cat()
 		self.printMAPClassification8cat()
 		self.findTop20WordsPerClass8cat()
