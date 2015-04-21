@@ -331,11 +331,12 @@ class Part1(object):
 		highestFour = []
 		for i in xrange(0, NUM_CLASSES):
 			for j in xrange(0, NUM_CLASSES):
-				if (i!=j):
-					highestFour.append([1-self.confusionMatrix[i][j], i, j])
+				highestFour.append([1-self.confusionMatrix[i][j], i, j])
 				# 1 - because want highest values returned from sorted
 				# sorted returns lowest values by default
 		highestFour = sorted(highestFour, key=itemgetter(0))
+
+		print "highestFour:",highestFour
 
 		for i in xrange(0, 4):
 			#print highestFour[i][1], highestFour[i][2]
