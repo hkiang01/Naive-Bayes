@@ -4,8 +4,8 @@ import scipy as sp #importing scipy (not used at time of writing)
 
 # GLOBAL 
 NUM_CLASSES = 10
-NUM_ROWS = 60
-NUM_COLS = 70
+NUM_ROWS = 70
+NUM_COLS = 60
 
 #Class Digit
 class Face(object):
