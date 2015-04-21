@@ -637,14 +637,13 @@ class Part2(object):
 		for row in self.confusionMatrix8cat:
 			col_counter = 0
 			for col in row:
-				if(row_counter==col_counter): #exclude diagonals
-					continue
 				curr = []
 				curr.append(col)
 				curr.append(row_counter)
 				curr.append(col_counter)
 				#print curr
-				highestFour.append(curr)
+				if(row_counter!=col_counter): #exclude diagonals
+					highestFour.append(curr)
 				col_counter += 1
 			row_counter += 1
 
@@ -678,6 +677,33 @@ class Part2(object):
 				print logOddsWordListEmail[j][0]
 			print "\n"
 
+	def generateCloudMapInputFileEmail(self):
+		e1 = open("emailspam.txt", "w")
+		e2 = open("emailnormal.txt", "w")
+
+		for word in self.spamEmailsDictionary:
+			frequency = int(self.spamEmailsDictionary.get(word)[0])
+
+			for i in xrange(frequency):
+				curr = ""
+				curr += word
+				curr += " "
+				e1.write(curr)
+
+			e1.write("\n")
+
+		for word in self.normalEmailsDictionary:
+			frequency = int(self.normalEmailsDictionary.get(word)[0])
+
+			for i in xrange(frequency):
+				curr = ""
+				curr += word
+				curr += " "
+				e2.write(curr)
+
+			e2.write("\n")
+
+
 	def __init__(self, filename_email_training, filename_8cat_training, filename_email_test, filename_8cat_test):
 
 		# #EMAILS
@@ -700,6 +726,7 @@ class Part2(object):
 		self.confusionMatrixEmails()
 		self.printConfusionMatrixEmails()
 		self.oddsRatiosEmail()
+		self.generateCloudMapInputFileEmail()
 
 		#8CAT
 		self.parseTraining8cat(filename_8cat_training)
