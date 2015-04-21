@@ -18,7 +18,6 @@ class Digit(object):
         self.number = []
         self.features = []
         self.V = numFeatures
-        print 'yolo'+str(numFeatures)
     
     #translate parsed file to 0's and 1's
     def processFeatures(self):
@@ -32,7 +31,7 @@ class Digit(object):
     				if (self.V==2):
     					curr_line.append(1.0)
     				else:
-    					curr_line.append(0.6)
+    					curr_line.append(0.1)
     			else:
     				curr_line.append(0.0)
     		ret_list.append(curr_line)

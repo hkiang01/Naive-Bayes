@@ -391,7 +391,7 @@ class Part1(object):
 	def printOddsRatiosMatrices(self):
 		matrix_counter = 1
 		for matrix in self.oddsRatiosMatrices:
-			print "Matrix", matrix_counter, "comparing class", self.c1_list[(matrix_counter-1)//4], "with class", self.c2_list[(matrix_counter-1)%4]
+			print "Matrix", matrix_counter, "comparing class", self.c1_list[(matrix_counter-1)%4], "with class", self.c2_list[(matrix_counter-1)%4]
 			for row in matrix:
 				for col in row:
 					print ("%.2f" % col),
@@ -402,7 +402,7 @@ class Part1(object):
 	def printLogOddsRatiosMatrices(self):
 		matrix_counter = 1
 		for matrix in self.logOddsRatiosMatrices:
-			print "Log Matrix", matrix_counter, "comparing class", self.c1_list[(matrix_counter-1)//4], "with class", self.c2_list[(matrix_counter-1)%4]
+			print "Log Matrix", matrix_counter, "comparing class", self.c1_list[(matrix_counter-1)%4], "with class", self.c2_list[(matrix_counter-1)%4]
 			for row in matrix:
 				for col in row:
 					print ("%.2f" % col),
@@ -414,7 +414,7 @@ class Part1(object):
 		matrix_counter = 1
 		
 		for matrix in self.logOddsRatiosMatrices:
-			print "Matrix", matrix_counter, "comparing class", self.c1_list[(matrix_counter-1)//4], "with class", self.c2_list[(matrix_counter-1)%4]
+			print "Matrix", matrix_counter, "comparing class", self.c1_list[(matrix_counter-1)%4], "with class", self.c2_list[(matrix_counter-1)%4]
 			output_string = ""
 						
 			for row in matrix:
@@ -442,7 +442,7 @@ class Part1(object):
 	def printLogOddsRatiosAllMatricesASCII(self):
 		matrix_counter = 1
 		for matrix in self.logOddsRatiosAllMatrices:
-			print "Matrix", matrix_counter, "comparing class", (matrix_counter-1)//10, "with class",(matrix_counter-1)%10
+			print "Matrix", matrix_counter, "comparing class", (matrix_counter-1)%10, "with class",(matrix_counter-1)%10
 			output_string = ""
 			for row in matrix:
 				curr_line = ""

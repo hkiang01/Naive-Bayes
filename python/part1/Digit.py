@@ -31,7 +31,7 @@ class Digit(object):
     				if (self.V==2):
     					curr_line.append(1.0)
     				else:
-    					curr_line.append(0.6)
+    					curr_line.append(0.8)
     			else:
     				curr_line.append(0.0)
     		ret_list.append(curr_line)
