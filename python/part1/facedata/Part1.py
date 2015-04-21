@@ -60,11 +60,11 @@ class Part1(object):
 		self.sample_size = self.file_len(filename) // NUM_ROWS
 		f = open(filename, "r") #opens trainingimages
 
-        retlist = []
+        	retlist = []
 		# parsing
 		for i in xrange (0, self.sample_size):    
 			currList = [] #the array of lines for each Digit
-			curr_digit = Digit() 
+			curr_digit = Face() 
 			for i in xrange(NUM_ROWS):
 			    currline = f.readline()
 			    currList.append(currline)
