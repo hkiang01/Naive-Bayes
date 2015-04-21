@@ -8,13 +8,13 @@ import matplotlib.pyplot as plt
 
 
 k = 1
-V = 2
+V = 3
 oddsTolerance = 0.30
 
 class Part1(object):
 
 	sample_size = 5000
-	threshold = 0.55
+	threshold = 0.45
 	masterList = [] # full list of training Digits from given problem
 	digitDB = [] # groups of digits (grouped by similartiy)
 	learnLabels = []
@@ -176,8 +176,10 @@ class Part1(object):
 		      for y in xrange(NUM_ROWS):
 		          for x in xrange(NUM_COLS):
 		              case = digit.features[y][x]
-		              if case==0:
+		              if case==0.0:
 		                  sum1 += float(log(1-llh[y][x]))
+		              elif case==0.5:
+		                  sum1 += float(log(llh[y][x]))
 		              else:
 		                  sum1 += float(log(llh[y][x]))
 
@@ -197,8 +199,10 @@ class Part1(object):
 		      for y in xrange(NUM_ROWS):
 		          for x in xrange(NUM_COLS):
 		              case = digit.features[y][x]
-		              if case==0:
+		              if case==0.0:
 		                  sum1 += float(log(1-llh[y][x]))
+		              elif case==0.5:
+		                  sum1 += float(log(llh[y][x]))
 		              else:
 		                  sum1 += float(log(llh[y][x]))
 
@@ -325,7 +329,7 @@ class Part1(object):
 		highestFour = []
 		for i in xrange(0, NUM_CLASSES):
 			for j in xrange(0, NUM_CLASSES):
-				if (self.confusionMatrix[i][j]!=1):
+				if (i!=j):
 					highestFour.append([1-self.confusionMatrix[i][j], i, j])
 				# 1 - because want highest values returned from sorted
 				# sorted returns lowest values by default
@@ -339,10 +343,10 @@ class Part1(object):
 		print "Highest four c1, c2 pairs"
 		for i in xrange(0, 4):
 			print self.c1_list[i], self.c2_list[i]
-			#self.printToHeatMap(self.llhList[self.c1_list[i]],"originalFirst"+str(i))
-			#self.printToHeatMap(self.llhList[self.c2_list[i]],"originalSecond"+str(i))
-			self.printToHeatMap(self.llhList[highestFour[i][1]],"originalFirst"+str(i))
-			self.printToHeatMap(self.llhList[highestFour[i][2]],"originalSecond"+str(i))
+			self.printToHeatMap(self.llhList[self.c1_list[i]],"originalFirst"+str(i))
+			self.printToHeatMap(self.llhList[self.c2_list[i]],"originalSecond"+str(i))
+			#self.printToHeatMap(self.llhList[highestFour[i][1]],"originalFirst"+str(i))
+			#self.printToHeatMap(self.llhList[highestFour[i][2]],"originalSecond"+str(i))
 
 		#for c1 in self.c1_list:
 		#	for c2 in self.c2_list:
@@ -353,10 +357,10 @@ class Part1(object):
 				curr_line = []
 				log_curr_line = []
 				for j in xrange(0, NUM_COLS):
-					curr_line.append(odds(i, j, highestFour[idx][1], highestFour[idx][2]))
-					log_curr_line.append(logodds(i, j, highestFour[idx][1], highestFour[idx][2]))
-					#curr_line.append(odds(i, j, self.c1_list[idx], self.c2_list[idx]))
-					#log_curr_line.append(logodds(i, j, self.c1_list[idx], self.c2_list[idx]))
+					#curr_line.append(odds(i, j, highestFour[idx][1], highestFour[idx][2]))
+					#log_curr_line.append(logodds(i, j, highestFour[idx][1], highestFour[idx][2]))
+					curr_line.append(odds(i, j, self.c1_list[idx], self.c2_list[idx]))
+					log_curr_line.append(logodds(i, j, self.c1_list[idx], self.c2_list[idx]))
 				curr_matrix.append(curr_line)
 				log_curr_matrix.append(log_curr_line)
 			self.oddsRatiosMatrices.append(curr_matrix)
@@ -501,10 +505,10 @@ class Part1(object):
 		self.confusionMatrix()
 		self.printConfusionMatrix()
 		self.printAccuracyForEachClass()
-		self.oddsRatios()
-		self.printOddsRatiosMatrices()
-		self.printLogOddsRatiosMatrices()
-		self.printLogOddsRatiosMatricesASCII()
+#		self.oddsRatios()
+#		self.printOddsRatiosMatrices()
+#		self.printLogOddsRatiosMatrices()
+#		self.printLogOddsRatiosMatricesASCII()
 		#self.printLogOddsRatiosAllMatricesASCII()
 		#self.printLogLikelihoodMapsASCII()
 		

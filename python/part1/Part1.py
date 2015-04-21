@@ -8,13 +8,13 @@ import matplotlib.pyplot as plt
 
 
 k = 1
-V = 2
+V = 3
 oddsTolerance = 0.30
 
 class Part1(object):
 
 	sample_size = 5000
-	threshold = 0.55
+	threshold = 0.45
 	masterList = [] # full list of training Digits from given problem
 	digitDB = [] # groups of digits (grouped by similartiy)
 	learnLabels = []
@@ -176,8 +176,10 @@ class Part1(object):
 		      for y in xrange(NUM_ROWS):
 		          for x in xrange(NUM_COLS):
 		              case = digit.features[y][x]
-		              if case==0:
+		              if case==0.0:
 		                  sum1 += float(log(1-llh[y][x]))
+		              elif case==0.5:
+		                  sum1 += float(log(llh[y][x]))
 		              else:
 		                  sum1 += float(log(llh[y][x]))
 
@@ -197,8 +199,10 @@ class Part1(object):
 		      for y in xrange(NUM_ROWS):
 		          for x in xrange(NUM_COLS):
 		              case = digit.features[y][x]
-		              if case==0:
+		              if case==0.0:
 		                  sum1 += float(log(1-llh[y][x]))
+		              elif case==0.5:
+		                  sum1 += float(log(llh[y][x]))
 		              else:
 		                  sum1 += float(log(llh[y][x]))
 

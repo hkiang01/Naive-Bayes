@@ -23,10 +23,12 @@ class Digit(object):
     	for s in self.number: #s is a string
     		curr_line = []
     		for c in s:
-    			if(c=='#' or c=='+'):
-    				curr_line.append(1)
+    			if c=='#':
+    				curr_line.append(1.0)
+    			elif c=='+':
+    				curr_line.append(0.7)
     			else:
-    				curr_line.append(0)
+    				curr_line.append(0.0)
     		ret_list.append(curr_line)
     	self.features = ret_list
     
@@ -55,7 +57,7 @@ class Digit(object):
     	heuristic = 0
     	for row in xrange(0, NUM_ROWS):
     		for col in xrange(0, NUM_COLS):
-    			if(self.features[row][col] == a_digit.features[row][col] == 1):
+    			if(self.features[row][col] == a_digit.features[row][col] >= 0.5):
     				heuristic += 1
     	return heuristic
 

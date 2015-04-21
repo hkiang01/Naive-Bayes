@@ -3,11 +3,14 @@ import scipy as sp #importing scipy (not used at time of writing)
 
 
 # GLOBAL 
+NUM_CLASSES = 10
 NUM_ROWS = 28
 NUM_COLS = 28
 
 #Class Digit
 class Digit(object):
+
+    properClass = 0
 
     #define class to store the digit
     def ___init___(self): #default constructor
@@ -20,10 +23,12 @@ class Digit(object):
     	for s in self.number: #s is a string
     		curr_line = []
     		for c in s:
-    			if(c=='#' or c=='+'):
-    				curr_line.append(1)
+    			if c=='#':
+    				curr_line.append(1.0)
+    			elif c=='+':
+    				curr_line.append(0.5)
     			else:
-    				curr_line.append(0)
+    				curr_line.append(0.0)
     		ret_list.append(curr_line)
     	self.features = ret_list
     
@@ -35,14 +40,12 @@ class Digit(object):
         for row in xrange(NUM_ROWS): #xrange returns xrange object
         # xrange, see: https://wiki.python.org/moin/ForLoop
         # xrange is more efficient with memory than range
-        	curr_line = ""
-        	for col in xrange(NUM_COLS): 
-        		curr_line += self.number[row][col]
-        	print curr_line
-<<<<<<< HEAD
-        	
-=======
->>>>>>> 5002cf83d3d7e6ee9a60f5b06f8b5c82fe1e72e2
+           	curr_line = ""
+           	for col in xrange(NUM_COLS): 
+          		curr_line += self.number[row][col]
+           	print curr_line
+           	
+
     def printFeatures(self):
     	for row in xrange(NUM_ROWS):
     		curr_line = ""
@@ -54,11 +57,15 @@ class Digit(object):
     	heuristic = 0
     	for row in xrange(0, NUM_ROWS):
     		for col in xrange(0, NUM_COLS):
-    			if(self.features[row][col] == a_digit.features[row][col] == 1):
+    			if(self.features[row][col] == a_digit.features[row][col] >= 0.5):
     				heuristic += 1
     	return heuristic
 
+    def setProperClass(self, value):
+        self.properClass = value
 
+    def getProperClass(self):
+        return self.properClass
 
 ### NOTES ###
 
