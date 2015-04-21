@@ -3,7 +3,7 @@ import scipy as sp #importing scipy (not used at time of writing)
 
 
 # GLOBAL 
-NUM_CLASSES = 10
+NUM_CLASSES = 2
 NUM_ROWS = 70
 NUM_COLS = 60
 

@@ -109,7 +109,13 @@ class Part1(object):
 
 	def calculateLikelihood(self):
 		def llhGraph(digitClass):
-			ret = [[0 for y in xrange(NUM_ROWS)] for x in xrange(NUM_COLS)] 
+			ret = []
+			for y in xrange(NUM_ROWS):
+				curr_line = []
+				for x in xrange(NUM_COLS):
+					curr_line.append(0)
+				ret.append(curr_line)
+
 			for digit in digitClass:
 				#totalFeature = 0		
 				for y in xrange(NUM_ROWS):
