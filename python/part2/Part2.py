@@ -4,8 +4,8 @@ from operator import itemgetter
 import sys
 
 k = 1 #1 to 50
-V = 2
-V8 = 8
+V = 198622 #DOUBLE CHECK
+V8 = 586476 #DOUBLE CHECK
 
 class Part2(object):
 
