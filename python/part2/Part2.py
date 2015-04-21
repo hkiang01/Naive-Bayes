@@ -637,14 +637,13 @@ class Part2(object):
 		for row in self.confusionMatrix8cat:
 			col_counter = 0
 			for col in row:
-				if(row_counter==col_counter): #exclude diagonals
-					continue
 				curr = []
 				curr.append(col)
 				curr.append(row_counter)
 				curr.append(col_counter)
 				#print curr
-				highestFour.append(curr)
+				if(row_counter!=col_counter): #exclude diagonals
+					highestFour.append(curr)
 				col_counter += 1
 			row_counter += 1
 
@@ -678,6 +677,72 @@ class Part2(object):
 				print logOddsWordListEmail[j][0]
 			print "\n"
 
+	def generateCloudMapInputFilesEmail(self):
+		e1 = open("emailspam.txt", "w")
+		e2 = open("emailnormal.txt", "w")
+
+		for word in self.spamEmailsDictionary:
+			frequency = int(self.spamEmailsDictionary.get(word)[0])
+
+			for i in xrange(frequency):
+				curr = ""
+				curr += word
+				curr += " "
+				e1.write(curr)
+
+			e1.write("\n")
+
+		for word in self.normalEmailsDictionary:
+			frequency = int(self.normalEmailsDictionary.get(word)[0])
+
+			for i in xrange(frequency):
+				curr = ""
+				curr += word
+				curr += " "
+				e2.write(curr)
+
+			e2.write("\n")
+
+		e1.close()
+		e2.close()
+
+	def generateCloudMapInputFiles8cat(self):
+		e0 = open("cat0.txt", "w")
+		e1 = open("cat1.txt", "w")
+		e2 = open("cat2.txt", "w")
+		e3 = open("cat3.txt", "w")
+		e4 = open("cat4.txt", "w")
+		e5 = open("cat5.txt", "w")
+		e6 = open("cat6.txt", "w")
+		e7 = open("cat7.txt", "w")
+
+
+		def getOutputFileName(x):
+		    return {
+		        0: e0,
+		        1: e1,
+		        2: e2,
+		        3: e3,
+		        4: e4,
+		        5: e5,
+		        6: e6,
+		        7: e7,
+		    }.get(x)
+
+		cat_counter = 0
+		for dictionary in self.master8catDictList:
+			for word in dictionary:
+				frequency = int(dictionary.get(word)[0])
+
+				for i in xrange(frequency):
+					curr = ""
+					curr += word
+					curr += " "
+					getOutputFileName(cat_counter).write(curr)
+
+				getOutputFileName(cat_counter).write("\n")
+			cat_counter+= 1
+
 	def __init__(self, filename_email_training, filename_8cat_training, filename_email_test, filename_8cat_test):
 
 		# #EMAILS
@@ -700,6 +765,7 @@ class Part2(object):
 		self.confusionMatrixEmails()
 		self.printConfusionMatrixEmails()
 		self.oddsRatiosEmail()
+		self.generateCloudMapInputFilesEmail()
 
 		#8CAT
 		self.parseTraining8cat(filename_8cat_training)
@@ -718,3 +784,4 @@ class Part2(object):
 		self.confusionMatrix8cat()
 		self.printConfusionMatrix8cat()
 		self.oddsRatios8cat()
+		self.generateCloudMapInputFiles8cat()
